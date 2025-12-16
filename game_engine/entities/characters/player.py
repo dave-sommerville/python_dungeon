@@ -48,6 +48,7 @@ class Player(Character):
         self.health = 100
 
     def print_player_info(self):
+        print(f"{self.health}{self.sanity}{self.name}{self.killcount}")
         #Name, desc, killcount, location, level, xp, mod, maxHP
         # Current HP, AC (with armor), current weapon(s),
         # Gold, Mana, sanity, exhaustion
@@ -55,24 +56,52 @@ class Player(Character):
 
     # This should print to bottom menu
     def print_player_inventory(self):
-        pass
+        for i, item in enumerate(self.inventory):
+            print(f"{i}: {item.name} - {item.durability}")
     def print_current_location(self):
         return f"{self.x},{self.y}"
-    def print_next_location(self):
-        return f"{self.x + 1}{self.y}"
+    def print_next_location(self, direction):
+        match direction:
+            case "north":
+                return f"{self.x + 1},{self.y}"
+            case "east":
+                return f"{self.x},{self.y + 1}"
+            case "south":
+                return f"{self.x - 1},{self.y}"
+            case "west":
+                return f"{self.x},{self.y - 1}"
+            case _:
+                print("invalid entry")
+                return
+
     def search_chamber(self):
         # Need to add perception mechanic
         # Need to add trap/contest mechanic
         if len(self.current_chamber.chamber_items) > 0:
             for item in self.current_chamber.chamber_items:
                 self.add_to_inventory(item)
+        self.print_inventory()
+
     def attempt_to_rest(self):
-        # Need to add trap/contest mechanic
+        # Need to add surprise combat mechanic
         self.exhaustion_counter = 0
-        pass
+        print(self.exhaustion_counter)
     # Will need to add limiting to list, but mayaswell enjoy the dynamic sizes for now
     def add_to_inventory(self, item):
         self.inventory.append(item)
-    
+    def print_inventory(self):
+        for item in self.inventory:
+            print(item)
+    def add_skill_point(self, skill):
+        match skill:
+            case "dex":
+                self.dex += 1
+            case "con":
+                self.con += 1
+            case "cha": 
+                self.cha += 1
+            case "wis":
+                self.wis += 1
     # Manage inventory
     # Manage Spells
+

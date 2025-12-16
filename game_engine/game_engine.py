@@ -29,14 +29,25 @@ class GameEngine:
     
     def _resolve_main_menu(self, dungeon, action):
         match action:
-            case "move": # Sub events
-                dungeon.move_player()
+            case "move north": # Sub events
+                dungeon.move_player("north")
+                print(dungeon.player.print_current_location())
+            case "move east": # Sub events
+                dungeon.move_player("east")
+                print(dungeon.player.print_current_location())
+            case "move south": # Sub events
+                dungeon.move_player("south")
+                print(dungeon.player.print_current_location())
+            case "move west": # Sub events
+                dungeon.move_player("west")
                 print(dungeon.player.print_current_location())
             case "search":
                 dungeon.player.search_chamber()
             case "rest":
                 dungeon.player.attempt_to_rest()
             case "inventory":
+                dungeon.state = GameState.INVENTORY_MANAGEMENT
+                dungeon.player.print_inventory()
                 pass
             case "spells":
                 pass
@@ -51,7 +62,12 @@ class GameEngine:
                 return
     
     def _resolve_inventory_management_menu(self, dungeon, action):
-        pass
+        match action:
+            case "back":
+                dungeon.state = GameState.MAIN_MENU
+            case _:
+                print("invalid input")
+                return
 
     def _resolve_spell_management_menu(self, dungeon, action):
         pass
@@ -62,7 +78,7 @@ class GameEngine:
 
         match dungeon.state:
             case GameState.MAIN_MENU:
-                return ["move", "search", "rest", "inventory", "spells", "details", "describe"]
+                return ["move north", "move east", "move south", "move west", "search", "rest", "inventory", "spells", "details", "describe"]
             case GameState.INVENTORY_MANAGEMENT:
                 return ["use", "equip", "drop", "back"]
             case GameState.SPELL_MANAGEMENT:

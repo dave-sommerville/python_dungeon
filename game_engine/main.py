@@ -22,8 +22,6 @@ while dungeon.state != GameState.GAME_OVER:
     try:
         choice = int(input("> ")) - 1
         action = options[choice]
-        print(choice)
-        print(action)
     except (ValueError, IndexError):
         print("Invalid selection.")
         continue

@@ -25,16 +25,18 @@ class Dungeon:
         # Randomize passages
         # Add return passage
         # Display only present passages
-    def move_player(self):
-        next_id = self.player.print_next_location()
+    def move_player(self, direction):
+        next_id = self.player.print_next_location(direction)
         next_chamber = next((chamber for chamber in self.visited_locations if chamber.id == next_id), None)
         if next_chamber:
             self.player.current_chamber = next_chamber
         else:
+            t_x, t_y = map(int, next_id.split(','))
             next_chamber = Chamber(next_id)
             self.player.current_chamber = next_chamber
             self.visited_locations.append(next_chamber)
-            self.player.x += 1
+            self.player.x = t_x
+            self.player.y = t_y
             self.player.exhaustion_counter += 1
 
     def transfer_data(self):
