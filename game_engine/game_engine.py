@@ -1,4 +1,5 @@
 from game_states import GameState
+from locations.dungeon import Dungeon
 class GameEngine:
     def resolve_action(self, dungeon, action: str):
         if dungeon.current_event:
@@ -18,7 +19,49 @@ class GameEngine:
         match dungeon.state:
             case GameState.MAIN_MENU:
                 self._resolve_main_menu(dungeon, action)
-            case GameState.COMBAT:
-                self._resolve_main_menu(dungeon, action)
+            case GameState.INVENTORY_MANAGEMENT:
+                self._resolve_inventory_management_menu(dungeon, action)
+            case GameState.SPELL_MANAGEMENT:
+                self._resolve_spell_management_menu(dungeon, action)
             case _:
                 print("Invalid State")
+    
+    def _resolve_main_menu(self, dungeon, action):
+        match action:
+            case "move": # Sub events
+                dungeon.player.move_player()
+            case "search":
+                dungeon.player.search_chamber()
+            case "rest":
+                dungeon.player.attempt_to_rest()
+            case "inventory":
+                pass
+            case "spells":
+                pass
+            case "details":
+                details = dungeon.player.print_player_info()
+                print(details)
+            case "describe":
+                roomDesc = dungeon.player.current_chamber.describe_chamber()
+                print(roomDesc)
+            case _:
+                print("Invalid Action")
+    
+    def _resolve_inventory_management_menu(self, dungeon):
+        pass
+
+    def _resolve_spell_management_menu(self, dungeon):
+        pass
+    def get_current_menu(dungeon):
+        if dungeon.current_event:
+            return dungeon.current_event.get_options()
+
+        match dungeon.state:
+            case GameState.MAIN_MENU:
+                return ["move", "search", "rest", "inventory", "spells", "details", "describe"]
+            case GameState.INVENTORY_MANAGEMENT:
+                return ["use", "equip", "drop", "back"]
+            case GameState.SPELL_MANAGEMENT:
+                return ["cast", "inspect", "back"]
+            case _:
+                return []

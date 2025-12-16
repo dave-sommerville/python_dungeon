@@ -1,4 +1,5 @@
-from character import Character
+from entities.characters.character import Character
+from locations.chamber import Chamber
     # prisoner_status = ''
 
 class Player(Character):
@@ -8,7 +9,7 @@ class Player(Character):
     killcount = 0
     x = 0
     y = 0
-    current_chamber = None
+    current_chamber = Chamber("00")
     # plot_progression = None
 
     # Stats
@@ -35,31 +36,43 @@ class Player(Character):
     mana = 5
     sanity = 100
     inventory = []
+    inventory_size = 5
     weapon_primary = None
     weapon_secondary = None
     armor = None
     magical_item = None
 
 
-    def __init__(self, name, description):
-        super().__init__(name, description)
+    def __init__(self):
+        super().__init__()
         self.health = 100
+
     def print_player_info(self):
+        #Name, desc, killcount, location, level, xp, mod, maxHP
+        # Current HP, AC (with armor), current weapon(s),
+        # Gold, Mana, sanity, exhaustion
         pass
 
     # This should print to bottom menu
     def print_player_inventory():
         pass
-    def move_player():
+    def print_current_location(self):
+        return f"{self.x}{self.y}"
+    def print_next_location(self):
+        return f"{self.x + 1}{self.y}"
+    def search_chamber(self):
+        # Need to add perception mechanic
+        # Need to add trap/contest mechanic
+        if len(self.current_chamber.chamber_items) > 0:
+            for item in self.current_chamber.chamber_items:
+                self.add_to_inventory(item)
+    def attempt_to_rest(self):
+        # Need to add trap/contest mechanic
+        self.exhaustion_counter = 0
         pass
+    # Will need to add limiting to list, but mayaswell enjoy the dynamic sizes for now
+    def add_to_inventory(self, item):
+        self.inventory.append(item)
     
-    def search_chamber():
-        pass
-    def attempt_to_rest():
-        pass
-    
-
     # Manage inventory
     # Manage Spells
-    #   
-    #

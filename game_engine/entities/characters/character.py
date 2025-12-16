@@ -8,9 +8,9 @@ class Character:
     inventory = []
     health = 0
 
-    def __init__(self, name, description):
-        self.name = name
-        description = description
+    def __init__(self):
+        self.name = ''
+        self.description = ''
         
     def some_method(self):
         pass

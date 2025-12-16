@@ -1,19 +1,17 @@
 # ChamberID
-# Description
-# Description generation method
-# 4 passages
-# NPC?
-# Trap?
-# Monster
-# ChamberLoot
-# ChamberGold
 # Distribution property
 
-# Moving:
-    # Randomize passages
-    # Add return passage
-    # Display only present passages
-# Rest
-# Special Events
-# Search room method
+class Chamber():
+    id = ''
+    description = ''
+    chamber_items = []
+    chamber_gold = 0
+    north_passage = True
+    east_passage = True
+    south_passage = True
+    west_passage = True
 
+    def __init__(self, id):
+        self.id = id
+    def describe_chamber(self):
+        return 'This'
