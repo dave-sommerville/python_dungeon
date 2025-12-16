@@ -22,6 +22,8 @@ while dungeon.state != GameState.GAME_OVER:
     try:
         choice = int(input("> ")) - 1
         action = options[choice]
+        print(choice)
+        print(action)
     except (ValueError, IndexError):
         print("Invalid selection.")
         continue
@@ -29,5 +31,4 @@ while dungeon.state != GameState.GAME_OVER:
     # 4. Resolve action
     engine.resolve_action(dungeon, action)
 
-    # 5. World tick (optional for now)
-    dungeon.tick() if hasattr(dungeon, "tick") else None
+

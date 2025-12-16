@@ -1,5 +1,6 @@
 from entities.characters.player import Player
 from locations.chamber import Chamber
+from game_states import GameState
 # Content
     # Room descriptions
     # Passageway
@@ -8,13 +9,16 @@ class Dungeon:
     player = Player()
     visited_locations  = []
     current_event = None
-    state = 'INIALIZING'
+    state = GameState.MAIN_MENU
 
 
     def __init__(self):
-        pass
+        self.player = Player()
+        self.visited_locations  = []
+        self.current_event = None
+        self.state = GameState.MAIN_MENU
 
-    def create_player():
+    def create_player(self):
         pass
     # Needs Directions, chance of encounter,
     # Moving:
@@ -33,11 +37,11 @@ class Dungeon:
             self.player.x += 1
             self.player.exhaustion_counter += 1
 
-    def transfer_data():
+    def transfer_data(self):
         pass
-    def create_map():
+    def create_map(self):
         pass
-    def display_map():
+    def display_map(self):
         pass
 
 """

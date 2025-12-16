@@ -54,10 +54,10 @@ class Player(Character):
         pass
 
     # This should print to bottom menu
-    def print_player_inventory():
+    def print_player_inventory(self):
         pass
     def print_current_location(self):
-        return f"{self.x}{self.y}"
+        return f"{self.x},{self.y}"
     def print_next_location(self):
         return f"{self.x + 1}{self.y}"
     def search_chamber(self):

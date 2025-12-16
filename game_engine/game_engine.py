@@ -25,11 +25,13 @@ class GameEngine:
                 self._resolve_spell_management_menu(dungeon, action)
             case _:
                 print("Invalid State")
+                return
     
     def _resolve_main_menu(self, dungeon, action):
         match action:
             case "move": # Sub events
-                dungeon.player.move_player()
+                dungeon.move_player()
+                print(dungeon.player.print_current_location())
             case "search":
                 dungeon.player.search_chamber()
             case "rest":
@@ -46,12 +48,14 @@ class GameEngine:
                 print(roomDesc)
             case _:
                 print("Invalid Action")
+                return
     
-    def _resolve_inventory_management_menu(self, dungeon):
+    def _resolve_inventory_management_menu(self, dungeon, action):
         pass
 
-    def _resolve_spell_management_menu(self, dungeon):
+    def _resolve_spell_management_menu(self, dungeon, action):
         pass
+    @staticmethod
     def get_current_menu(dungeon):
         if dungeon.current_event:
             return dungeon.current_event.get_options()
