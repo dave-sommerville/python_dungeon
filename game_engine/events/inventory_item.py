@@ -1,18 +1,22 @@
 from events.event import Event
 
 class InventoryItemEvent(Event):
-  def __init__(self, param):
-    super().__init__(param)
-  def get_options():
+  def __init__(self, entity):
+    super().__init__(entity)
+  def get_options(self):
     return ["use", "discard", "back"]
 
-  def resolve(self, action, dungeon):
-    item = dungeon.player.inventory[self.param]
+  def resolve(self, dungeon, action):
     match action:
       case "use":
-        item.use_item()
+        self.entity.use_item()
+        dungeon.player.inventory.remove(self.entity)
+        dungeon.current_event = None
       case "discard":
-        dungeon.player.inventory.remove(item)
+        dungeon.player.inventory.remove(self.entity)
+        print("Item Removed")
+        dungeon.player.print_inventory()
+        dungeon.current_event = None
       case "back":
         dungeon.current_event = None
       case _:

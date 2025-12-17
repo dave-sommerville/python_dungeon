@@ -1,5 +1,6 @@
 from entities.characters.character import Character
 from locations.chamber import Chamber
+from entities.items.item import Item
     # prisoner_status = ''
 
 class Player(Character):
@@ -22,9 +23,8 @@ class Player(Character):
 
         # Stats
         self.player_level = 1
-        self.modifer = 0
-        self.maxHP = 0
-        self.armor_class = 10
+        self.modifer = 10
+        self.maxHP = 100
         self.dex = 0
         self.con = 0
         self.cha = 0
@@ -35,11 +35,9 @@ class Player(Character):
         self.gold = 0
         self.mana = 5
         self.sanity = 100
-        self.inventory = []
+        self.inventory = [Item("A cup", "Shiny", 10), Item("A Key", "Old", 2)]
         self.inventory_size = 5
-        self.weapon_primary = None
         self.weapon_secondary = None
-        self.armor = None
         self.magical_item = None
     def print_player_info(self):
         print(f"{self.health}{self.sanity}{self.name}{self.killcount}")
@@ -47,11 +45,7 @@ class Player(Character):
         # Current HP, AC (with armor), current weapon(s),
         # Gold, Mana, sanity, exhaustion
         pass
-
-    # This should print to bottom menu
-    def print_player_inventory(self):
-        for i, item in enumerate(self.inventory):
-            print(f"{i}: {item.name} - {item.durability}")
+    
     def print_current_location(self):
         return f"{self.x},{self.y}"
     def print_next_location(self, direction):
@@ -76,16 +70,23 @@ class Player(Character):
                 self.add_to_inventory(item)
         self.print_inventory()
 
+    # This should print to bottom menu
+    def print_player_inventory(self):
+        inventory_list = []
+        for i, item in enumerate(self.inventory):
+            inventory_list.append(f"{i}: {item.name} - {item.durability}")
+        inventory_list.append("back")
+        return inventory_list
+
+    # Will need to add limiting to list, but mayaswell enjoy the dynamic sizes for now
+    def add_to_inventory(self, item):
+        self.inventory.append(item)
+
     def attempt_to_rest(self):
         # Need to add surprise combat mechanic
         self.exhaustion_counter = 0
         print(self.exhaustion_counter)
-    # Will need to add limiting to list, but mayaswell enjoy the dynamic sizes for now
-    def add_to_inventory(self, item):
-        self.inventory.append(item)
-    def print_inventory(self):
-        for item in self.inventory:
-            print(item)
+
     def add_skill_point(self, skill):
         match skill:
             case "dex":
@@ -96,6 +97,11 @@ class Player(Character):
                 self.cha += 1
             case "wis":
                 self.wis += 1
+    def level_up(self):
+        pass
+
+    
+
     # Manage inventory
     # Manage Spells
 

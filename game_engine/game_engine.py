@@ -2,6 +2,8 @@ from game_states import GameState
 from locations.dungeon import Dungeon
 from entities.characters.character import Character
 from events.combat import CombatEvent
+from events.inventory_item import InventoryItemEvent
+
 class GameEngine:
     def resolve_action(self, dungeon, action: str):
         if dungeon.current_event:
@@ -14,8 +16,7 @@ class GameEngine:
         options = event.get_options()
         if action not in options:
             print("Not a valid option ")
-        event._resolve(dungeon, action)
-
+        event.resolve(dungeon, action)
 
     def _resolve_state_action(self, dungeon, action):
         match dungeon.state:
@@ -28,10 +29,12 @@ class GameEngine:
             case _:
                 print("Invalid State")
                 return
+            
     def _call_for_combat_event(self, dungeon):
         character = Character("Jeff", "The Skeleton")
         event = CombatEvent(character)
         dungeon.current_event = event
+
     def _resolve_main_menu(self, dungeon, action):
         match action:
             case "move north": # Sub events
@@ -53,7 +56,7 @@ class GameEngine:
                 dungeon.player.attempt_to_rest()
             case "inventory":
                 dungeon.state = GameState.INVENTORY_MANAGEMENT
-                dungeon.player.print_inventory()
+                print("Select item")
                 pass
             case "spells":
                 pass
@@ -68,15 +71,31 @@ class GameEngine:
                 return
     
     def _resolve_inventory_management_menu(self, dungeon, action):
-        match action:
-            case "back":
-                dungeon.state = GameState.MAIN_MENU
-            case _:
-                print("invalid input")
-                return
+        player = dungeon.player
+
+        if action == "back":
+            dungeon.state = GameState.MAIN_MENU
+            return
+
+        # Extract leading number if present (e.g. "0: Sword")
+        if ":" in action:
+            index_part = action.split(":")[0]
+
+            if index_part.isdigit():
+                index = int(index_part)
+
+                if 0 <= index < len(player.inventory):
+                    item = player.inventory[index]
+                    dungeon.current_event = InventoryItemEvent(item)
+                    return
+
+        print("Invalid input")
+
+
 
     def _resolve_spell_management_menu(self, dungeon, action):
         pass
+
     @staticmethod
     def get_current_menu(dungeon):
         if dungeon.current_event:
@@ -88,8 +107,7 @@ class GameEngine:
                 actions_list.extend(["search", "rest", "inventory", "spells", "details", "describe"])
                 return actions_list
             case GameState.INVENTORY_MANAGEMENT:
-                count_list = [str(i) for i in range(1, (len() -1))]
-                return count_list
+                return dungeon.player.print_player_inventory()
             case GameState.SPELL_MANAGEMENT:
                 return ["cast", "inspect", "back"]
             case _:

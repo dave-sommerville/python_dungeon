@@ -54,8 +54,8 @@ class Dungeon:
     def display_player_inventory(self):
         for i, item in enumerate(self.player.inventory, start=1):
             print(f"{i}: {item}") # Change to response object
-    def display_player_item(self, selection):
-        self.player.inventory[selection].display_description()
+
+
     def transfer_data(self):
         pass
     def create_map(self):
