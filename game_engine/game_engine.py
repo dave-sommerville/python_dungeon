@@ -78,7 +78,9 @@ class GameEngine:
 
         match dungeon.state:
             case GameState.MAIN_MENU:
-                return ["move north", "move east", "move south", "move west", "search", "rest", "inventory", "spells", "details", "describe"]
+                actions_list = dungeon.player.current_chamber.move_actions()
+                actions_list.append("search", "rest", "inventory", "spells", "details", "describe")
+                return actions_list
             case GameState.INVENTORY_MANAGEMENT:
                 return ["use", "equip", "drop", "back"]
             case GameState.SPELL_MANAGEMENT:

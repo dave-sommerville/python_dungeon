@@ -7,3 +7,6 @@ def weighted_decision(weight: float):
 
 def random_list_element(list):
     return random.choice((list))
+
+def random_integer(min, max):
+    return random.randint(min, max)

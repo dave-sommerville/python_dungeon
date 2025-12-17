@@ -1,17 +1,50 @@
 # ChamberID
 # Distribution property
 from entities.items.item import Item
+from utilities.rng_utilities import weighted_decision, random_integer
 class Chamber():
     id = ''
     description = ''
-    chamber_items = [Item("A pot", 10)]
+    item = Item("A pot", 10)
+    chamber_items = []
     chamber_gold = 0
     north_passage = True
     east_passage = True
     south_passage = True
     west_passage = True
 
-    def __init__(self, id):
+    def __init__(self, id, description):
         self.id = id
+        self.chamber_items.append(self.item)
+        self.chamber_gold = random_integer(0, 50)
+        self.north_passage = weighted_decision(0.7)
+        self.east_passage = weighted_decision(0.6)
+        self.south_passage = weighted_decision(0.6)
+        self.west_passage = weighted_decision(0.6)
+
+
+    def add_reverse_passage(self, direction):
+        match direction:
+            case "north":
+                self.north_passage = True
+            case "east":
+                self.east_passage = True
+            case "south":
+                self.south_passage = True
+            case "west":
+                self.west_passage = True
+
     def describe_chamber(self):
         return 'This'
+    
+    def move_actions(self):
+        actions_list = []
+        if self.north_passage:
+            actions_list.append("move north")
+        if self.east_passage:
+            actions_list.append("move east")
+        if self.south_passage:
+            actions_list.append("move south")
+        if self.west_passage:
+            actions_list.append("move west")
+        return actions_list

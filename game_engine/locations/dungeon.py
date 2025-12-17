@@ -1,6 +1,7 @@
 from entities.characters.player import Player
 from locations.chamber import Chamber
 from game_states import GameState
+from utilities.rng_utilities import weighted_decision
 # Content
     # Room descriptions
     # Passageway
@@ -33,12 +34,30 @@ class Dungeon:
         else:
             t_x, t_y = map(int, next_id.split(','))
             next_chamber = Chamber(next_id)
+            next_chamber.add_reverse_passage(self.reverse_direction(direction))
             self.player.current_chamber = next_chamber
             self.visited_locations.append(next_chamber)
             self.player.x = t_x
             self.player.y = t_y
-            self.player.exhaustion_counter += 1
-
+            if weighted_decision(0.6):
+                self.player.exhaustion_counter += 1
+    def reverse_direction(direction):
+        match direction:
+            case "north":
+                return "south"
+            case "east":
+                return "west"
+            case "south":
+                return "north"
+            case "west":
+                return "east"
+            case _:
+                return
+    def display_player_inventory(self):
+        for i, item in enumerate(self.player.inventory, start=1):
+            print(f"{i}: {item}") # Change to response object
+    def display_player_item(self, selection):
+        self.player.inventory[selection].display_description()
     def transfer_data(self):
         pass
     def create_map(self):
