@@ -11,6 +11,7 @@ class Character(Entity):
         self.health = 30
         self.weapon_primary = None
         self.armor = None
+        self.maxHP = 30
         
     def don_armor(self, armor):
         pass
@@ -24,15 +25,15 @@ class Character(Entity):
             attack_modifer += self.weapon_primary.attack_bonus
             damage + self.weapon_primary.damage
         target = character.armor_class
-        if self.is_dodging:
+        if character.is_dodging:
             target *= 2
-            self.is_dodging = False
+            character.is_dodging = False
         if attack > target:
             character.health -= damage
             print("You hit")
         else:
             print("You missed")
-            
+
     def dodge_action(self):
         self.is_dodging = True
 
@@ -41,3 +42,8 @@ class Character(Entity):
             return True
         else:
             return False
+        
+    def heal(self, amount):
+        self.health += amount
+        if self.health > self.maxHP:
+            self.health = self.maxHP

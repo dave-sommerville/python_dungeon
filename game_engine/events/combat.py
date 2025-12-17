@@ -9,7 +9,7 @@ class CombatEvent(Event):
     def resolve(self, dungeon, action):
         if isinstance(self.entity, Character) and dungeon.player.health > 0:
             print("Behold the might of Jeff")
-            print(f"{self.entity.name}{self.entity.description}")
+            print(f"{self.entity.name} {self.entity.description}")
             match action:
                 case "attack": # Sub events
                     dungeon.player.attack_action(self.entity)

@@ -97,11 +97,6 @@ class Player(Character):
                 self.cha += 1
             case "wis":
                 self.wis += 1
-    def level_up(self):
-        pass
 
-    
 
-    # Manage inventory
-    # Manage Spells
 
