@@ -3,24 +3,6 @@ from locations.chamber import Chamber
     # prisoner_status = ''
 
 class Player(Character):
-    # Basic
-    name = ''
-    description = ''
-    killcount = 0
-    x = 0
-    y = 0
-    current_chamber = Chamber("00")
-    # plot_progression = None
-
-    # Stats
-    player_level = 1
-    modifer = 0
-    maxHP = 0
-    armor_class = 10
-    dex = 0
-    con = 0
-    cha = 0
-    wis = 0
     """
     Outside of skill checks:
         Con: Increases MaxHP
@@ -29,24 +11,36 @@ class Player(Character):
         Cha improves likeability 
         Wis helps against being surprised
     """
-
-    xp = 0
-    exhaustion_counter = 0
-    gold = 0
-    mana = 5
-    sanity = 100
-    inventory = []
-    inventory_size = 5
-    weapon_primary = None
-    weapon_secondary = None
-    armor = None
-    magical_item = None
-
-
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name, description):
+        super().__init__(name,description)
         self.health = 100
+        self.killcount = 0
+        self.x = 0
+        self.y = 0
+        self.current_chamber = Chamber("0,0")
+        # self.plot_progression = None
 
+        # Stats
+        self.player_level = 1
+        self.modifer = 0
+        self.maxHP = 0
+        self.armor_class = 10
+        self.dex = 0
+        self.con = 0
+        self.cha = 0
+        self.wis = 0
+        # Resources 
+        self.xp = 0
+        self.exhaustion_counter = 0
+        self.gold = 0
+        self.mana = 5
+        self.sanity = 100
+        self.inventory = []
+        self.inventory_size = 5
+        self.weapon_primary = None
+        self.weapon_secondary = None
+        self.armor = None
+        self.magical_item = None
     def print_player_info(self):
         print(f"{self.health}{self.sanity}{self.name}{self.killcount}")
         #Name, desc, killcount, location, level, xp, mod, maxHP

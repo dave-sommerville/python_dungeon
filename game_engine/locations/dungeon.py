@@ -7,14 +7,13 @@ from utilities.rng_utilities import weighted_decision
     # Passageway
 
 class Dungeon:
-    player = Player()
     visited_locations  = []
     current_event = None
     state = GameState.MAIN_MENU
 
 
     def __init__(self):
-        self.player = Player()
+        self.player = Player("Gal","Guy")
         self.visited_locations  = []
         self.current_event = None
         self.state = GameState.MAIN_MENU
@@ -24,31 +23,34 @@ class Dungeon:
     # Needs chance of encounter
     def move_player(self, direction):
         next_id = self.player.print_next_location(direction)
-        next_chamber = next((chamber for chamber in self.visited_locations if chamber.id == next_id), None)
-        if next_chamber:
-            self.player.current_chamber = next_chamber
-        else:
-            t_x, t_y = map(int, next_id.split(','))
+        t_x, t_y = map(int, next_id.split(','))
+
+        next_chamber = next(
+            (c for c in self.visited_locations if c.id == next_id),
+            None
+        )
+
+        if not next_chamber:
             next_chamber = Chamber(next_id)
             next_chamber.add_reverse_passage(self.reverse_direction(direction))
-            self.player.current_chamber = next_chamber
             self.visited_locations.append(next_chamber)
-            self.player.x = t_x
-            self.player.y = t_y
+
             if weighted_decision(0.6):
                 self.player.exhaustion_counter += 1
+
+        self.player.current_chamber = next_chamber
+        self.player.x = t_x
+        self.player.y = t_y
+    
+    @staticmethod
     def reverse_direction(direction):
         match direction:
-            case "north":
-                return "south"
-            case "east":
-                return "west"
-            case "south":
-                return "north"
-            case "west":
-                return "east"
-            case _:
-                return
+            case "north": return "south"
+            case "east": return "west"
+            case "south": return "north"
+            case "west": return "east"
+            case _: raise ValueError("Invalid direction")    
+    
     def display_player_inventory(self):
         for i, item in enumerate(self.player.inventory, start=1):
             print(f"{i}: {item}") # Change to response object

@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
 
 class Event():
-    param = -1
-    def __init__(self, param):
-        self.param = param
+    entity = None
+
+    def __init__(self, entity):
+        self.entity = entity
 
     @abstractmethod
     def get_options(self):

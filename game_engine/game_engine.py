@@ -1,5 +1,7 @@
 from game_states import GameState
 from locations.dungeon import Dungeon
+from entities.characters.character import Character
+from events.combat import CombatEvent
 class GameEngine:
     def resolve_action(self, dungeon, action: str):
         if dungeon.current_event:
@@ -12,7 +14,7 @@ class GameEngine:
         options = event.get_options()
         if action not in options:
             print("Not a valid option ")
-        event.resolve(action, dungeon)
+        event._resolve(dungeon, action)
 
 
     def _resolve_state_action(self, dungeon, action):
@@ -26,11 +28,15 @@ class GameEngine:
             case _:
                 print("Invalid State")
                 return
-    
+    def _call_for_combat_event(self, dungeon):
+        character = Character("Jeff", "The Skeleton")
+        event = CombatEvent(character)
+        dungeon.current_event = event
     def _resolve_main_menu(self, dungeon, action):
         match action:
             case "move north": # Sub events
                 dungeon.move_player("north")
+                self._call_for_combat_event(dungeon)
                 print(dungeon.player.print_current_location())
             case "move east": # Sub events
                 dungeon.move_player("east")
@@ -79,7 +85,7 @@ class GameEngine:
         match dungeon.state:
             case GameState.MAIN_MENU:
                 actions_list = dungeon.player.current_chamber.move_actions()
-                actions_list.append("search", "rest", "inventory", "spells", "details", "describe")
+                actions_list.extend(["search", "rest", "inventory", "spells", "details", "describe"])
                 return actions_list
             case GameState.INVENTORY_MANAGEMENT:
                 count_list = [str(i) for i in range(1, (len() -1))]
