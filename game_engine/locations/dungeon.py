@@ -21,11 +21,7 @@ class Dungeon:
 
     def create_player(self):
         pass
-    # Needs Directions, chance of encounter,
-    # Moving:
-        # Randomize passages
-        # Add return passage
-        # Display only present passages
+    # Needs chance of encounter
     def move_player(self, direction):
         next_id = self.player.print_next_location(direction)
         next_chamber = next((chamber for chamber in self.visited_locations if chamber.id == next_id), None)

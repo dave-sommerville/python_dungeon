@@ -82,7 +82,8 @@ class GameEngine:
                 actions_list.append("search", "rest", "inventory", "spells", "details", "describe")
                 return actions_list
             case GameState.INVENTORY_MANAGEMENT:
-                return ["use", "equip", "drop", "back"]
+                count_list = [str(i) for i in range(1, (len() -1))]
+                return count_list
             case GameState.SPELL_MANAGEMENT:
                 return ["cast", "inspect", "back"]
             case _:

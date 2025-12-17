@@ -1,13 +1,14 @@
 from abc import ABC, abstractmethod
 
 class Event():
-    def __init__():
-        pass
+    param = -1
+    def __init__(self, param):
+        self.param = param
 
     @abstractmethod
-    def get_options():
+    def get_options(self):
         pass
     
     @abstractmethod
-    def resolve():
+    def resolve(self, action, dungeon):
         pass
