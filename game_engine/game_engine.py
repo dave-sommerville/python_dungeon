@@ -1,21 +1,44 @@
 from game_states import GameState
+from game_action_error import GameActionError
 from locations.dungeon import Dungeon
 from entities.characters.character import Character
 from events.combat import CombatEvent
 from events.inventory_item import InventoryItemEvent
-
+from utilities.rng_utilities import weighted_decision
 class GameEngine:
+    def __init__(self):
+        self.logs = []
+        self.error = None
     def resolve_action(self, dungeon, action: str):
-        if dungeon.current_event:
-            self._resolve_event_action(dungeon, action)
-        else:
+        self.logs = []
+        self.error = None
+
+        try:
+            # Attempt the game logic
             self._resolve_state_action(dungeon, action)
+        
+        except GameActionError as e:
+            # If an error happens, we catch it here
+            self.error = str(e)
+        
+        finally:
+            # This block runs NO MATTER WHAT (success or error)
+            self.logs.extend(dungeon.message_buffer)
+            dungeon.message_buffer = [] 
+
+        return {
+            "logs": self.logs,
+            "menu": self.get_current_menu(dungeon),
+            "error": self.error
+        }
+    def _log(self, message):
+        self.logs.append(message)
 
     def _resolve_event_action(self, dungeon, action):
         event = dungeon.current_event
         options = event.get_options()
         if action not in options:
-            print("Not a valid option ")
+            self._log("Not a valid option ")
         event.resolve(dungeon, action)
 
     def _resolve_state_action(self, dungeon, action):
@@ -27,47 +50,52 @@ class GameEngine:
             case GameState.SPELL_MANAGEMENT:
                 self._resolve_spell_management_menu(dungeon, action)
             case _:
-                print("Invalid State")
+                raise GameActionError("Invalid State")
                 return
             
     def _call_for_combat_event(self, dungeon):
-        character = Character("Jeff", "The Skeleton")
-        event = CombatEvent(character)
-        dungeon.current_event = event
+        if weighted_decision(0.5):
+            character = Character("Jeff", "The Skeleton")
+            event = CombatEvent(character)
+            dungeon.current_event = event
 
+    # Has to check the room's direction for sneaky players
     def _resolve_main_menu(self, dungeon, action):
         match action:
             case "move north": # Sub events
                 dungeon.move_player("north")
                 self._call_for_combat_event(dungeon)
-                print(dungeon.player.print_current_location())
+                self._log(dungeon.player.print_current_location())
             case "move east": # Sub events
                 dungeon.move_player("east")
-                print(dungeon.player.print_current_location())
+                self._call_for_combat_event(dungeon)
+                self._log(dungeon.player.print_current_location())
             case "move south": # Sub events
                 dungeon.move_player("south")
-                print(dungeon.player.print_current_location())
+                self._call_for_combat_event(dungeon)
+                self._log(dungeon.player.print_current_location())
             case "move west": # Sub events
                 dungeon.move_player("west")
-                print(dungeon.player.print_current_location())
+                self._call_for_combat_event(dungeon)
+                self._log(dungeon.player.print_current_location())
             case "search":
                 dungeon.player.search_chamber()
             case "rest":
                 dungeon.player.attempt_to_rest()
             case "inventory":
                 dungeon.state = GameState.INVENTORY_MANAGEMENT
-                print("Select item")
+                self._log("Select item")
                 pass
             case "spells":
                 pass
             case "details":
                 details = dungeon.player.print_player_info()
-                print(details)
+                self._log(details)
             case "describe":
                 roomDesc = dungeon.player.current_chamber.describe_chamber()
-                print(roomDesc)
+                self._log(roomDesc)
             case _:
-                print("Invalid Action")
+                raise GameActionError("Invalid Action")
                 return
     
     def _resolve_inventory_management_menu(self, dungeon, action):
@@ -89,7 +117,7 @@ class GameEngine:
                     dungeon.current_event = InventoryItemEvent(item)
                     return
 
-        print("Invalid input")
+        raise GameActionError("Invalid input")
 
 
 

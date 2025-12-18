@@ -15,6 +15,7 @@ class Player(Character):
     """
     def __init__(self, name, description):
         super().__init__(name,description)
+        self.message_buffer = []
         self.health = 80
         self.killcount = 0
         self.x = 0
@@ -40,8 +41,10 @@ class Player(Character):
         self.inventory_size = 5
         self.weapon_secondary = None
         self.magical_item = None
+    def _msg(self, text):
+        self.message_buffer.append(text)
     def print_player_info(self):
-        print(f"{self.health}{self.sanity}{self.name}{self.killcount}")
+        self._msg(f"{self.health}{self.sanity}{self.name}{self.killcount}")
         #Name, desc, killcount, location, level, xp, mod, maxHP
         # Current HP, AC (with armor), current weapon(s),
         # Gold, Mana, sanity, exhaustion
@@ -49,6 +52,7 @@ class Player(Character):
     
     def print_current_location(self):
         return f"{self.x},{self.y}"
+    
     def print_next_location(self, direction):
         match direction:
             case "north":
@@ -60,8 +64,7 @@ class Player(Character):
             case "west":
                 return f"{self.x},{self.y - 1}"
             case _:
-                print("invalid entry")
-                return
+                raise ValueError(f"{direction} is not a valid direction.")
 
     def search_chamber(self):
         # Need to add perception mechanic
@@ -71,7 +74,6 @@ class Player(Character):
                 self.add_to_inventory(item)
         self.print_inventory()
 
-    # This should print to bottom menu
     def print_player_inventory(self):
         inventory_list = []
         for i, item in enumerate(self.inventory):

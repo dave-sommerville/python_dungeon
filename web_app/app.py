@@ -1,10 +1,11 @@
 from flask import Flask, request, jsonify
 from game_engine import GameEngine
+from game_engine.locations.dungeon import Dungeon
 # Import your other classes...
 
 app = Flask(__name__)
 engine = GameEngine()
-dungeon = Dungeon() # In a real app, you'd load this from a database/session
+dungeon = Dungeon()
 
 @app.route('/action', methods=['POST'])
 def handle_action():

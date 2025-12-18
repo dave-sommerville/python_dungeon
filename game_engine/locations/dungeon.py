@@ -7,16 +7,19 @@ from utilities.rng_utilities import weighted_decision
     # Passageway
 
 class Dungeon:
-    visited_locations  = []
     current_event = None
     state = GameState.MAIN_MENU
 
 
     def __init__(self):
+        self.message_buffer = []
         self.player = Player("Gal","Guy")
         self.visited_locations  = []
         self.current_event = None
-        self.state = GameState.MAIN_MENU
+    def _msg(self, text):
+        self.message_buffer.extend(self.player.message_buffer)
+        self.player.message_buffer = []
+        self.message_buffer.append(text)
 
     def create_player(self):
         pass
@@ -53,11 +56,8 @@ class Dungeon:
     
     def display_player_inventory(self):
         for i, item in enumerate(self.player.inventory, start=1):
-            print(f"{i}: {item}") # Change to response object
+            self._msg(f"{i}: {item}") # Change to response object
 
-
-    def transfer_data(self):
-        pass
     def create_map(self):
         pass
     def display_map(self):
