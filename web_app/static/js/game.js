@@ -58,10 +58,11 @@ window.addEventListener('DOMContentLoaded', () => {
     // Try to get initial state; ignore errors
     (async () => {
         try {
-            const resp = await fetch('/action', {
+            // Reset server-side state on load so the page shows the initial game
+            const resp = await fetch('/reset', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'describe' })
+                body: JSON.stringify({})
             });
             if (!resp.ok) return;
             const initData = await resp.json();

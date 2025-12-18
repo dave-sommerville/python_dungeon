@@ -22,5 +22,23 @@ def handle_action():
 def index():
     return render_template('index.html')
 
+
+@app.route('/reset', methods=['GET', 'POST'])
+def reset():
+    """Reinitialize the in-memory engine and dungeon state.
+
+    Optional POST JSON: { "user_id": "..." } (not implemented yet)
+    Returns the same response shape as `/action` with initial describe output.
+    """
+    global engine, dungeon
+
+    # Create fresh game state (in future, load by user_id)
+    engine = GameEngine()
+    dungeon = Dungeon()
+
+    # Return an initial describe packet so the client has logs and menu
+    response_data = engine.resolve_action(dungeon, 'describe')
+    return jsonify(response_data)
+
 if __name__ == '__main__':
     app.run(debug=True)
