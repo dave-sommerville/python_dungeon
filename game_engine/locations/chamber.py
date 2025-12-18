@@ -1,7 +1,7 @@
 # ChamberID
 # Distribution property
-from entities.items.item import Item
-from utilities.rng_utilities import weighted_decision, random_integer
+from ..entities.items.item import Item
+from ..utilities.rng_utilities import weighted_decision, random_integer
 class Chamber():
     item = Item("Shiny", "A pot", 10)
 

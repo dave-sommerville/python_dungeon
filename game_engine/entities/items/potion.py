@@ -1,5 +1,6 @@
-from entities.items.item import Item
-# from entities.characters.player import Player
+from .item import Item
+
+
 class Potion(Item):
     def __init__(self, name, description, type_of_potion, potency):
         super().__init__(name, description, durability=1)
@@ -14,7 +15,12 @@ class Potion(Item):
                 character.health -= self.potency
                 self.durability = 0
             case "restoration":
-                if isinstance(character, Player):
+                try:
+                    from ..characters.player import Player
+                except Exception:
+                    Player = None
+
+                if Player is not None and isinstance(character, Player):
                     if self.potency >= 5:
                         character.health = character.maxHP
                         character.exhaustion

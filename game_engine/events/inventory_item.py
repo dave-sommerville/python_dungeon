@@ -1,4 +1,4 @@
-from events.event import Event
+from .event import Event
 
 class InventoryItemEvent(Event):
   def __init__(self, entity):

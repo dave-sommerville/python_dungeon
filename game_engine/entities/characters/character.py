@@ -1,5 +1,5 @@
-from entities.entity import Entity
-from utilities.rng_utilities import random_integer, weighted_decision
+from ..entity import Entity
+from ...utilities.rng_utilities import random_integer, weighted_decision
 class Character(Entity):
     def __init__(self, name, description):
         super().__init__(name, description)

@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from game_engine import GameEngine
+from game_engine.game_engine import GameEngine
 from game_engine.locations.dungeon import Dungeon
 # Import your other classes...
 

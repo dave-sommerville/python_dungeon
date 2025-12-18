@@ -1,5 +1,5 @@
-from events.event import Event
-from entities.characters.character import Character
+from .event import Event
+from ..entities.characters.character import Character
 class CombatEvent(Event):
 
     def __init__(self, entity):

@@ -1,7 +1,7 @@
-from entities.characters.character import Character
-from locations.chamber import Chamber
-from entities.items.item import Item
-from entities.items.potion import Potion
+from .character import Character
+from ...locations.chamber import Chamber
+from ..items.item import Item
+from ..items.potion import Potion
     # prisoner_status = ''
 
 class Player(Character):
