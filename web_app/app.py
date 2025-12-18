@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from game_engine.game_engine import GameEngine
 from game_engine.locations.dungeon import Dungeon
 # Import your other classes...
@@ -16,6 +16,11 @@ def handle_action():
     response_data = engine.resolve_action(dungeon, user_input)
     
     return jsonify(response_data)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

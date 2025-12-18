@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="./src/css/utils.css" media="all">
     <link rel="stylesheet" href="./src/css/style.css" media="all">
     
-    <script src="./src/js/app.js" defer></script>
+    <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>
 </head>
 <body>
     <header>
@@ -36,13 +36,14 @@
             </div>
 
             <div id="menu-panel" style="background: #eee; padding: 10px; margin-top: 10px;">
-                <strong>Available Actions:</strong> <span id="options-list"></span>
+                <strong>Available Actions:</strong>
+                <ol id="options-list" style="margin:6px 0 0 18px; padding:0;"></ol>
             </div>
 
             <div id="error-panel" style="color: red; min-height: 20px;"></div>
 
-            <input type="text" id="player-input" placeholder="Type your action...">
-            <button onclick="sendAction()">Execute</button>
+            <input type="text" id="player-input" placeholder="Type action or number and press Enter...">
+            <button id="execute-btn" onclick="sendAction()">Execute</button>
         </div>
     </main>
 

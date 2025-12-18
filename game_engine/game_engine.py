@@ -17,8 +17,12 @@ class GameEngine:
         self.error = None
 
         try:
-            # Attempt the game logic
-            self._resolve_state_action(dungeon, action)
+            # If there's a current event, resolve it first (event menus take precedence)
+            if getattr(dungeon, 'current_event', None):
+                self._resolve_event_action(dungeon, action)
+            else:
+                # Attempt the game logic for the current state
+                self._resolve_state_action(dungeon, action)
 
         except GameActionError as e:
             # If an error happens, we catch it here
@@ -40,9 +44,14 @@ class GameEngine:
 
     def _resolve_event_action(self, dungeon, action):
         event = dungeon.current_event
-        options = event.get_options()
+        if not event:
+            raise GameActionError("No active event to resolve")
+
+        options = event.get_options() or []
+        # Accept numeric selection or exact match; caller UI maps numbers, engine expects strings
         if action not in options:
-            self._log("Not a valid option ")
+            raise GameActionError("Invalid event option")
+
         event.resolve(dungeon, action)
 
     def _resolve_state_action(self, dungeon, action):
