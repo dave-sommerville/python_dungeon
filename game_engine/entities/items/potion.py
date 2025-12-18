@@ -1,6 +1,6 @@
-from items.item import Item
-from entities.characters.player import Player
-class Potion():
+from entities.items.item import Item
+# from entities.characters.player import Player
+class Potion(Item):
     def __init__(self, name, description, type_of_potion, potency):
         super().__init__(name, description, durability=1)
         self.type_of_potion = type_of_potion

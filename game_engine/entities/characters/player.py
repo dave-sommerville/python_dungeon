@@ -1,6 +1,7 @@
 from entities.characters.character import Character
 from locations.chamber import Chamber
 from entities.items.item import Item
+from entities.items.potion import Potion
     # prisoner_status = ''
 
 class Player(Character):
@@ -14,7 +15,7 @@ class Player(Character):
     """
     def __init__(self, name, description):
         super().__init__(name,description)
-        self.health = 100
+        self.health = 80
         self.killcount = 0
         self.x = 0
         self.y = 0
@@ -35,7 +36,7 @@ class Player(Character):
         self.gold = 0
         self.mana = 5
         self.sanity = 100
-        self.inventory = [Item("A cup", "Shiny", 10), Item("A Key", "Old", 2)]
+        self.inventory = [Item("A cup", "Shiny", 10), Item("A Key", "Old", 2), Potion("Potion", "of healing", "healing", 20)]
         self.inventory_size = 5
         self.weapon_secondary = None
         self.magical_item = None
