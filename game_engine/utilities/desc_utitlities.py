@@ -1,0 +1,82 @@
+from .rng_utilities import random_list_element
+chamber_descriptions = [
+    "A low stone chamber with damp walls, where the air smells faintly of mold and rust.",
+    "Cracked flagstones cover the floor of this room, and water drips steadily from the ceiling above.",
+    "An abandoned guard post stands here, marked by a broken spear and a crumbling wooden stool.",
+    "This narrow chamber is cluttered with fallen stones, as if part of the ceiling collapsed long ago.",
+    "A cold draft moves through this room, causing old cobwebs to sway between the stone pillars.",
+    "Faded carvings line the walls, their meaning lost beneath centuries of erosion.",
+    "The floor here is slick with moisture, and your footsteps echo sharply in the confined space.",
+    "A shallow pool of murky water fills the center of this chamber, reflecting the dim light above.",
+    "Rust-stained chains hang from iron hooks along the walls, creaking softly as you pass.",
+    "This room smells of old smoke, and blackened scorch marks stain the stone floor.",
+    "Broken crates and splintered barrels lie scattered across the chamber, long since looted.",
+    "The ceiling arches higher here, giving the chamber an uneasy sense of openness.",
+    "Dust coats every surface in this room, disturbed only by your movement through it.",
+    "A collapsed doorway blocks one wall, the stones piled in a rough, impassable mound.",
+    "This chamber feels strangely quiet, as if sound itself is swallowed by the thick stone walls."
+  ]
+def chamber_description():
+  return random_list_element(chamber_descriptions)
+
+medium_weapons = [
+    ("Worn Shortsword", "A practical blade with nicks along its edge, still serviceable despite heavy use."),
+    ("Iron Hand Axe", "A solid iron axe with a chipped head and a leather-wrapped handle."),
+    ("Balanced Mace", "A blunt weapon with a simple iron head, designed more for durability than elegance."),
+    ("Notched Dagger", "A short blade with visible wear, favored for close and desperate fights."),
+    ("Rust-Flecked Spear", "A long spear with a sturdy shaft, its metal tip marked by age and use."),
+    ("Plain Warhammer", "A heavy hammer built for breaking armor, lacking any decorative detail."),
+    ("Broad-Bladed Knife", "A thick, weighty knife meant for combat rather than utility."),
+    ("Old Cavalry Saber", "Once well-made, this curved blade has lost some of its former sharpness."),
+    ("Steel Club", "A reinforced club with metal bands bolted into its wooden frame."),
+    ("Guard’s Longsword", "A regulation weapon bearing scratches from many previous engagements.")
+]
+
+good_weapons = [
+    ("Well-Forged Longsword", "A carefully balanced blade that holds its edge remarkably well."),
+    ("Tempered Battle Axe", "Its sharpened edge and reinforced haft suggest skilled craftsmanship."),
+    ("Knight’s Mace", "A polished iron head mounted on a firm grip, capable of crushing armor."),
+    ("Fine Steel Dagger", "Lightweight and razor-sharp, designed for precision strikes."),
+    ("Heavy War Pick", "A hardened point meant to pierce even reinforced plating."),
+    ("Masterwork Spear", "A long, flexible shaft topped with a finely honed steel tip."),
+    ("Engraved Shortsword", "Subtle engravings run along the blade, hinting at pride in its creation."),
+    ("Balanced Flail", "A well-made chain and striking head that move smoothly in practiced hands."),
+    ("Steel Morningstar", "Evenly weighted and brutally effective, with no wasted material."),
+    ("Veteran’s Blade", "A trusted weapon that shows signs of care rather than neglect.")
+]
+
+medium_armor = [
+    ("Chainmail Shirt", "Interlocking rings provide solid protection without excessive weight."),
+    ("Reinforced Leather Armor", "Thick leather plates sewn together to absorb glancing blows."),
+    ("Iron Breastplate", "A solid chest piece bearing dents from previous battles."),
+    ("Scale Armor Vest", "Overlapping metal scales stitched onto a leather backing."),
+    ("Guard Helm", "A simple iron helmet designed for practicality over comfort."),
+    ("Padded Gambeson", "Layers of quilted cloth offering modest protection and warmth."),
+    ("Steel Greaves", "Leg armor with worn straps but intact metal plating."),
+    ("Brigandine Coat", "Metal plates hidden beneath heavy fabric, flexible but durable."),
+    ("Round Shield", "A wooden shield reinforced with iron bands along its rim."),
+    ("Iron Pauldrons", "Shoulder plates that restrict movement slightly but offer reliable defense.")
+]
+
+mystery_potions = [
+    ("Clouded Vial", "A murky liquid swirls inside, shifting color when shaken."),
+    ("Cracked Glass Flask", "The contents glow faintly, though its purpose is unclear."),
+    ("Sealed Alchemical Bottle", "No label marks this potion, and the liquid inside is unsettlingly still.")
+]
+
+low_trinkets = [
+    ("Bent Copper Ring", "A misshapen ring with little value beyond sentiment."),
+    ("Cracked Clay Charm", "A small token that may once have been worn for luck."),
+    ("Tarnished Locket", "The hinge barely holds, and the image inside has faded away."),
+    ("Wooden Dice Set", "Roughly carved and uneven, likely used for idle gambling."),
+    ("Frayed Cloth Talisman", "A strip of fabric tied with string, its meaning long forgotten.")
+]
+
+high_trinkets = [
+    ("Silver Inlaid Brooch", "Carefully crafted, its design suggests noble ownership."),
+    ("Gem-Set Ring", "A polished stone sits firmly in a well-made metal band."),
+    ("Engraved Pocket Relic", "Covered in precise markings, possibly of religious origin."),
+    ("Gold Filigree Pendant", "Delicate metalwork forms an intricate and valuable piece."),
+    ("Jeweled Dice Pair", "Finely balanced and adorned, more status symbol than game piece.")
+]
+

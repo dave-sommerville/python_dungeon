@@ -14,8 +14,10 @@ def run_web():
 
 
 def run_cli():
-	# importing game_engine.main runs the CLI loop
-	import game_engine.main
+	# importing python_dungeon.game_engine.main runs the CLI loop
+	from python_dungeon.game_engine import main
+	# Call main explicitly to avoid import-time side-effects
+	main.main()
 
 
 if __name__ == "__main__":

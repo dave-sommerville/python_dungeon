@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
-from game_engine.game_engine import GameEngine
-from game_engine.locations.dungeon import Dungeon
+from ..game_engine.engine import GameEngine
+from ..game_engine.locations.dungeon import Dungeon
 # Import your other classes...
 
 app = Flask(__name__)

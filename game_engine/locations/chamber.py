@@ -5,11 +5,11 @@ from ..utilities.rng_utilities import weighted_decision, random_integer
 class Chamber():
     item = Item("Shiny", "A pot", 10)
 
-    def __init__(self, id):
+    def __init__(self, id, description, chamber_items):
         self.id = id
-        self.chamber_items = []
+        self.chamber_items = chamber_items
         self.chamber_items.append(Chamber.item)
-        self.description = 'Dark and Gloooomy'
+        self.description = description
         self.chamber_gold = random_integer(0, 50)
         self.north_passage = weighted_decision(0.7)
         self.east_passage = weighted_decision(0.6)

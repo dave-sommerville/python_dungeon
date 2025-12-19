@@ -1,7 +1,7 @@
 from item import Item
 class Weapon(Item):
 
-    def __init__(self, name, durability, damage, attack_bonus, range_of_attack):
+    def __init__(self, name, durability, damage, attack_bonus):
         super.__init__(name, durability)
         self.damage = damage
         self.attack_bonus = attack_bonus

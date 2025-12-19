@@ -1,4 +1,4 @@
-from .game_engine import GameEngine
+from .engine import GameEngine
 from .locations.dungeon import Dungeon
 from .game_states import GameState
 

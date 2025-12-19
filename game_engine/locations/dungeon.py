@@ -1,7 +1,8 @@
 from ..entities.characters.player import Player
+from .chamber_descriptions import ChamberDescriptions
 from .chamber import Chamber
 from ..game_states import GameState
-from ..utilities.rng_utilities import weighted_decision
+from ..utilities.rng_utilities import weighted_decision, random_list_element
 
 
 class Dungeon:
@@ -30,7 +31,7 @@ class Dungeon:
         next_chamber = next((c for c in self.visited_locations if c.id == next_id), None)
 
         if not next_chamber:
-            next_chamber = Chamber(next_id)
+            next_chamber = self.generate_chamber(next_id)
             next_chamber.add_reverse_passage(self.reverse_direction(direction))
             self.visited_locations.append(next_chamber)
 
@@ -42,6 +43,14 @@ class Dungeon:
         self.player.y = t_y
         # Describe the new chamber
         self._msg(f"As you look around, you see {self.describe_current_chamber()}")
+    def generate_chamber(self, next_id):
+        description = random_list_element(ChamberDescriptions.chamber_descriptions)
+        loot = self.generate_items()
+        return Chamber(next_id, description, loot)
+    def generate_items(self):
+        pass
+    def generate_merchant():
+        pass
 
     def describe_current_chamber(self):
         """Return the description for the chamber the player is currently in.
