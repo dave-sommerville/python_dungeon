@@ -18,9 +18,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     
     <!-- Local Stylesheets -->
-    <link rel="stylesheet" href="./src/css/reset.css" media="all">
-    <link rel="stylesheet" href="./src/css/utils.css" media="all">
-    <link rel="stylesheet" href="./src/css/style.css" media="all">
+    <style>
+        p {
+            margin: 0;
+        }
+    </style>
     
     <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>
 </head>
@@ -31,13 +33,13 @@
 
     <main>
         <div id="game-container">
-            <div id="log-panel" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc;">
+            <div id="log-panel" style="height: 500px; overflow-y: scroll; border: 1px solid #ccc;">
                 <p>Welcome to the dungeon...</p>
             </div>
 
             <div id="menu-panel" style="background: #eee; padding: 10px; margin-top: 10px;">
                 <strong>Available Actions:</strong>
-                <ol id="options-list" style="margin:6px 0 0 18px; padding:0;"></ol>
+                <ul id="options-list" style="padding:0;"></ul>
             </div>
 
             <div id="error-panel" style="color: red; min-height: 20px;"></div>

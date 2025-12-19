@@ -9,7 +9,7 @@ import os
 
 
 def run_web():
-	from web_app.app import app
+	from .web_app.app import app
 	app.run(debug=True)
 
 

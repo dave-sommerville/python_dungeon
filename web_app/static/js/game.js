@@ -1,4 +1,6 @@
 let currentMenu = [];
+let currentState = null; // server-reported game state (e.g. 'INVENTORY_MANAGEMENT')
+let isEventMenu = false; // true when the server is showing an active event menu (use/discard/back)
 
 async function sendAction(overrideAction) {
     const inputEl = document.getElementById('player-input');
@@ -10,7 +12,17 @@ async function sendAction(overrideAction) {
     if (numericMatch) {
         const idx = parseInt(action.trim(), 10) - 1;
         if (currentMenu && idx >= 0 && idx < currentMenu.length) {
-            action = currentMenu[idx];
+            // If the currently displayed menu is an event menu (use/discard/back)
+            // we should send the option string (e.g. "use"). If it's the
+            // inventory-selection state, send the numeric index directly so the
+            // engine can open the item event.
+            if (isEventMenu) {
+                action = currentMenu[idx];
+            } else if (currentState === 'INVENTORY_MANAGEMENT') {
+                action = String(idx);
+            } else {
+                action = currentMenu[idx];
+            }
         }
     }
     try {
@@ -37,15 +49,23 @@ async function sendAction(overrideAction) {
 
     // 2. Update Menu (render numbered clickable list)
     currentMenu = data.menu || [];
+    currentState = data.state || null;
+    isEventMenu = data.event || false;
     const ol = document.getElementById('options-list');
     ol.innerHTML = '';
     currentMenu.forEach((opt, i) => {
         const li = document.createElement('li');
         li.style.cursor = 'pointer';
-        li.style.marginBottom = '4px';
         li.dataset.index = i;
         li.innerText = `${i + 1}: ${opt}`;
-        li.addEventListener('click', () => sendAction(opt));
+        // Event menus expect option strings; inventory state expects numeric index selection
+        if (isEventMenu) {
+            li.addEventListener('click', () => sendAction(opt));
+        } else if (currentState === 'INVENTORY_MANAGEMENT') {
+            li.addEventListener('click', () => sendAction(String(i)));
+        } else {
+            li.addEventListener('click', () => sendAction(opt));
+        }
         ol.appendChild(li);
     });
 
@@ -71,6 +91,8 @@ window.addEventListener('DOMContentLoaded', () => {
             (initData.logs || []).forEach(m => logPanel.innerHTML += `<p>> ${m}</p>`);
             // populate currentMenu and render
             currentMenu = initData.menu || [];
+            currentState = initData.state || null;
+            isEventMenu = initData.event || false;
             const ol = document.getElementById('options-list');
             ol.innerHTML = '';
             currentMenu.forEach((opt, i) => {
@@ -79,7 +101,13 @@ window.addEventListener('DOMContentLoaded', () => {
                 li.style.marginBottom = '4px';
                 li.dataset.index = i;
                 li.innerText = `${i + 1}: ${opt}`;
-                li.addEventListener('click', () => sendAction(opt));
+                if (isEventMenu) {
+                    li.addEventListener('click', () => sendAction(opt));
+                } else if (currentState === 'INVENTORY_MANAGEMENT') {
+                    li.addEventListener('click', () => sendAction(String(i)));
+                } else {
+                    li.addEventListener('click', () => sendAction(opt));
+                }
                 ol.appendChild(li);
             });
             // focus input

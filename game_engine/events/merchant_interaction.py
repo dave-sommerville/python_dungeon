@@ -1,20 +1,34 @@
 from .event import Event
 from ..game_states import GameState
-
+from ..game_action_error import GameActionError
+from ..events.merchant_item import MerchantItemEvent
 class MerchantEvent(Event):
-  def __init__(self, entity, index):
+  def __init__(self, entity):
     super().__init__(entity)
-    self.index = index
-  def get_options(self):
-    return ["purchase", "back"]
-  def resolve(self, dungeon, action):
-      match action:
-          case "use":
-              self.entity.use_item(dungeon.player)
-              del dungeon.player.inventory[self.index]
-              dungeon.message_buffer.append("Item purchased.")
-              dungeon.current_event = None
 
-          case "back":
-              dungeon.current_event = None
+  def get_options(self):
+    return self.entity.print_player_inventory()
+  def resolve(self, dungeon, action):
+        if action == "back":
+            dungeon.state = GameState.MAIN_MENU
+            return
+        # Accept a plain digit (sent from the UI as the index), or a leading-index form like "0: Sword"
+        if isinstance(action, str) and action.isdigit():
+            index = int(action)
+            if 0 <= index < len(self.entity.inventory):
+                item = self.entity.inventory[index]
+                self._log(item.item_description())
+                dungeon.current_event = MerchantItemEvent(item, index)
+                return
+        # Backwards-compatible: parse "0: Name" style
+        if isinstance(action, str) and ":" in action:
+            index_part = action.split(":")[0].strip()
+            if index_part.isdigit():
+                index = int(index_part)
+                if 0 <= index < len(self.entity.inventory):
+                    item = self.entity.inventory[index]
+                    self._log(item.item_description())
+                    dungeon.current_event = MerchantItemEvent(item, index, self)
+                    return
+        raise GameActionError("Invalid input")
 

@@ -80,9 +80,14 @@ class Player(Character):
         self.print_inventory()
 
     def print_player_inventory(self):
+        """Return inventory entries WITHOUT numeric prefixes.
+
+        The UI is responsible for adding 1-based numbering. This avoids
+        duplicated numbers when the frontend also numbers options.
+        """
         inventory_list = []
-        for i, item in enumerate(self.inventory):
-            inventory_list.append(f"{i}: {item.name} - {item.durability}")
+        for item in self.inventory:
+            inventory_list.append(f"{item.name} - {item.durability}")
         inventory_list.append("back")
         return inventory_list
 

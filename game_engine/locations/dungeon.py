@@ -1,9 +1,13 @@
 from ..entities.characters.player import Player
-from .chamber_descriptions import ChamberDescriptions
+from ..entities.characters.npc import NPC
+from ..utilities.desc_utitlities import chamber_description
 from .chamber import Chamber
 from ..game_states import GameState
-from ..utilities.rng_utilities import weighted_decision, random_list_element
-
+from ..utilities.rng_utilities import random_integer, weighted_decision, random_list_element
+from ..entities.items.item import Item
+from ..entities.items.armor import Armor
+from ..entities.items.potion import Potion
+from ..entities.items.weapon import Weapon
 
 class Dungeon:
     current_event = None
@@ -44,13 +48,50 @@ class Dungeon:
         # Describe the new chamber
         self._msg(f"As you look around, you see {self.describe_current_chamber()}")
     def generate_chamber(self, next_id):
-        description = random_list_element(ChamberDescriptions.chamber_descriptions)
+        description = random_list_element(chamber_description())
         loot = self.generate_items()
         return Chamber(next_id, description, loot)
+    
+    def get_rarity(self):
+        index = random_integer(1, 100)
+        if index > 95:
+            return 10
+        elif index > 85:
+            return 8
+        elif index > 70:
+            return 7
+        elif index > 50:
+            return 5
+        elif index > 20:
+            return 3
+        else:
+            return 1
+        
     def generate_items(self):
-        pass
-    def generate_merchant():
-        pass
+        loot = []
+        if weighted_decision(0.3):
+            loot.append(Weapon(self.get_rarity()))
+            if weighted_decision(0.2):
+                loot.append(Weapon(self.get_rarity()))
+        if weighted_decision(0.3):
+            loot.append(Armor(self.get_rarity()))
+            if weighted_decision(0.2):
+                loot.append(Weapon(self.get_rarity()))
+        if weighted_decision(0.3):
+            loot.append(Item(self.get_rarity()))
+            if weighted_decision(0.2):
+                loot.append(Weapon(self.get_rarity()))
+        if weighted_decision(0.3):
+            loot.append(Potion(self.get_rarity()))
+            if weighted_decision(0.2):
+                loot.append(Weapon(self.get_rarity()))
+        return loot
+    
+    def generate_merchant(self):
+        merchant = NPC("Jeff"," the Merchant")
+        merchant.inventory.extend(self.generate_items())
+        merchant.is_merchant = True
+        return merchant
 
     def describe_current_chamber(self):
         """Return the description for the chamber the player is currently in.

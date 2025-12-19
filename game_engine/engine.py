@@ -34,6 +34,8 @@ class GameEngine:
             "logs": self.logs,
             "menu": self.get_current_menu(dungeon),
             "error": self.error,
+            "state": getattr(dungeon, 'state', None).name if getattr(dungeon, 'state', None) is not None else None,
+            "event": getattr(dungeon, 'current_event', None) is not None,
         }
 
     def _log(self, message):
@@ -107,9 +109,17 @@ class GameEngine:
         if action == "back":
             dungeon.state = GameState.MAIN_MENU
             return
-        # Extract leading number if present (e.g. "0: Sword")
-        if ":" in action:
-            index_part = action.split(":")[0]
+        # Accept a plain digit (sent from the UI as the index), or a leading-index form like "0: Sword"
+        if isinstance(action, str) and action.isdigit():
+            index = int(action)
+            if 0 <= index < len(player.inventory):
+                item = player.inventory[index]
+                self._log(item.item_description())
+                dungeon.current_event = InventoryItemEvent(item, index)
+                return
+        # Backwards-compatible: parse "0: Name" style
+        if isinstance(action, str) and ":" in action:
+            index_part = action.split(":")[0].strip()
             if index_part.isdigit():
                 index = int(index_part)
                 if 0 <= index < len(player.inventory):

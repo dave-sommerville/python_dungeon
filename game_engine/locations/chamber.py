@@ -5,8 +5,11 @@ from ..utilities.rng_utilities import weighted_decision, random_integer
 class Chamber():
     item = Item("Shiny", "A pot", 10)
 
-    def __init__(self, id, description, chamber_items):
+    def __init__(self, id, description="", chamber_items=None):
         self.id = id
+        # ensure each chamber gets its own list
+        if chamber_items is None:
+            chamber_items = []
         self.chamber_items = chamber_items
         self.chamber_items.append(Chamber.item)
         self.description = description

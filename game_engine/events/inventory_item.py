@@ -15,13 +15,11 @@ class InventoryItemEvent(Event):
               dungeon.message_buffer.append("Item used.")
               dungeon.current_event = None
               dungeon.state = GameState.MAIN_MENU
-
           case "discard":
               del dungeon.player.inventory[self.index]
               dungeon.message_buffer.append("Item discarded.")
               dungeon.current_event = None
               dungeon.state = GameState.MAIN_MENU
-
           case "back":
               dungeon.current_event = None
               dungeon.state = GameState.MAIN_MENU
