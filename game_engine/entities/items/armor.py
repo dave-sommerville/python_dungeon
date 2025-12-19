@@ -1,10 +1,14 @@
 from item import Item
-class Armor(Item):
-    ac_bonus = 0
-    dex_impairment = False
+from ...utilities.desc_utitlities import armor_description
+from ...utilities.rng_utilities import random_integer
 
-    def __init__(self, name, durability, ac_bonus, dex_impairment):
-        super.__init__(name, durability)
-        self.ac_bonus = ac_bonus
-        self.dex_impairment = dex_impairment
+class Armor(Item):
+    def __init__(self, rarity):
+        super.__init__(rarity)
+        info_obj = armor_description(rarity)
+        self.name = info_obj[0]
+        self.description = info_obj[1]
+
+        self.ac_bonus = rarity + random_integer(1,3)
+        self.dex_impairment = False
     

@@ -44,7 +44,12 @@ good_weapons = [
     ("Steel Morningstar", "Evenly weighted and brutally effective, with no wasted material."),
     ("Veteran’s Blade", "A trusted weapon that shows signs of care rather than neglect.")
 ]
-
+def weapon_description(rarity):
+  if rarity < 5:
+    return random_list_element(medium_weapons)
+  else:
+    return random_list_element(good_weapons)
+  
 medium_armor = [
     ("Chainmail Shirt", "Interlocking rings provide solid protection without excessive weight."),
     ("Reinforced Leather Armor", "Thick leather plates sewn together to absorb glancing blows."),
@@ -57,12 +62,32 @@ medium_armor = [
     ("Round Shield", "A wooden shield reinforced with iron bands along its rim."),
     ("Iron Pauldrons", "Shoulder plates that restrict movement slightly but offer reliable defense.")
 ]
+good_armor = [
+    ("Polished Breastplate", "A carefully shaped steel breastplate that reflects light and resists heavy blows."),
+    ("Knight’s Chainmail", "Tightly linked rings forged from quality steel, offering excellent protection and flexibility."),
+    ("Hardened Leather Armor", "Thick, treated leather reinforced at key points for improved durability."),
+    ("Tempered Steel Helm", "A well-fitted helmet that protects the head without severely limiting vision."),
+    ("Reinforced Brigandine", "Hidden steel plates beneath heavy fabric provide strong defense with mobility."),
+    ("Steel Greaves and Vambraces", "Matching limb guards crafted to distribute impact evenly."),
+    ("Heater Shield", "A well-balanced shield with reinforced edges and a sturdy central boss."),
+    ("Officer’s Half-Plate", "Partial plate armor designed for leaders who value both protection and command presence."),
+    ("Articulated Pauldrons", "Carefully jointed shoulder armor that moves smoothly with the wearer."),
+    ("Veteran’s Armor Coat", "Armor that shows signs of expert maintenance rather than battlefield neglect.")
+]
+
+def armor_description(rarity):
+  if rarity < 5:
+    return random_list_element(medium_armor)
+  else:
+    return random_list_element(good_armor)
 
 mystery_potions = [
     ("Clouded Vial", "A murky liquid swirls inside, shifting color when shaken."),
     ("Cracked Glass Flask", "The contents glow faintly, though its purpose is unclear."),
     ("Sealed Alchemical Bottle", "No label marks this potion, and the liquid inside is unsettlingly still.")
 ]
+def potion_description():
+  return random_list_element(mystery_potions)
 
 low_trinkets = [
     ("Bent Copper Ring", "A misshapen ring with little value beyond sentiment."),
@@ -79,4 +104,10 @@ high_trinkets = [
     ("Gold Filigree Pendant", "Delicate metalwork forms an intricate and valuable piece."),
     ("Jeweled Dice Pair", "Finely balanced and adorned, more status symbol than game piece.")
 ]
+
+def base_item_description(rarity):
+  if rarity < 5:
+    return random_list_element(high_trinkets)
+  else:
+    return random_list_element(low_trinkets)
 
