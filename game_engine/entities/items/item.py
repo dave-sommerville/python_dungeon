@@ -7,8 +7,8 @@ class Item:
         self.description = description
         self.durability = durability
     def use_item(self, character):
-        # Mostly for durability, except in potions
-        print('You cannot use this item')
-    def display_description(self):
-        print(self.description)
+        return ('You cannot use this item')
+
+    def item_description(self):
+        return f"{self.name}: {self.description}"
     

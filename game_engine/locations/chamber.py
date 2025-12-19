@@ -9,7 +9,7 @@ class Chamber():
         self.id = id
         self.chamber_items = []
         self.chamber_items.append(Chamber.item)
-        self.description = ''
+        self.description = 'Dark and Gloooomy'
         self.chamber_gold = random_integer(0, 50)
         self.north_passage = weighted_decision(0.7)
         self.east_passage = weighted_decision(0.6)
@@ -27,9 +27,6 @@ class Chamber():
                 self.south_passage = True
             case "west":
                 self.west_passage = True
-
-    def describe_chamber(self):
-        return 'This'
     
     def move_actions(self):
         actions_list = []

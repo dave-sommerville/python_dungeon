@@ -15,7 +15,6 @@ class GameEngine:
     def resolve_action(self, dungeon, action: str):
         self.logs = []
         self.error = None
-
         try:
             # If there's a current event, resolve it first (event menus take precedence)
             if getattr(dungeon, 'current_event', None):
@@ -27,12 +26,10 @@ class GameEngine:
         except GameActionError as e:
             # If an error happens, we catch it here
             self.error = str(e)
-
         finally:
             # This block runs NO MATTER WHAT (success or error)
             self.logs.extend(dungeon.message_buffer)
             dungeon.message_buffer = []
-
         return {
             "logs": self.logs,
             "menu": self.get_current_menu(dungeon),
@@ -46,12 +43,10 @@ class GameEngine:
         event = dungeon.current_event
         if not event:
             raise GameActionError("No active event to resolve")
-
         options = event.get_options() or []
         # Accept numeric selection or exact match; caller UI maps numbers, engine expects strings
         if action not in options:
             raise GameActionError("Invalid event option")
-
         event.resolve(dungeon, action)
 
     def _resolve_state_action(self, dungeon, action):
@@ -101,33 +96,27 @@ class GameEngine:
             case "spells":
                 pass
             case "details":
-                details = dungeon.player.print_player_info()
-                self._log(details)
+                dungeon.log_player_info()
             case "describe":
-                roomDesc = dungeon.player.current_chamber.describe_chamber()
-                self._log(roomDesc)
+                self._log(dungeon.describe_current_chamber())
             case _:
                 raise GameActionError("Invalid Action")
 
     def _resolve_inventory_management_menu(self, dungeon, action):
         player = dungeon.player
-
         if action == "back":
             dungeon.state = GameState.MAIN_MENU
             return
-
         # Extract leading number if present (e.g. "0: Sword")
         if ":" in action:
             index_part = action.split(":")[0]
-
             if index_part.isdigit():
                 index = int(index_part)
-
                 if 0 <= index < len(player.inventory):
                     item = player.inventory[index]
-                    dungeon.current_event = InventoryItemEvent(item)
+                    self._log(item.item_description())
+                    dungeon.current_event = InventoryItemEvent(item, index)
                     return
-
         raise GameActionError("Invalid input")
 
     def _resolve_spell_management_menu(self, dungeon, action):
@@ -150,4 +139,4 @@ class GameEngine:
             case GameState.SPELL_MANAGEMENT:
                 return ["cast", "inspect", "back"]
             case _:
-                return []
+                raise GameActionError("Invalid Action")

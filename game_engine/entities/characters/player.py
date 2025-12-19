@@ -37,19 +37,24 @@ class Player(Character):
         self.gold = 0
         self.mana = 5
         self.sanity = 100
-        self.inventory = [Item("A cup", "Shiny", 10), Item("A Key", "Old", 2), Potion("Potion", "of healing", "healing", 20)]
+        self.inventory = [Item("A cup", "Shiny", 10), Item("A Key", "Old", 2), Potion("Potion", "of healing", 20)]
         self.inventory_size = 5
         self.weapon_secondary = None
         self.magical_item = None
     def _msg(self, text):
         self.message_buffer.append(text)
     def print_player_info(self):
-        self._msg(f"{self.health}{self.sanity}{self.name}{self.killcount}")
-        #Name, desc, killcount, location, level, xp, mod, maxHP
-        # Current HP, AC (with armor), current weapon(s),
-        # Gold, Mana, sanity, exhaustion
-        pass
-    
+        return [
+            f"Health: {self.health}/{self.maxHP} "
+            f"Sanity: {self.sanity}",
+            f"Mana: {self.mana} ",
+            f"Exhaustion: {self.exhaustion_counter} "
+            f"Gold: {self.gold} ",
+            f"Killcount: {self.killcount} "
+            f"Level: {self.player_level} XP: {self.xp} ",
+            f"AC: {self.armor_class} "
+        ]
+        
     def print_current_location(self):
         return f"{self.x},{self.y}"
     
