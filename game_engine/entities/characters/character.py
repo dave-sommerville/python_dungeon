@@ -5,13 +5,15 @@ class Character(Entity):
         super().__init__(name, description)
         self.is_dodging = False
         self.is_stunned = False
+
         self.modifer = 0
-        self.armor_class = 10
-        self.inventory = []
         self.health = 30
-        self.weapon_primary = None
-        self.armor = None
-        self.maxHP = 30
+        self.maxHP = 100
+        self.armor_class = 8
+
+        self.inventory = []
+        # sub(): self.weapon_primary = None
+        # sub(): self.armor = None
         
     def don_armor(self, armor):
         pass

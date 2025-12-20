@@ -6,7 +6,6 @@ from .events.combat import CombatEvent
 from .events.inventory_item import InventoryItemEvent
 from .utilities.rng_utilities import weighted_decision
 
-
 class GameEngine:
     def __init__(self):
         self.logs = []
@@ -88,9 +87,11 @@ class GameEngine:
                 self._call_for_combat_event(dungeon)
                 self._log(dungeon.player.print_current_location())
             case "search":
-                dungeon.player.search_chamber()
+                loot_list = dungeon.player.search_chamber()
+                for item in loot_list:
+                    dungeon._msg(item)
             case "rest":
-                dungeon.player.attempt_to_rest()
+                dungeon.attempt_to_rest()
             case "inventory":
                 dungeon.state = GameState.INVENTORY_MANAGEMENT
                 self._log("Select item")

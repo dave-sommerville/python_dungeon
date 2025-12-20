@@ -1,21 +1,36 @@
 from event import Event
+from ..game_action_error import GameActionError
 class LevelUpEvent(Event):
-    skill_points_assigned = 0
-    def __init__(self, entity):
-        super().__init__(entity)
+    def __init__(self):
+        super().__init__(entity=None)
+        self.creation_stage = 1
     def get_options(self):
-        return ["dex", "con", "wis", "cha"]
+        match self.creation_stage:
+            case 1:
+                return["Type your name"]
+            case 2:
+                return ["Enter a description of yourself, or enter x to skip"]
+            case 3 | 4:
+                return ["dex", "con", "wis", "cha"]
+            case _:
+                raise GameActionError("Invalid action")
 
     def resolve(self, dungeon, action):
-        if LevelUpEvent.skill_points_assigned < 2:
-            print("You are levelling up. Your maxHP, modifier and skill points will all increase")
-            dungeon.player.add_skill_point(action)
-            LevelUpEvent.skill_points_assigned += 1
-            if LevelUpEvent.skill_points_assigned >= 2:
-                LevelUpEvent.skill_points_assigned = 0
-                dungeon.player.maxHP += 10
-                dungeon.player.modifer += 1
-                dungeon.player.level += 1
-                print(dungeon.player.maxHP)
-
-                dungeon.current_event = None
+        match self.creation_stage:
+            case 1:
+                dungeon._msg("Please give us your name, player")
+                dungeon.name_player(action)
+                self.creation_stage += 1
+                pass
+            case 2:
+                if action is "x":
+                    self.creation_stage += 1
+                else:
+                    dungeon.describe_player(action)
+                    self.creation_stage += 1
+            case 3 | 4:
+                self.creation_stage += 1
+                dungeon._msg("You can select a skill to specialize in.")
+            case _: 
+                raise GameActionError("Out of range")
+            

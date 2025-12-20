@@ -2,6 +2,8 @@ from ..entities.characters.player import Player
 from ..entities.characters.npc import NPC
 from ..utilities.desc_utitlities import chamber_description
 from .chamber import Chamber
+from ..entities.characters.character import Character
+from ..events.combat import CombatEvent
 from ..game_states import GameState
 from ..utilities.rng_utilities import random_integer, weighted_decision, random_list_element
 from ..entities.items.item import Item
@@ -22,6 +24,12 @@ class Dungeon:
 
     def _msg(self, text):
         self.message_buffer.append(text)
+
+    def name_player(self, name):
+        self.player.name = name
+
+    def describe_player(self, description):
+        self.player.description - description
 
     def create_player(self):
         pass
@@ -52,6 +60,20 @@ class Dungeon:
         loot = self.generate_items()
         return Chamber(next_id, description, loot)
     
+    def attempt_to_rest(self):
+        # Need to add surprise combat mechanic
+        if weighted_decision(0.2):
+            character = Character("Jeff", "The Skeleton")
+            self._msg(f"Before you can rest, you are {character.name}")
+            event = CombatEvent(character)
+            self.current_event = event
+            return False
+            pass
+        else:
+            self.exhaustion_counter = 0
+            self._msg("You manage to rest safely and feel much better")
+            return True
+
     def get_rarity(self):
         index = random_integer(1, 100)
         if index > 95:

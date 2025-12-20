@@ -1,7 +1,9 @@
+import math
 from .character import Character
 from ...locations.chamber import Chamber
 from ..items.item import Item
 from ..items.potion import Potion
+from ...utilities.rng_utilities import weighted_decision
     # prisoner_status = ''
 
 class Player(Character):
@@ -13,36 +15,49 @@ class Player(Character):
         Cha improves likeability 
         Wis helps against being surprised
     """
+
     def __init__(self, name, description):
         super().__init__(name,description)
+        # Character Statuses
+        # self.is_dodging = False
+        # super(): self.is_stunned = False
+
+        # Player State Management
         self.message_buffer = []
-        self.health = 80
-        self.killcount = 0
         self.x = 0
         self.y = 0
         self.current_chamber = Chamber("0,0")
         # self.plot_progression = None
 
-        # Stats
-        self.player_level = 1
-        self.modifer = 10
-        self.maxHP = 100
-        self.dex = 0
-        self.con = 0
-        self.cha = 0
-        self.wis = 0
-        # Resources 
-        self.xp = 0
+        # Player Base Upgrades
+        self.modifer = 10 # super(): 0
+        self.health = 80 # super(): 30
+        self.maxHP = 100 # super(): 100
+        self.armor_class = 10 # super(): 8
+        
+        self.killcount = 0
         self.exhaustion_counter = 0
         self.gold = 0
         self.mana = 5
         self.sanity = 100
+
+        # Player Characteristics 
+        self.player_level = 0
+        self.xp = 0
+        self.dex = 0
+        self.con = 0
+        self.cha = 0
+        self.wis = 0
+
+        # Item Management
         self.inventory = [Item("A cup", "Shiny", 10), Item("A Key", "Old", 2), Potion("Potion", "of healing", 20)]
         self.inventory_size = 5
         self.weapon_secondary = None
         self.magical_item = None
+
     def _msg(self, text):
         self.message_buffer.append(text)
+
     def print_player_info(self):
         return [
             f"Health: {self.health}/{self.maxHP} "
@@ -54,7 +69,13 @@ class Player(Character):
             f"Level: {self.player_level} XP: {self.xp} ",
             f"AC: {self.armor_class} "
         ]
-        
+    def build_player_from_stats(self):
+        self.player_level = self.scaled_value(self.xp)
+        self.health = 100 + ((self.player_level + self.con) * 10)
+
+    def scaled_value(self, value):
+        return max(0, int(math.log(value / 1000, 2)) + 1)
+
     def print_current_location(self):
         return f"{self.x},{self.y}"
     
@@ -74,10 +95,14 @@ class Player(Character):
     def search_chamber(self):
         # Need to add perception mechanic
         # Need to add trap/contest mechanic
+        loot_list = []
         if len(self.current_chamber.chamber_items) > 0:
             for item in self.current_chamber.chamber_items:
+                loot_list.append(item.name)
                 self.add_to_inventory(item)
-        self.print_inventory()
+        else:
+            loot_list.append("This room appears to be empty")
+        return loot_list 
 
     def print_player_inventory(self):
         """Return inventory entries WITHOUT numeric prefixes.
@@ -95,11 +120,15 @@ class Player(Character):
     def add_to_inventory(self, item):
         self.inventory.append(item)
 
-    def attempt_to_rest(self):
-        # Need to add surprise combat mechanic
-        self.exhaustion_counter = 0
-        print(self.exhaustion_counter)
-
+    def exhaustion_check(self, dungeon):
+        if weighted_decision(0.6):
+            if self.exhaustion_counter > 6:
+                self.health -= 5
+                dungeon._msg("You are exhausted and lose some health from the activity.")
+                # Player death check
+            else:
+                self.exhaustion_counter += 1
+                dungeon._msg("You are feeling a little tired from all this activity")
     def add_skill_point(self, skill):
         match skill:
             case "dex":
