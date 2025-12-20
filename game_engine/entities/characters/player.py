@@ -20,7 +20,8 @@ class Player(Character):
         super().__init__(name,description)
         # Character Statuses
         # self.is_dodging = False
-        # super(): self.is_stunned = False
+        # self.is_stunned = False
+        # self.is_poisoned = False
 
         # Player State Management
         self.message_buffer = []
@@ -139,6 +140,7 @@ class Player(Character):
                 self.cha += 1
             case "wis":
                 self.wis += 1
-
+    def return_skill_check(self, type, dc):
+        pass
 
 

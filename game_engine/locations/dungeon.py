@@ -137,6 +137,13 @@ class Dungeon:
         for info in player_info_list:
             self._msg(info)
 
+    def player_death_check():
+        # Track the type of death for final message
+
+        pass
+    def sanity_events():
+        pass
+    
     @staticmethod
     def reverse_direction(direction):
         match direction:
