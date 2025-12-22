@@ -1,0 +1,36 @@
+Core Mechanics
+- Inventory sizing
+- Interactions
+    - Dialogue options
+    - Cha vs Wis checks
+        - Pick pocketing
+        - Convincing them by charm, deception, or intimidation
+- Combat mechanics
+    - Fix weapon/secondary weapon attack methods
+    - Opponent death checks with xp awarding (and looting?)
+    - Special Actions:
+        - Retreat: Add opportunity attack/rushing effect (moves to chamber at random)
+        - Interact:
+        - Use Item:
+        - Cast spell (later)
+- Killcount
+- Skill challenges
+- Challenge (event) Generation
+- File/class/function maintenance
+- Final touches to merchant Interactions
+- Perception mechanics for search
+- Appropriate description design
+
+
+UI/Frontend
+
+
+Game play touches
+- Serpent introduction and help
+- Spells
+- Secret rooms/Treasure Chests
+- Magical Items
+  - Bag of holding
+  - Displacer Cloak
+- Sanity challenges
+- Progress map

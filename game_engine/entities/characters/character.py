@@ -1,5 +1,6 @@
 from ..entity import Entity
 from ...utilities.rng_utilities import random_integer, weighted_decision
+from ..items.weapon import Weapon
 class Character(Entity):
     def __init__(self, name, description):
         super().__init__(name, description)
@@ -10,6 +11,7 @@ class Character(Entity):
         self.health = 30
         self.maxHP = 100
         self.armor_class = 8
+        self.weapon_primary = Weapon(2)
         self.stealth = 0
         self.wis = 0
         self.inventory = []
@@ -25,7 +27,7 @@ class Character(Entity):
         attack  = self.modifer + random_integer(2,8)
         damage = random_integer(10, 30)
         if self.weapon_primary:
-            attack_modifer += self.weapon_primary.attack_bonus
+            attack += self.weapon_primary.attack_bonus
             damage + self.weapon_primary.damage
         target = character.armor_class
         if character.is_dodging:

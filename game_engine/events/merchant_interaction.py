@@ -18,7 +18,7 @@ class MerchantEvent(Event):
             if 0 <= index < len(self.entity.inventory):
                 item = self.entity.inventory[index]
                 self._log(item.item_description())
-                dungeon.current_event = MerchantItemEvent(item, index)
+                dungeon.current_event = MerchantItemEvent(item, index, self)
                 return
         # Backwards-compatible: parse "0: Name" style
         if isinstance(action, str) and ":" in action:

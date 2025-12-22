@@ -8,13 +8,14 @@ class MerchantItemEvent(Event):
 
   def get_options(self):
     return ["buy","back"]
+  
   def resolve(self, dungeon, action):
     match action:
       case "buy":
         dungeon.player.add_to_inventory(self.entity)
         dungeon.message_buffer.append("Item purchased")
         del self.prev_event.entity.inventory[self.index]
-        
+        dungeon.current_event = self.prev_event
       case "back":
         dungeon.current_event = self.prev_event
       case _:

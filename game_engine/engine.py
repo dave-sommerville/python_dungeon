@@ -46,8 +46,6 @@ class GameEngine:
             raise GameActionError("No active event to resolve")
         options = event.get_options() or []
         # Accept numeric selection or exact match; caller UI maps numbers, engine expects strings
-        if action not in options:
-            raise GameActionError("Invalid event option")
         event.resolve(dungeon, action)
 
     def _resolve_state_action(self, dungeon, action):
