@@ -15,6 +15,7 @@ class CombatInventoryEvent(Event):
     def resolve(self, dungeon, action):
         if action == "back":
             dungeon.current_event = self.prev_event
+            dungeon.state = GameState.MAIN_MENU
             return
         # Accept a plain digit (sent from the UI as the index), or a leading-index form like "0: Sword"
         if isinstance(action, str) and action.isdigit():

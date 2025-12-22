@@ -21,10 +21,12 @@ class CombatEvent(Event):
                     if self.entity.character_death_check():
                         dungeon._msg("You killed the creature")
                         dungeon.current_event = None
+                        dungeon.state = GameState.MAIN_MENU
                     self.entity.attack_action(dungeon.player)
                 case "interact": # Sub events
                     dungeon._msg("You said hi and they left")
                     dungeon.current_event = None
+                    dungeon.state = GameState.MAIN_MENU
                 case "dodge":
                     dungeon._msg("You dodged")
                     dungeon.player.dodge_action()
@@ -34,8 +36,12 @@ class CombatEvent(Event):
                     dungeon._msg("you retreat from the battle, but they get one attack")
                     self.entity.attack_action(dungeon.player)
                     dungeon.current_event = None
+                    dungeon.state = GameState.MAIN_MENU
+
                 case "use item": # Sub events
                     dungeon._msg("Select an item to use")
+                    dungeon.state = GameState.INVENTORY_MANAGEMENT
+                    print("Inventory management")
                     dungeon.current_event = CombatInventoryEvent(self.entity, self, dungeon.player)
                     pass
                 case _:

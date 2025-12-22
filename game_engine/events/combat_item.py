@@ -1,4 +1,5 @@
 from .event import Event
+from ..game_states import GameState
 class CombatItemEvent(Event):
     def __init__(self, entity, index, prev_event):
         super().__init__(entity)
@@ -12,5 +13,6 @@ class CombatItemEvent(Event):
             case "use":
                 self.entity.use_item(dungeon.player)
                 dungeon.current_event = self.prev_event.prev_event
+                dungeon.state = GameState.MAIN_MENU
             case "back":
                 dungeon.current_event = self.prev_event
