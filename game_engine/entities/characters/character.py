@@ -11,7 +11,7 @@ class Character(Entity):
         self.maxHP = 100
         self.armor_class = 8
         self.stealth = 0
-
+        self.wis = 0
         self.inventory = []
         # self.weapon_primary = None
         # self.armor = None

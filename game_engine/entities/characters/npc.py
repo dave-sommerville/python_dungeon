@@ -4,7 +4,6 @@ class NPC(Character):
     super().__init__(name, description)
     self.dialogue = []
     self.is_merchant = False
-    self.perception = 0
     self.compliance_level = 0
     self.alignment = "neutral"
     self.special_interest = "gold"

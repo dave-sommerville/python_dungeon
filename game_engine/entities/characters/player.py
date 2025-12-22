@@ -48,7 +48,8 @@ class Player(Character):
         self.dex = 0
         self.con = 0
         self.cha = 0
-        self.wis = 0
+        # self.wis = 0
+        # self.stealth = 0
 
         # Item Management
         self.inventory = [Item("A cup", "Shiny", 10), Item("A Key", "Old", 2), Potion("Potion", "of healing", 20)]
@@ -70,6 +71,7 @@ class Player(Character):
             f"Level: {self.player_level} XP: {self.xp} ",
             f"AC: {self.armor_class} "
         ]
+    
     def build_player_from_stats(self):
         self.player_level = self.scaled_value(self.xp)
         self.health = 100 + ((self.player_level + self.con) * 10)
