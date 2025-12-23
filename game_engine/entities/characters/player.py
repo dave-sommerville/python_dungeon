@@ -3,6 +3,7 @@ from .character import Character
 from ...locations.chamber import Chamber
 from ..items.item import Item
 from ..items.potion import Potion
+from ...game_action_error import GameActionError
 from ...utilities.rng_utilities import weighted_decision
     # prisoner_status = ''
 
@@ -99,15 +100,14 @@ class Player(Character):
         # Need to add perception mechanic
         # Need to add trap/contest mechanic
         loot_list = []
-        if len(self.current_chamber.chamber_items) > 0:
+        loot_count = len(self.current_chamber.chamber_items)
+        inventory_room = self.inventory_length - len(self.inventory)
+        if loot_count > 0 and loot_count <= inventory_room:
             for item in self.current_chamber.chamber_items:
                 loot_list.append(item.name)
                 self.add_to_inventory(item)
-        else:
-            loot_list.append("This room appears to be empty")
-        return loot_list 
 
-    def print_player_inventory(self):
+    def print_character_inventory(self):
         """Return inventory entries WITHOUT numeric prefixes.
 
         The UI is responsible for adding 1-based numbering. This avoids
@@ -121,6 +121,8 @@ class Player(Character):
 
     # Will need to add limiting to list, but mayaswell enjoy the dynamic sizes for now
     def add_to_inventory(self, item):
+        if len(self.inventory) >= self.inventory_size:
+            raise GameActionError("Inventory is currently full")
         self.inventory.append(item)
 
     def exhaustion_check(self, dungeon):
@@ -132,6 +134,7 @@ class Player(Character):
             else:
                 self.exhaustion_counter += 1
                 dungeon._msg("You are feeling a little tired from all this activity")
+
     def add_skill_point(self, skill):
         match skill:
             case "dex":
@@ -142,7 +145,6 @@ class Player(Character):
                 self.cha += 1
             case "wis":
                 self.wis += 1
-    def return_skill_check(self, type, dc):
-        pass
+
 
 

@@ -4,9 +4,12 @@ from .locations.dungeon import Dungeon
 from .entities.characters.character import Character
 from .events.combat import CombatEvent
 from .events.skill_contest import SkillContestEvent
+from .events.merchant_interaction import MerchantEvent
 from .events.inventory_item import InventoryItemEvent
 from .utilities.rng_utilities import weighted_decision
 from .entities.contest_object import ContestObject
+from .entities.characters.npc import NPC
+from .entities.items.item import Item
 
 class GameEngine:
     def __init__(self):
@@ -66,17 +69,28 @@ class GameEngine:
             character = Character("Jeff", "The Skeleton")
             event = CombatEvent(character)
             dungeon.current_event = event
+
     def _take_damage(self):
         self._log("You take damage")
         pass
     def _take_half_damage(self):
         self._log("You take half damage")
+
     def _call_for_contest_event(self, dungeon):
-        contest_obj = ContestObject("Acid spray",["Jump away", "Ignore"], "dex", 15, [self._take_damage, self._take_half_damage])
+        dungeon.state = GameState.INVENTORY_MANAGEMENT
+        contest_obj = ContestObject("Acid spray", "", "", ["Jump away", "Ignore"], "dex", 15, [self._take_damage, self._take_half_damage])
         contest = SkillContestEvent(contest_obj)
-        self._log(f"You see {self.entity.objective_description}. What do you do?")
+        self._log(f"You see a trap. What do you do?")
         dungeon.current_event = contest
-        
+
+    def _call_for_merchant_event(self, dungeon):
+        dungeon.state = GameState.INVENTORY_MANAGEMENT
+        merchant = NPC("Also jeff", "idk, a little mushroom guy")
+        merchant.is_merchant = True
+        merchant.inventory = [Item("For Sale","Urn"), Item("For sale","Jug")]
+        merchant_interaction = MerchantEvent(merchant)
+        self._log(f"You meet a merchant")
+        dungeon.current_event = merchant_interaction
     # Has to check the room's direction for sneaky players
     def _resolve_main_menu(self, dungeon, action):
         match action:
@@ -86,7 +100,7 @@ class GameEngine:
                 self._log(dungeon.player.print_current_location())
             case "move east":  # Sub events
                 dungeon.move_player("east")
-                self._call_for_combat_event(dungeon)
+                self._call_for_merchant_event(dungeon)
                 self._log(dungeon.player.print_current_location())
             case "move south":  # Sub events
                 dungeon.move_player("south")
@@ -94,7 +108,7 @@ class GameEngine:
                 self._log(dungeon.player.print_current_location())
             case "move west":  # Sub events
                 dungeon.move_player("west")
-                self._call_for_combat_event(dungeon)
+                self._call_for_contest_event(dungeon)
                 self._log(dungeon.player.print_current_location())
             case "search":
                 loot_list = dungeon.player.search_chamber()
@@ -156,7 +170,7 @@ class GameEngine:
                 )
                 return actions_list
             case GameState.INVENTORY_MANAGEMENT:
-                return dungeon.player.print_player_inventory()
+                return dungeon.player.print_character_inventory()
             case GameState.SPELL_MANAGEMENT:
                 return ["cast", "inspect", "back"]
             case _:

@@ -15,7 +15,7 @@ class Character(Entity):
         self.stealth = 0
         self.wis = 0
         self.inventory = []
-        # self.weapon_primary = None
+        self.xp_award = 5
         # self.armor = None
         
     def don_armor(self, armor):
@@ -28,7 +28,7 @@ class Character(Entity):
         damage = random_integer(10, 30)
         if self.weapon_primary:
             attack += self.weapon_primary.attack_bonus
-            damage + self.weapon_primary.damage
+            damage += self.weapon_primary.damage
         target = character.armor_class
         if character.is_dodging:
             target *= 2
@@ -52,3 +52,14 @@ class Character(Entity):
         self.health += amount
         if self.health > self.maxHP:
             self.health = self.maxHP
+    def print_character_inventory(self):
+        """Return inventory entries WITHOUT numeric prefixes.
+
+        The UI is responsible for adding 1-based numbering. This avoids
+        duplicated numbers when the frontend also numbers options.
+        """
+        inventory_list = []
+        for item in self.inventory:
+            inventory_list.append(f"{item.name} - {item.durability}")
+        inventory_list.append("back")
+        return inventory_list

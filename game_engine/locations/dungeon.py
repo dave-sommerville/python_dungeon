@@ -33,7 +33,7 @@ class Dungeon:
 
     def create_player(self):
         pass
-
+    
     def move_player(self, direction):
         self._msg(f"You move {direction}")
         # Determine target chamber before describing it
@@ -131,18 +131,6 @@ class Dungeon:
             self.visited_locations.append(self.player.current_chamber)
             return self.player.current_chamber.description
         return "You see nothing of interest."
-
-    def log_player_info(self):
-        player_info_list = self.player.print_player_info()
-        for info in player_info_list:
-            self._msg(info)
-
-    def player_death_check():
-        # Track the type of death for final message
-
-        pass
-    def sanity_events():
-        pass
     
     @staticmethod
     def reverse_direction(direction):
@@ -162,8 +150,4 @@ class Dungeon:
         for item in self.player.inventory:
             self._msg(f"{item}")
 
-    def create_map(self):
-        pass
 
-    def display_map(self):
-        pass

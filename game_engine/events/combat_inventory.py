@@ -10,7 +10,7 @@ class CombatInventoryEvent(Event):
         self.player = player
 
     def get_options(self):
-        return self.player.print_player_inventory()
+        return self.player.print_character_inventory()
     
     def resolve(self, dungeon, action):
         if action == "back":

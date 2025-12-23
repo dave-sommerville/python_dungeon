@@ -7,7 +7,7 @@ class MerchantEvent(Event):
     super().__init__(entity)
 
   def get_options(self):
-    return self.entity.print_player_inventory()
+    return self.entity.print_character_inventory()
   def resolve(self, dungeon, action):
         if action == "back":
             dungeon.state = GameState.MAIN_MENU
@@ -17,7 +17,7 @@ class MerchantEvent(Event):
             index = int(action)
             if 0 <= index < len(self.entity.inventory):
                 item = self.entity.inventory[index]
-                self._log(item.item_description())
+                dungeon._msg(item.item_description())
                 dungeon.current_event = MerchantItemEvent(item, index, self)
                 return
         # Backwards-compatible: parse "0: Name" style
@@ -27,7 +27,7 @@ class MerchantEvent(Event):
                 index = int(index_part)
                 if 0 <= index < len(self.entity.inventory):
                     item = self.entity.inventory[index]
-                    self._log(item.item_description())
+                    dungeon._msg(item.item_description())
                     dungeon.current_event = MerchantItemEvent(item, index, self)
                     return
         raise GameActionError("Invalid input")

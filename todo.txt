@@ -1,37 +1,28 @@
 Core Mechanics
-- Inventory sizing
+- Log orders and display information
+- Appropriate description design
 - Add more potions
+- Combat Retreat: Add rushing effect (moves to chamber at random)
+- Challenge (event) Generation
+- Perception mechanics for search
+- Add block to rooms where no exits
+- File/class/function maintenance
+
+UI/Frontend
+- Dark background
+- Code style typing
+- Naturalize input UI
+- Fix size of menu options
+- Fix hover effects/pointers for clicking UI
+
+Game play touches
+- Secondary weapon
 - Interactions
     - Dialogue options
     - Cha vs Wis checks
         - Pick pocketing
         - Convincing them by charm, deception, or intimidation
-- Combat mechanics
-    - More descriptions and trace order
-    - Fix weapon/secondary weapon attack methods
-    - Opponent death checks with
-      - :XP awarding
-      - Killcount
-      - Looting option
-    - Special Actions:
-        - Retreat: Add rushing effect (moves to chamber at random)
-        - Interact:
-- Skill challenges
-- Challenge (event) Generation
-- File/class/function maintenance
-- Final touches to merchant Interactions
-- Perception mechanics for search
-- Appropriate description design
-
-
-UI/Frontend
-- Dark background
-- Code style typing
-- Naturalize input
-- Fix size of menu options
-- Fix hover effects/pointers for clicking UI
-
-Game play touches
+        - Add combat interactions
 - Spells
 - Secret rooms/Treasure Chests
 - Magical Items
