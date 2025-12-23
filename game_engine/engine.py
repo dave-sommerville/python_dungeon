@@ -3,8 +3,10 @@ from .game_action_error import GameActionError
 from .locations.dungeon import Dungeon
 from .entities.characters.character import Character
 from .events.combat import CombatEvent
+from .events.skill_contest import SkillContestEvent
 from .events.inventory_item import InventoryItemEvent
 from .utilities.rng_utilities import weighted_decision
+from .entities.contest_object import ContestObject
 
 class GameEngine:
     def __init__(self):
@@ -64,7 +66,17 @@ class GameEngine:
             character = Character("Jeff", "The Skeleton")
             event = CombatEvent(character)
             dungeon.current_event = event
-
+    def _take_damage(self):
+        self._log("You take damage")
+        pass
+    def _take_half_damage(self):
+        self._log("You take half damage")
+    def _call_for_contest_event(self, dungeon):
+        contest_obj = ContestObject("Acid spray",["Jump away", "Ignore"], "dex", 15, [self._take_damage, self._take_half_damage])
+        contest = SkillContestEvent(contest_obj)
+        self._log(f"You see {self.entity.objective_description}. What do you do?")
+        dungeon.current_event = contest
+        
     # Has to check the room's direction for sneaky players
     def _resolve_main_menu(self, dungeon, action):
         match action:

@@ -1,19 +1,21 @@
 Core Mechanics
 - Inventory sizing
+- Add more potions
 - Interactions
     - Dialogue options
     - Cha vs Wis checks
         - Pick pocketing
         - Convincing them by charm, deception, or intimidation
 - Combat mechanics
+    - More descriptions and trace order
     - Fix weapon/secondary weapon attack methods
-    - Opponent death checks with xp awarding (and looting?)
+    - Opponent death checks with
+      - :XP awarding
+      - Killcount
+      - Looting option
     - Special Actions:
-        - Retreat: Add opportunity attack/rushing effect (moves to chamber at random)
+        - Retreat: Add rushing effect (moves to chamber at random)
         - Interact:
-        - Use Item:
-        - Cast spell (later)
-- Killcount
 - Skill challenges
 - Challenge (event) Generation
 - File/class/function maintenance
@@ -23,10 +25,13 @@ Core Mechanics
 
 
 UI/Frontend
-
+- Dark background
+- Code style typing
+- Naturalize input
+- Fix size of menu options
+- Fix hover effects/pointers for clicking UI
 
 Game play touches
-- Serpent introduction and help
 - Spells
 - Secret rooms/Treasure Chests
 - Magical Items
@@ -34,3 +39,8 @@ Game play touches
   - Displacer Cloak
 - Sanity challenges
 - Progress map
+- Sneak/Surprise mechanics
+
+
+Plot Edits
+- Serpent introduction and help
