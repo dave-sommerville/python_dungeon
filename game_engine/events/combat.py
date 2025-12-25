@@ -41,12 +41,12 @@ class CombatEvent(Event):
                     dungeon._msg("You dodged")
                     dungeon.player.dodge_action()
                     self.entity.attack_action(dungeon.player)
+                    dungeon.current_event = None
 
                 case "retreat":
                     dungeon._msg("you retreat from the battle, but they get one attack")
                     self.entity.attack_action(dungeon.player)
                     dungeon.current_event = None
-                    dungeon.state = GameState.MAIN_MENU
 
                 case "use item": # Sub events
                     dungeon._msg("Select an item to use")

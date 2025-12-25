@@ -9,7 +9,9 @@ class MerchantEvent(Event):
   def get_options(self):
     return self.entity.print_character_inventory()
   def resolve(self, dungeon, action):
+        print(action)
         if action == "back":
+            dungeon.current_event = None
             dungeon.state = GameState.MAIN_MENU
             return
         # Accept a plain digit (sent from the UI as the index), or a leading-index form like "0: Sword"
@@ -19,6 +21,7 @@ class MerchantEvent(Event):
                 item = self.entity.inventory[index]
                 dungeon._msg(item.item_description())
                 dungeon.current_event = MerchantItemEvent(item, index, self)
+                dungeon.state = GameState.MAIN_MENU
                 return
         # Backwards-compatible: parse "0: Name" style
         if isinstance(action, str) and ":" in action:

@@ -11,15 +11,16 @@ class MerchantItemEvent(Event):
     return ["buy","back"]
   
   def resolve(self, dungeon, action):
+    print(action)
     match action:
       case "buy":
         dungeon.player.add_to_inventory(self.entity)
         dungeon.message_buffer.append("Item purchased")
         del self.prev_event.entity.inventory[self.index]
         dungeon.current_event = self.prev_event
-        dungeon.state = GameState.MAIN_MENU
+        dungeon.state = GameState.INVENTORY_MANAGEMENT
       case "back":
         dungeon.current_event = self.prev_event
-        dungeon.state = GameState.MAIN_MENU
+        dungeon.state = GameState.INVENTORY_MANAGEMENT
       case _:
         raise GameActionError("Invalid Action")
