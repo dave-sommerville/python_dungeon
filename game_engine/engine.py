@@ -10,6 +10,7 @@ from .utilities.rng_utilities import weighted_decision
 from .entities.contest_object import ContestObject
 from .entities.characters.npc import NPC
 from .entities.items.item import Item
+from .entities.items.armor import Armor
 
 class GameEngine:
     def __init__(self):
@@ -32,7 +33,8 @@ class GameEngine:
             self.error = str(e)
         finally:
             # This block runs NO MATTER WHAT (success or error)
-            self.logs.extend(dungeon.message_buffer)
+            dungeon.message_buffer.extend(self.logs)
+            self.logs = dungeon.message_buffer
             dungeon.message_buffer = []
         return {
             "logs": self.logs,
@@ -68,6 +70,10 @@ class GameEngine:
         if weighted_decision(0.5):
             character = Character("Jeff", "The Skeleton")
             event = CombatEvent(character)
+            self._log(f"You are attacked by an aggressive enemy")
+            self._log(f"{character.name}")
+            self._log(f"{character.description}")
+            self._log("Choose your next action wisely")
             dungeon.current_event = event
 
     def _take_damage(self):
@@ -97,19 +103,15 @@ class GameEngine:
             case "move north":  # Sub events
                 dungeon.move_player("north")
                 self._call_for_combat_event(dungeon)
-                self._log(dungeon.player.print_current_location())
             case "move east":  # Sub events
                 dungeon.move_player("east")
                 self._call_for_merchant_event(dungeon)
-                self._log(dungeon.player.print_current_location())
             case "move south":  # Sub events
                 dungeon.move_player("south")
                 self._call_for_combat_event(dungeon)
-                self._log(dungeon.player.print_current_location())
             case "move west":  # Sub events
                 dungeon.move_player("west")
                 self._call_for_contest_event(dungeon)
-                self._log(dungeon.player.print_current_location())
             case "search":
                 loot_list = dungeon.player.search_chamber()
                 for item in loot_list:
@@ -123,9 +125,11 @@ class GameEngine:
             case "spells":
                 pass
             case "details":
-                dungeon.log_player_info()
+                for item in dungeon.player.print_player_info():
+                    self._log(item)
             case "describe":
-                self._log(dungeon.describe_current_chamber())
+                chamber = dungeon.player.current_chamber
+                self._log(chamber.description)
             case _:
                 raise GameActionError("Invalid Action")
 

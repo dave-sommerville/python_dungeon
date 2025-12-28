@@ -9,7 +9,6 @@ class CombatEvent(Event):
         super().__init__(entity)
     def enemy_death(self, dungeon):
         if self.entity.character_death_check():
-            dungeon._msg("You killed the creature")
             dungeon.current_event = None
             dungeon.state = GameState.MAIN_MENU
             dungeon.player.xp += self.entity.xp_award
@@ -21,17 +20,23 @@ class CombatEvent(Event):
     def get_options(self):
         return ["attack", "interact", "dodge", "retreat", "use item"]
     def resolve(self, dungeon, action):
-        dungeon._msg(f"You are attacked by {self.entity.name}")
-        dungeon._msg(f"They are {self.entity.description}")
-
         if isinstance(self.entity, Character) and dungeon.player.health > 0:
-            dungeon._msg("Choose your next action wisely")
             match action:
                 case "attack": # Sub events
-                    dungeon.player.attack_action(self.entity)
+                    player_damage = dungeon.player.attack_action(self.entity)
+                    if player_damage == 0:
+                        dungeon._msg("You attempt to strike, but miss your foe")
+                    else:
+                        dungeon._msg(f"You attack and strike your foe for {player_damage} points of damage")
                     if self.enemy_death(dungeon):
+                        dungeon._msg("Your attack is enough to vanquish your enemy")
                         return
-                    self.entity.attack_action(dungeon.player)
+                    enemy_damage = self.entity.attack_action(dungeon.player)
+                    if enemy_damage == 0:
+                        dungeon._msg(f"{self.entity.name} attacks you but misses")
+                    else:
+                        dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
+
                 case "interact": # Sub events
                     dungeon._msg("You said hi and they left")
                     dungeon.current_event = None
@@ -40,12 +45,19 @@ class CombatEvent(Event):
                 case "dodge":
                     dungeon._msg("You dodged")
                     dungeon.player.dodge_action()
-                    self.entity.attack_action(dungeon.player)
-                    dungeon.current_event = None
+                    enemy_damage = self.entity.attack_action(dungeon.player)
+                    if enemy_damage == 0:
+                        dungeon._msg(f"{self.entity.name} attacks you but misses")
+                    else:
+                        dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
 
                 case "retreat":
                     dungeon._msg("you retreat from the battle, but they get one attack")
-                    self.entity.attack_action(dungeon.player)
+                    enemy_damage = self.entity.attack_action(dungeon.player)
+                    if enemy_damage == 0:
+                        dungeon._msg(f"{self.entity.name} attacks you but misses")
+                    else:
+                        dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
                     dungeon.current_event = None
 
                 case "use item": # Sub events

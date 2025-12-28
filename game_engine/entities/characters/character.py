@@ -8,7 +8,7 @@ class Character(Entity):
         self.is_stunned = False
         self.is_poisoned = False
         self.modifer = 0
-        self.health = 30
+        self.health = 70
         self.maxHP = 100
         self.armor_class = 8
         self.weapon_primary = Weapon(2)
@@ -23,7 +23,6 @@ class Character(Entity):
     def doff_armor(self):
         pass
     def attack_action(self, character):
-        print("you attack")
         attack  = self.modifer + random_integer(2,8)
         damage = random_integer(10, 30)
         if self.weapon_primary:
@@ -35,9 +34,9 @@ class Character(Entity):
             character.is_dodging = False
         if attack > target:
             character.health -= damage
-            print("You hit")
+            return damage
         else:
-            print("You missed")
+            return 0
 
     def dodge_action(self):
         self.is_dodging = True
@@ -52,9 +51,9 @@ class Character(Entity):
         self.health += amount
         if self.health > self.maxHP:
             self.health = self.maxHP
+
     def print_character_inventory(self):
         """Return inventory entries WITHOUT numeric prefixes.
-
         The UI is responsible for adding 1-based numbering. This avoids
         duplicated numbers when the frontend also numbers options.
         """

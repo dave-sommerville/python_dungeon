@@ -32,7 +32,7 @@ class Player(Character):
         # self.plot_progression = None
 
         # Player Base Upgrades
-        self.modifer = 10 # super(): 0
+        self.modifer = 0 # super(): 0
         self.health = 80 # super(): 30
         self.maxHP = 100 # super(): 100
         self.armor_class = 10 # super(): 8

@@ -54,9 +54,12 @@ class Dungeon:
         self.player.x = t_x
         self.player.y = t_y
         # Describe the new chamber
-        self._msg(f"As you look around, you see {self.describe_current_chamber()}")
+        self._msg(f"{self.describe_current_chamber()}")
+        self._msg(f"What do you do next?")
+        self._msg("")
+        
     def generate_chamber(self, next_id):
-        description = random_list_element(chamber_description())
+        description = chamber_description()
         loot = self.generate_items()
         return Chamber(next_id, description, loot)
     
@@ -124,6 +127,7 @@ class Dungeon:
         """
         location_id = self.player.print_current_location()
         chamber = next((c for c in self.visited_locations if c.id == location_id), None)
+        print(chamber.description)
         if chamber:
             return chamber.description
         # Fallback to player's current chamber (and track it for future lookups)
