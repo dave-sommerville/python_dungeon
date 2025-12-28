@@ -111,3 +111,23 @@ def base_item_description(rarity):
   else:
     return random_list_element(low_trinkets)
 
+dungeon_enemies = [
+    ("Skeleton Footman", "Animated bones clad in rusted armor, attacking with the fading memory of drill and discipline."),
+    ("Carrion Crawler", "A pale, many-legged creature that drags its slimy bulk across the floor, seeking paralyzed prey."),
+    ("Rotting Ghoul", "A corpse animated by hunger, its eyes alert and unfocused as it sniffs out the living."),
+    ("Dungeon Rat Swarm", "A churning mass of oversized rats, their teeth clicking as they surge forward in a tide."),
+    ("Hollow-Eyed Cultist", "A mortal servant to dark forces, whispering prayers and clutching a ritual blade."),
+    ("Rust-Eaten Animated Armor", "An empty suit of plate that clatters with each step, driven by magic alone."),
+    ("Cave Stalker", "A lanky, grey-skinned thing that clings to stone walls and drops silently on its prey."),
+    ("Gravebound Spirit", "A flickering phantom bound to the place of its death, drifting in looping patterns of memory."),
+    ("Tunnel Kobold Sapper", "A scrawny trap-maker carrying unstable explosives and too much confidence."),
+    ("Mire Troll", "A hulking brute caked in filth, regenerating flesh as fast as weapons carve it away."),
+    ("Crypt Spider", "A chitinous predator the size of a hound, its eyes glimmering in the dark like ink-black pearls."),
+    ("Ooze Spawn", "A wobbling glob of corrosive slime that absorbs weapons, light, and anything foolish enough to touch it."),
+    ("Plague-Scarred Bat", "A huge bat with patchy fur and cracked skin, shrieking as it wheels through stagnant air."),
+    ("Lost Adventurer Shade", "A ghostly fragment of someone who came before you, reenacting their final moments in endless loops."),
+    ("Ironbound Jailor", "A towering warden fused to chains and shackles, dragging the instruments of imprisonment with every stride.")
+]
+
+def enemy_description():
+  return random_list_element(dungeon_enemies)

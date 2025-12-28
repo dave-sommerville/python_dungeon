@@ -57,7 +57,7 @@ class Dungeon:
         self._msg(f"{self.describe_current_chamber()}")
         self._msg(f"What do you do next?")
         self._msg("")
-        
+
     def generate_chamber(self, next_id):
         description = chamber_description()
         loot = self.generate_items()

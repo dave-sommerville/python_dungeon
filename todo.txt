@@ -1,9 +1,7 @@
 Core Mechanics
-- Log orders and display information
-- Appropriate description design
+- Contest/Enemy generation
 - Add more potions
 - Combat Retreat: Add rushing effect (moves to chamber at random)
-- Challenge (event) Generation
 - Perception mechanics for search
 - Add block to rooms where no exits
 - File/class/function maintenance
@@ -11,11 +9,12 @@ Core Mechanics
 UI/Frontend
 - Dark background
 - Code style typing
-- Naturalize input UI
+- Naturalize appearance of input UI
 - Fix size of menu options
 - Fix hover effects/pointers for clicking UI
 
 Game play touches
+- ASCII Printouts
 - Secondary weapon
 - Interactions
     - Dialogue options
@@ -32,6 +31,14 @@ Game play touches
 - Progress map
 - Sneak/Surprise mechanics
 
-
 Plot Edits
 - Serpent introduction and help
+
+Other
+- Database
+- User authorization
+- Containerization
+- Extras:
+  - Loading Screen
+  - NeoCities Site
+

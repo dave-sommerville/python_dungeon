@@ -19,7 +19,7 @@ class MerchantEvent(Event):
             index = int(action)
             if 0 <= index < len(self.entity.inventory):
                 item = self.entity.inventory[index]
-                dungeon._msg(item.item_description())
+                dungeon._msg(f"It is a {item.item_description()} for {item.cost} gold pieces")
                 dungeon.current_event = MerchantItemEvent(item, index, self)
                 dungeon.state = GameState.MAIN_MENU
                 return
@@ -30,7 +30,7 @@ class MerchantEvent(Event):
                 index = int(index_part)
                 if 0 <= index < len(self.entity.inventory):
                     item = self.entity.inventory[index]
-                    dungeon._msg(item.item_description())
+                    dungeon._msg(f"It is a {item.item_description()} for {item.cost} gold pieces")
                     dungeon.current_event = MerchantItemEvent(item, index, self)
                     return
         raise GameActionError("Invalid input")

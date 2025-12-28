@@ -7,6 +7,7 @@ from .events.skill_contest import SkillContestEvent
 from .events.merchant_interaction import MerchantEvent
 from .events.inventory_item import InventoryItemEvent
 from .utilities.rng_utilities import weighted_decision
+from .factory import enemy_factory
 from .entities.contest_object import ContestObject
 from .entities.characters.npc import NPC
 from .entities.items.item import Item
@@ -27,7 +28,6 @@ class GameEngine:
             else:
                 # Attempt the game logic for the current state
                 self._resolve_state_action(dungeon, action)
-
         except GameActionError as e:
             # If an error happens, we catch it here
             self.error = str(e)
@@ -68,7 +68,7 @@ class GameEngine:
 
     def _call_for_combat_event(self, dungeon):
         if weighted_decision(0.5):
-            character = Character("Jeff", "The Skeleton")
+            character = enemy_factory()
             event = CombatEvent(character)
             self._log(f"You are attacked by an aggressive enemy")
             self._log(f"{character.name}")
@@ -84,9 +84,10 @@ class GameEngine:
 
     def _call_for_contest_event(self, dungeon):
         dungeon.state = GameState.INVENTORY_MANAGEMENT
-        contest_obj = ContestObject("Acid spray", "", "", ["Jump away", "Ignore"], "dex", 15, [self._take_damage, self._take_half_damage])
+        contest_obj = ContestObject("Acid spray", "A spray of acid", "Duck away", ["Jump away", "Ignore"], "dex", 15, [self._take_damage, self._take_half_damage])
         contest = SkillContestEvent(contest_obj)
-        self._log(f"You see a trap. What do you do?")
+        self._log(f"You see a {contest_obj.description}")
+        self._log(f"You attempt to {contest_obj.objective_description}")
         dungeon.current_event = contest
 
     def _call_for_merchant_event(self, dungeon):
@@ -95,7 +96,8 @@ class GameEngine:
         merchant.is_merchant = True
         merchant.inventory = [Item("For Sale","Urn"), Item("For sale","Jug")]
         merchant_interaction = MerchantEvent(merchant)
-        self._log(f"You meet a merchant")
+        self._log(f"You meet a merchant named {merchant.name}")
+        self._log("Select an item to purchase if you wish")
         dungeon.current_event = merchant_interaction
     # Has to check the room's direction for sneaky players
     def _resolve_main_menu(self, dungeon, action):
