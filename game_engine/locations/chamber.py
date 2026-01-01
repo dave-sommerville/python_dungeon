@@ -3,7 +3,6 @@
 from ..entities.items.item import Item
 from ..utilities.rng_utilities import weighted_decision, random_integer
 class Chamber():
-    item = Item("Shiny", "A pot", 10)
 
     def __init__(self, id, description="", chamber_items=None):
         self.id = id
@@ -11,7 +10,6 @@ class Chamber():
         if chamber_items is None:
             chamber_items = []
         self.chamber_items = chamber_items
-        self.chamber_items.append(Chamber.item)
         self.description = description
         self.chamber_gold = random_integer(0, 50)
         self.north_passage = weighted_decision(0.7)

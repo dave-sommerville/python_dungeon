@@ -73,10 +73,10 @@ class Dungeon:
             return False
             pass
         else:
-            self.exhaustion_counter = 0
+            self.player.exhaustion_counter = 0
             self._msg("You manage to rest safely and feel much better")
             return True
-
+    # Conversion Function *****
     def get_rarity(self):
         index = random_integer(1, 100)
         if index > 95:
@@ -94,19 +94,19 @@ class Dungeon:
         
     def generate_items(self):
         loot = []
-        if weighted_decision(0.3):
+        if weighted_decision(0.2):
             loot.append(Weapon(self.get_rarity()))
-            if weighted_decision(0.2):
+            if weighted_decision(0.1):
                 loot.append(Weapon(self.get_rarity()))
-        if weighted_decision(0.3):
+        if weighted_decision(0.5):
             loot.append(Armor(self.get_rarity()))
-            if weighted_decision(0.2):
+            if weighted_decision(0.1):
                 loot.append(Weapon(self.get_rarity()))
-        if weighted_decision(0.3):
+        if weighted_decision(0.1):
             loot.append(Item(self.get_rarity()))
-            if weighted_decision(0.2):
+            if weighted_decision(0.1):
                 loot.append(Weapon(self.get_rarity()))
-        if weighted_decision(0.3):
+        if weighted_decision(0.1):
             loot.append(Potion(self.get_rarity()))
             if weighted_decision(0.2):
                 loot.append(Weapon(self.get_rarity()))

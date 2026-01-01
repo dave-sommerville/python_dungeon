@@ -164,6 +164,7 @@ class GameEngine:
         pass
 
     @staticmethod
+    # Oddly placed static function *****
     def get_current_menu(dungeon):
         if dungeon.current_event:
             return dungeon.current_event.get_options()

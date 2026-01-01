@@ -1,9 +1,30 @@
 Core Mechanics
-- Contest/Enemy generation
-- Add more potions
+* Finish moving the Move function into the Player class
+- Entities
+  - Remove rarity based constructor and use "legacy" system
+  - Add Monster classes?
+  - What's special about NPCs?
+  - How are the adbstract entities being incorporated
+- Factory class
+  - Enemy
+    - Built based off of player level
+    - Separate name lists for more challenging foes
+    - Add stat setting mechanic to factory
+  - Merchant
+    - Should the merchant always be the same character?
+    - Shop population (Using item factory)
+  - Item
+    - Built based off of rarity
+    - Add more potions to generate
+  - Contest
+    - Will have to generate functions at random somehow
+- Event / Room generation
+  - Mechanics for distributing loot
+  - Master controls for event triggering (on movement)
+
+- Add block to rooms where no exits
 - Combat Retreat: Add rushing effect (moves to chamber at random)
 - Perception mechanics for search
-- Add block to rooms where no exits
 - File/class/function maintenance
 
 UI/Frontend
