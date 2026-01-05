@@ -5,6 +5,7 @@ Core Mechanics
   - Add Monster classes?
   - What's special about NPCs?
   - How are the abstract entities being incorporated
+  - Contests should be simple objects
 - Factory class
   - Enemy
     - Built based off of player level
@@ -12,7 +13,7 @@ Core Mechanics
     - Add stat setting mechanic to factory
   - Merchant
     - Should the merchant always be the same character?
-    - Shop population (Using item factory)
+    - Shop population (Using item factor)
   - Item
     - Built based off of rarity
     - Add more potions to generate
@@ -22,11 +23,12 @@ Core Mechanics
   - Mechanics for distributing loot
   - Master controls for event triggering (on movement)
 
+
 - Add block to rooms where no exits
-- Combat Retreat: Add rushing effect (moves to chamber at random)
+- Combat Retreat: Add rushing effect (moves to visited chamber at random in the top slice)
 - Perception mechanics for search
 - File/class/function maintenance
-
+  - Add more error warning classes
 UI/Frontend
 - Dark background
 - Code style typing

@@ -1,3 +1,5 @@
+import random
+
 from .rng_utilities import random_list_element
 chamber_descriptions = [
     "A low stone chamber with damp walls, where the air smells faintly of mold and rust.",
@@ -112,22 +114,59 @@ def base_item_description(rarity):
     return random_list_element(low_trinkets)
 
 dungeon_enemies = [
-    ("Skeleton Footman", "Animated bones clad in rusted armor, attacking with the fading memory of drill and discipline."),
-    ("Carrion Crawler", "A pale, many-legged creature that drags its slimy bulk across the floor, seeking paralyzed prey."),
-    ("Rotting Ghoul", "A corpse animated by hunger, its eyes alert and unfocused as it sniffs out the living."),
-    ("Dungeon Rat Swarm", "A churning mass of oversized rats, their teeth clicking as they surge forward in a tide."),
     ("Hollow-Eyed Cultist", "A mortal servant to dark forces, whispering prayers and clutching a ritual blade."),
     ("Rust-Eaten Animated Armor", "An empty suit of plate that clatters with each step, driven by magic alone."),
+    ("Crypt Spider", "A chitinous predator the size of a hound, its eyes glimmering in the dark like ink-black pearls."),
+    ("Ooze Spawn", "A wobbling glob of corrosive slime that absorbs weapons, light, and anything foolish enough to touch it."),
+    ("Plague-Scarred Bat", "A huge bat with patchy fur and cracked skin, shrieking as it wheels through stagnant air."),
+    ("Skeleton Footman", "Animated bones clad in rusted armor, attacking with the fading memory of drill and discipline."),
+    ("Carrion Crawler", "A pale, many-legged creature that drags its slimy bulk across the floor, seeking paralyzed prey."),
+    ("Giant Rat", "Vermin the size of dogs, often swarming and spreading disease."),
+    ("Giant Spider", "Web-weaving predator with venomous fangs and cunning ambush tactics."),
+    ("Rotting Ghoul", "A corpse animated by hunger, its eyes alert and unfocused as it sniffs out the living."),
+    ("Dungeon Rat Swarm", "A churning mass of oversized rats, their teeth clicking as they surge forward in a tide."),
+    ("Skeleton Warrior", "Reanimated bones clad in rusted armor, driven by dark will."),
+    ("Animated Suit of Armor", "Hollow plate mail brought to life by magic, relentless and unfeeling."),
+    ("Kobold", "Small reptilian humanoid with a knack for traps and cowardly tactics."),
+    ("Deep Gnome", "Clever subterranean dweller skilled in stealth and illusion magic."),
+    ("Grimlock", "Blind, brutish humanoid with an acute sense of smell and aggression."),
+    ("Troglodyte", "Primitive reptilian humanoid, reeks of musk and savagery."),
+    ("Goblin Scout", "Fast and elusive scout, often the eyes and ears of larger goblin warbands."),
     ("Cave Stalker", "A lanky, grey-skinned thing that clings to stone walls and drops silently on its prey."),
     ("Gravebound Spirit", "A flickering phantom bound to the place of its death, drifting in looping patterns of memory."),
     ("Tunnel Kobold Sapper", "A scrawny trap-maker carrying unstable explosives and too much confidence."),
     ("Mire Troll", "A hulking brute caked in filth, regenerating flesh as fast as weapons carve it away."),
-    ("Crypt Spider", "A chitinous predator the size of a hound, its eyes glimmering in the dark like ink-black pearls."),
-    ("Ooze Spawn", "A wobbling glob of corrosive slime that absorbs weapons, light, and anything foolish enough to touch it."),
-    ("Plague-Scarred Bat", "A huge bat with patchy fur and cracked skin, shrieking as it wheels through stagnant air."),
-    ("Lost Adventurer Shade", "A ghostly fragment of someone who came before you, reenacting their final moments in endless loops."),
-    ("Ironbound Jailor", "A towering warden fused to chains and shackles, dragging the instruments of imprisonment with every stride.")
+    ("Spectre", "Ghostly apparition that drains warmth and life from nearby souls."),
+    ("Wight", "Undead warrior with cursed strength and a hunger for the living."),
+    ("Ogre", "Massive, dim-witted brute with a club that can shatter stone."),
+    ("Cave Troll", "Thick-skinned giant dwelling in caves, extremely strong and territorial."),
+    ("Stone Golem", "Magical construct of immense weight and force, nearly impervious to blades."),
+    ("Mummy", "Wrapped in ancient linens, cursed to protect tombs with dark magic."),
+    ("Pit Crawler", "Sinister, skittering horror that burrows through walls and flesh alike."),
+    ("Bone Naga", "Serpentine undead with spellcasting power and a gaze that chills the spine."),
+    ("Land Shark", "Massive beast with armored hide and a hunger for anything that moves underground."),
+    ("Death Knight", "Fallen champion clad in blackened armor, wielding unholy powers and blades."),
+    ("Drake", "Wingless draconic creature with elemental breath and raw fury."),
+    ("Hydra", "Many-headed serpent beast; cut one head off, two may take its place."),
+    ("Chimera", "Three-headed monstrosity that breathes fire, roars thunder, and strikes with venom."),
+    ("Wyvern", "Flying reptile with a venomous stinger and a taste for meat."),
+    ("Purple Worm", "Titanic worm with a gaping maw, capable of devouring adventurers whole.")
 ]
 
-def enemy_description():
-  return random_list_element(dungeon_enemies)
+def enemy_description(cr):
+  list_length = len(dungeon_enemies)
+  # We divide the list into 5 roughly equal chunks
+  chunk_size = list_length // 5
+  
+  # Calculate the start and end indices for the slice
+  # CR 1 -> 0 to chunk_size
+  # CR 5 -> (4 * chunk_size) to the end of the list
+  start_index = (cr - 1) * chunk_size
+  
+  # For the final CR level, we go to the very end to catch any remainder
+  if cr == 5:
+      monster_pool = dungeon_enemies[start_index:]
+  else:
+      end_index = start_index + chunk_size
+      monster_pool = dungeon_enemies[start_index:end_index]
+  return random.choice(monster_pool)
