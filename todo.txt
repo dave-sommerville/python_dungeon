@@ -4,7 +4,7 @@ Core Mechanics
   - Remove rarity based constructor and use "legacy" system
   - Add Monster classes?
   - What's special about NPCs?
-  - How are the adbstract entities being incorporated
+  - How are the abstract entities being incorporated
 - Factory class
   - Enemy
     - Built based off of player level
@@ -44,7 +44,7 @@ Game play touches
         - Convincing them by charm, deception, or intimidation
         - Add combat interactions
 - Spells
-- Secret rooms/Treasure Chests
+- Secret rooms
 - Magical Items
   - Bag of holding
   - Displacer Cloak
