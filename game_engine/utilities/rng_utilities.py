@@ -10,3 +10,4 @@ def random_list_element(lst):
 
 def random_integer(min_val, max_val):
     return random.randint(min_val, max_val)
+

@@ -17,20 +17,22 @@ Core Mechanics
 - Event / Room generation
   - Mechanics for distributing loot
   - Master controls for event triggering (on movement)
+- Fix player death sequence
 - ASCII Printouts
 - Secondary weapon
-- Add containers class(secret rooms/chests)
+- Character should have its own (player overwritten) display method
 - Combat Retreat: Add rushing effect (moves to visited chamber at random in the top slice)
 - Perception mechanics for search
+  - Secret room
 - File/class/function maintenance
   - Add more error warning classes
-
-UI/Frontend
-- Dark background
-- Code style typing
-- Naturalize appearance of input UI
-- Fix size of menu options
-- Fix hover effects/pointers for clicking UI
+  - Refactor JavaScript file to match my style
+- UI/Frontend
+  - Dark background
+  - Code style typing
+  - Naturalize appearance of input UI
+  - Fix size of menu options
+  - Fix hover effects/pointers for clicking UI
 
 Unmade Mechanics
 - Boss battles
@@ -51,6 +53,7 @@ Unmade Mechanics
 Plot Edits
 - Serpent introduction and help
 - Elder brain
+- Progress response in enemies
 
 Other
 - Database

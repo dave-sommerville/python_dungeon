@@ -7,7 +7,7 @@ from .events.skill_contest import SkillContestEvent
 from .events.merchant_interaction import MerchantEvent
 from .events.inventory_item import InventoryItemEvent
 from .utilities.rng_utilities import weighted_decision
-from .factory import enemy_factory
+from .factory import enemy_factory, merchant_factory
 from .entities.contest_object import ContestObject
 from .entities.characters.npc import NPC
 from .entities.items.item import Item
@@ -92,9 +92,7 @@ class GameEngine:
 
     def _call_for_merchant_event(self, dungeon):
         dungeon.state = GameState.INVENTORY_MANAGEMENT
-        merchant = NPC("Also jeff", "idk, a little mushroom guy")
-        merchant.is_merchant = True
-        merchant.inventory = [Item("For Sale","Urn"), Item("For sale","Jug")]
+        merchant = merchant_factory()
         merchant_interaction = MerchantEvent(merchant)
         self._log(f"You meet a merchant named {merchant.name}")
         self._log("Select an item to purchase if you wish")
