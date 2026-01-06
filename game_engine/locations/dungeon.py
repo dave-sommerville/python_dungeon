@@ -35,6 +35,18 @@ class Dungeon:
         pass
     
     def move_player(self, direction):
+        if direction == "north" and not self.player.current_chamber.north_passage:
+            print("blocked")
+            return
+        if direction == "east" and not self.player.current_chamber.east_passage:
+            print("blocked")
+            return
+        if direction == "south" and not self.player.current_chamber.south_passage:
+            print("blocked")
+            return
+        if direction == "west" and not self.player.current_chamber.west_passage:
+            print("blocked")
+            return   
         self._msg(f"You move {direction}")
         # Determine target chamber before describing it
         next_id = self.player.print_next_location(direction)
@@ -127,7 +139,6 @@ class Dungeon:
         """
         location_id = self.player.print_current_location()
         chamber = next((c for c in self.visited_locations if c.id == location_id), None)
-        print(chamber.description)
         if chamber:
             return chamber.description
         # Fallback to player's current chamber (and track it for future lookups)

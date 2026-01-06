@@ -1,34 +1,30 @@
 Core Mechanics
-* Finish moving the Move function into the Player class
 - Entities
   - Remove rarity based constructor and use "legacy" system
-  - Add Monster classes?
-  - What's special about NPCs?
-  - How are the abstract entities being incorporated
   - Contests should be simple objects
 - Factory class
   - Enemy
     - Built based off of player level
     - Separate name lists for more challenging foes
     - Add stat setting mechanic to factory
+    - Move describe function into character (override for player)
   - Merchant
     - Should the merchant always be the same character?
     - Shop population (Using item factor)
   - Item
     - Built based off of rarity
     - Add more potions to generate
-  - Contest
-    - Will have to generate functions at random somehow
 - Event / Room generation
   - Mechanics for distributing loot
   - Master controls for event triggering (on movement)
-
-
-- Add block to rooms where no exits
+- ASCII Printouts
+- Secondary weapon
+- Add containers class(secret rooms/chests)
 - Combat Retreat: Add rushing effect (moves to visited chamber at random in the top slice)
 - Perception mechanics for search
 - File/class/function maintenance
   - Add more error warning classes
+
 UI/Frontend
 - Dark background
 - Code style typing
@@ -36,9 +32,8 @@ UI/Frontend
 - Fix size of menu options
 - Fix hover effects/pointers for clicking UI
 
-Game play touches
-- ASCII Printouts
-- Secondary weapon
+Unmade Mechanics
+- Boss battles
 - Interactions
     - Dialogue options
     - Cha vs Wis checks
@@ -46,7 +41,6 @@ Game play touches
         - Convincing them by charm, deception, or intimidation
         - Add combat interactions
 - Spells
-- Secret rooms
 - Magical Items
   - Bag of holding
   - Displacer Cloak
@@ -56,6 +50,7 @@ Game play touches
 
 Plot Edits
 - Serpent introduction and help
+- Elder brain
 
 Other
 - Database
