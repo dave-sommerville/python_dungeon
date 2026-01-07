@@ -1,22 +1,7 @@
 Core Mechanics
-- Entities
-  - Remove rarity based constructor and use "legacy" system
-  - Contests should be simple objects
-- Factory class
-  - Enemy
-    - Built based off of player level
-    - Separate name lists for more challenging foes
-    - Add stat setting mechanic to factory
-    - Move describe function into character (override for player)
-  - Merchant
-    - Should the merchant always be the same character?
-    - Shop population (Using item factor)
-  - Item
-    - Built based off of rarity
-    - Add more potions to generate
-- Event / Room generation
-  - Mechanics for distributing loot
-  - Master controls for event triggering (on movement)
+- Contests should be simple objects
+- Master controls for event triggering (on movement)
+- Add more potions to generate
 - Fix player death sequence
 - ASCII Printouts
 - Secondary weapon
@@ -33,6 +18,13 @@ Core Mechanics
   - Naturalize appearance of input UI
   - Fix size of menu options
   - Fix hover effects/pointers for clicking UI
+  - Loading screen animation
+
+Other
+- Database
+- Containerization
+- Deployment
+- User authorization
 
 Unmade Mechanics
 - Boss battles
@@ -54,12 +46,4 @@ Plot Edits
 - Serpent introduction and help
 - Elder brain
 - Progress response in enemies
-
-Other
-- Database
-- User authorization
-- Containerization
-- Extras:
-  - Loading Screen
-  - NeoCities Site
 
