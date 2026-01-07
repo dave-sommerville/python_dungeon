@@ -1,14 +1,17 @@
 Core Mechanics
+- Function parameters
+  - Potions
+  - Contests
+  - Spells?
 - Contests should be simple objects
 - Master controls for event triggering (on movement)
 - Add more potions to generate
+
 - Fix player death sequence
 - ASCII Printouts
-- Secondary weapon
 - Character should have its own (player overwritten) display method
 - Combat Retreat: Add rushing effect (moves to visited chamber at random in the top slice)
 - Perception mechanics for search
-  - Secret room
 - File/class/function maintenance
   - Add more error warning classes
   - Refactor JavaScript file to match my style
@@ -27,6 +30,8 @@ Other
 - User authorization
 
 Unmade Mechanics
+- Secondary weapon
+  - Martial/Range weapons
 - Boss battles
 - Interactions
     - Dialogue options

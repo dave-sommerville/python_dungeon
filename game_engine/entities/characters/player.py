@@ -4,7 +4,7 @@ from ...locations.chamber import Chamber
 from ..items.item import Item
 from ..items.potion import Potion
 from ...game_action_error import GameActionError
-from ...utilities.rng_utilities import weighted_decision
+from ...utilities.rng_utilities import weighted_decision, random_list_element
     # prisoner_status = ''
 
 class Player(Character):
@@ -95,6 +95,17 @@ class Player(Character):
                 return f"{self.x},{self.y - 1}"
             case _:
                 raise ValueError(f"{direction} is not a valid direction.")
+    def get_possible_player_moves(self):
+        move_list = []
+        if self.current_chamber.north_passage:
+            move_list.append("north")
+        if self.current_chamber.east_passage:
+            move_list.append("east")
+        if self.current_chamber.south_passage:
+            move_list.append("south")
+        if self.current_chamber.west_passage:
+            move_list.append("west")
+        return random_list_element(move_list)
 
     def search_chamber(self):
         # Need to add perception mechanic

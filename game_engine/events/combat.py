@@ -36,12 +36,10 @@ class CombatEvent(Event):
                         dungeon._msg(f"{self.entity.name} attacks you but misses")
                     else:
                         dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
-
                 case "interact": # Sub events
                     dungeon._msg("You said hi and they left")
                     dungeon.current_event = None
                     dungeon.state = GameState.MAIN_MENU
-
                 case "dodge":
                     dungeon._msg("You dodged")
                     dungeon.player.dodge_action()
@@ -50,7 +48,6 @@ class CombatEvent(Event):
                         dungeon._msg(f"{self.entity.name} attacks you but misses")
                     else:
                         dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
-
                 case "retreat":
                     dungeon._msg("you retreat from the battle, but they get one attack")
                     enemy_damage = self.entity.attack_action(dungeon.player)
@@ -59,6 +56,10 @@ class CombatEvent(Event):
                     else:
                         dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
                     dungeon.current_event = None
+                    if dungeon.player.health > 0:
+                        dungeon._msg("You retreat to a previous chamber")
+                        direction = dungeon.player.get_possible_player_moves()
+                        dungeon.move_player(direction)
 
                 case "use item": # Sub events
                     dungeon._msg("Select an item to use")
