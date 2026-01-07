@@ -11,7 +11,7 @@ class Character(Entity):
         self.health = 70
         self.maxHP = 100
         self.armor_class = 8
-        self.weapon_primary = Weapon(2)
+        self.weapon_primary = Weapon("Sword","Shiny", 10, 5)
         self.stealth = 0
         self.wis = 0
         self.inventory = []

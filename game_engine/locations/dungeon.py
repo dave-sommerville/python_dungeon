@@ -10,6 +10,7 @@ from ..entities.items.item import Item
 from ..entities.items.armor import Armor
 from ..entities.items.potion import Potion
 from ..entities.items.weapon import Weapon
+from ..factory import random_item_factory
 
 class Dungeon:
     current_event = None
@@ -106,30 +107,11 @@ class Dungeon:
         
     def generate_items(self):
         loot = []
-        if weighted_decision(0.2):
-            loot.append(Weapon(self.get_rarity()))
-            if weighted_decision(0.1):
-                loot.append(Weapon(self.get_rarity()))
-        if weighted_decision(0.5):
-            loot.append(Armor(self.get_rarity()))
-            if weighted_decision(0.1):
-                loot.append(Weapon(self.get_rarity()))
-        if weighted_decision(0.1):
-            loot.append(Item(self.get_rarity()))
-            if weighted_decision(0.1):
-                loot.append(Weapon(self.get_rarity()))
-        if weighted_decision(0.1):
-            loot.append(Potion(self.get_rarity()))
-            if weighted_decision(0.2):
-                loot.append(Weapon(self.get_rarity()))
+        amount = random_integer(1,4)
+        for i in range(amount):
+            loot.append(random_item_factory(self.get_rarity()))
         return loot
     
-    def generate_merchant(self):
-        merchant = NPC("Jeff"," the Merchant")
-        merchant.inventory.extend(self.generate_items())
-        merchant.is_merchant = True
-        return merchant
-
     def describe_current_chamber(self):
         """Return the description for the chamber the player is currently in.
 

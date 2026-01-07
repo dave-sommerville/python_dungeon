@@ -53,7 +53,7 @@ class Player(Character):
         # self.stealth = 0
 
         # Item Management
-        self.inventory = [Item("A Key", "Old", 2), Potion("Potion", "of healing", 20)]
+        self.inventory = [Potion("Potion", "of healing")]
         self.inventory_size = 5
         self.weapon_secondary = None
         self.magical_item = None
