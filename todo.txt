@@ -1,7 +1,11 @@
 Core Mechanics
+- Round counter
 - Inventory management (Simply throws an error for a full inventory)
 - Function parameters
   - Potions
+    - Healing
+    - Effect removal
+    - 
   - Contests
   - Spells?
 - Contests should be simple objects
