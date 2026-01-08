@@ -1,14 +1,7 @@
 import {
   select, 
-  selectAll, 
   listen, 
   create, 
-  addClass, 
-  removeClass,
-  getDate,
-  isAlphaNum,
-  typeText,
-  randomFromArray
 } from './utils.js';
 
 let currentMenu = [];
@@ -68,10 +61,10 @@ function updateUI(data) {
     isEventMenu = data.event || false;
     // Update Logs
     if (data.logs) {
-        data.logs.forEach(msg => {
+        for (const msg of data.logs) {
             logPanel.innerHTML += `<p>> ${msg}</p>`;
-        });
-        logPanel.scrollTop = logPanel.scrollHeight;
+            logPanel.scrollTop = logPanel.scrollHeight;
+        }
     }
     // Update Menu Rendering
     ol.innerHTML = '';

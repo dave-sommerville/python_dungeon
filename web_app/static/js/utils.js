@@ -45,22 +45,9 @@ export function getDate() {
 
   return new Date().toLocaleDateString('en-ca', options);
 }
-export function isAlphaNum(inputString) {
-    // Standard pattern for letters and numbers
-    let pattern = /^[a-zA-Z0-9-]+$/;
-
-    return pattern.test(inputString);
-}
 export function randomDigit() {
   Math.floor(Math.random() * 10);
 }
 export function randomFromArray(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
-}
-export async function typeText(element, text, speed = 60) {
-  element.textContent = "";
-  for (let i = 0; i < text.length; i++) {
-    element.textContent += text[i];
-    await new Promise(resolve => setTimeout(resolve, speed));
-  }
 }

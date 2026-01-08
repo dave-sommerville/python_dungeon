@@ -1,4 +1,23 @@
 @charset "utf-8";
+.screen-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
 body {
     background-color: rgb(105, 105, 160);
+}
+#game-container{
+    height: 100svh;
+}
+#log-panel{
+    height: 70svh;
+    width: 70%;
+}
+#menu-panel {
+    width: 30%;
+}
+#error-panel {
+
 }

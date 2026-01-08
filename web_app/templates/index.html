@@ -22,28 +22,20 @@
     <script type="module" src="{{ url_for('static', filename='js/game.js') }}" defer></script>
 </head>
 <body>
-    <header>
-        <!-- Header content here -->
-    </header>
-
-    <main>
-        <div id="game-container">
+    <main id="game-container">
+        <div class="screen-container">
             <div id="log-panel" style="height: 500px; overflow-y: scroll; border: 1px solid #ccc;">
                 <p>Welcome to the dungeon...</p>
             </div>
-
             <div id="menu-panel" style="background: #eee; padding: 10px; margin-top: 10px;">
                 <strong>Available Actions:</strong>
                 <ul id="options-list" style="padding:0;"></ul>
             </div>
-
+        </div>
             <div id="error-panel" style="color: red; min-height: 20px;"></div>
-
             <input type="text" id="player-input" placeholder="Type action or number and press Enter...">
             <button id="execute-btn" onclick="sendAction()">Execute</button>
-        </div>
     </main>
-
     <footer>
         <!-- Footer content here -->
     </footer>
