@@ -1,4 +1,5 @@
 Core Mechanics
+- Inventory management (Simply throws an error for a full inventory)
 - Function parameters
   - Potions
   - Contests
