@@ -1,23 +1,141 @@
 @charset "utf-8";
-.screen-container {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
+:root { 
+    --bg-clr: #000f0a;
+    --text-clr: #8fa;
+    --input-bg-clr: #09120f;
+    --error-clr: #f31;
+    --text-secondary-clr: rgb(95, 133, 106);
+    --app-transition: all 0.3s ease-in-out;
 }
-
+.flex {
+    display: flex;
+}
+.f-col {
+    display: flex;
+    flex-direction: column;
+}
 body {
-    background-color: rgb(105, 105, 160);
+    background-color: var(--bg-clr);
+    font-size: 24px;
+    font-family: "Space Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--text-clr);
+    text-shadow:
+        0 0 2px #39c639,  
+        0 0 8px #2e9e2e,  
+        0 0 15px #2e9e2e; 
+    animation: text-flicker-anim 0.5s infinite linear alternate-reverse;
+    padding: 50px;
+    position: relative;
 }
 #game-container{
     height: 100svh;
 }
 #log-panel{
     height: 70svh;
-    width: 70%;
+    min-width: 700px;
+    max-width: 900px;
+    text-wrap: wrap;
 }
 #menu-panel {
-    width: 30%;
+    width: 200px;
+    margin-left: 50px;
+}
+.control-panel{
+    position: fixed;
+    top: 20px;
+    right: 200px;
+}
+ul {
+    list-style-type: none;
 }
 #error-panel {
+    height: 100px;
+    width: 200px;
+    color:var(--error-clr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.menu-item {
+    transition: var(--app-transition); /* Corrected spelling and base state */
+}
 
+.menu-item:hover {
+    filter: brightness(1.2);
+    background-color: var(--error-clr);
+}
+input {
+    height: 80px;
+    width: 400px;
+    background-color: var(--input-bg-clr);
+    caret-color: var(--text-clr);
+    color: var(--text-clr);
+    outline: none;
+    border: none;
+}
+input::placeholder {
+    color: var(--text-secondary-clr);
+}
+form {
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+}
+button {
+    width: 80px;
+    height: 80px;
+    margin-left: 20px;
+    border: none;
+    background-color: var(--bg-clr);
+    cursor: pointer;
+    transition: var(--app-transition);
+    i {
+        font-size: 64px;
+        color: var(--text-secondary-clr);
+    }
+}
+button i {
+    font-size: 64px;
+    color: var(--text-secondary-clr);
+    transition: color 0.3s ease-in-out; /* Smoothly fade the icon color */
+}
+button:hover i {
+    color: var(--text-clr);
+}
+
+@keyframes text-flicker-anim {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 2px #39c639, 0 0 8px #2e9e2e, 0 0 15px #2e9e2e;
+  }
+  /* Slight dimming */
+  23% {
+    opacity: 0.95;
+  }
+  /* Quick, sharp dip in brightness and glow tighten */
+  24% {
+    opacity: 0.8;
+    text-shadow: 0 0 2px #39c639, 0 0 4px #2e9e2e, 0 0 8px #2e9e2e;
+  }
+  25% {
+    opacity: 0.95;
+  }
+  /* Another slight variance */
+  55% {
+    opacity: 0.9;
+  }
+  /* Another sharp dip */
+  56% {
+    opacity: 0.75;
+    text-shadow: 0 0 2px #39c639, 0 0 4px #2e9e2e, 0 0 8px #2e9e2e;
+  }
+  57% {
+    opacity: 0.9;
+  }
+  /* Stable period */
+  75% {
+    opacity: 1;
+  }
 }
