@@ -1,28 +1,40 @@
 Core Mechanics
-- Round counter
+- Combat round counter
+- Secondary weapon
+  - Martial/Range weapons
+- Add effects/spells to combat
+- Only have healing/restoration potions, better by rarity
+- Finish armor donning/doffing
 - Inventory management (Simply throws an error for a full inventory)
 - Function parameters
-  - Potions
-    - Healing
-    - Effect removal
-    - 
   - Contests
-  - Spells?
+    - Fire Bomb
+    - Wall Arrows
+    - Poison gas
+    - Spike pit
+    - Rolling ball
+  - Spells
+    - Stun
+    - Poison
+    - Nerf
+    - Heal self
+    - Fireball
+    - Shield(Mage armor?)
 - Contests should be simple objects
-- Master controls for event triggering (on movement)
-- Add more potions to generate
 
+- Master controls for event triggering (on movement)
+- Add passage descriptions 
 - Fix player death sequence
+- Add D20 equivalent
 - ASCII Printouts
-- Character should have its own (player overwritten) display method
 - Combat Retreat: Add rushing effect (moves to visited chamber at random in the top slice)
-- Perception mechanics for search
 - File/class/function maintenance
   - Add more error warning classes
   - Refactor JavaScript file to match my style
 - UI/Frontend
+  - Tpying animation
   - Dark background
-  - Code style typing
+  - Code style font
   - Naturalize appearance of input UI
   - Fix size of menu options
   - Fix hover effects/pointers for clicking UI
@@ -30,13 +42,11 @@ Core Mechanics
 
 Other
 - Database
+- User authorization
 - Containerization
 - Deployment
-- User authorization
 
 Unmade Mechanics
-- Secondary weapon
-  - Martial/Range weapons
 - Boss battles
 - Interactions
     - Dialogue options
@@ -44,7 +54,6 @@ Unmade Mechanics
         - Pick pocketing
         - Convincing them by charm, deception, or intimidation
         - Add combat interactions
-- Spells
 - Magical Items
   - Bag of holding
   - Displacer Cloak

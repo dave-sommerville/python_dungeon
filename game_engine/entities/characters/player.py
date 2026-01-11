@@ -4,7 +4,7 @@ from ...locations.chamber import Chamber
 from ..items.item import Item
 from ..items.potion import Potion
 from ...game_action_error import GameActionError
-from ...utilities.rng_utilities import weighted_decision, random_list_element
+from ...utilities.rng_utilities import weighted_decision, random_list_element, random_integer
     # prisoner_status = ''
 
 class Player(Character):
@@ -45,11 +45,11 @@ class Player(Character):
 
         # Player Characteristics 
         self.player_level = 0
-        self.xp = 0
-        self.dex = 0
-        self.con = 0
-        self.cha = 0
-        # self.wis = 0
+        self.xp = 5
+        self.dex = 5
+        self.con = 5
+        self.cha = 5
+        self.wis = 5
         # self.stealth = 0
 
         # Item Management
@@ -61,16 +61,17 @@ class Player(Character):
     def _msg(self, text):
         self.message_buffer.append(text)
 
-    def print_player_info(self):
+    def print_character_info(self):
         return [
-            f"Health: {self.health}/{self.maxHP} "
-            f"Sanity: {self.sanity}",
-            f"Mana: {self.mana} ",
-            f"Exhaustion: {self.exhaustion_counter} "
+            f"AC: {self.armor_class} - "
+            f"Health: {self.health}/{self.maxHP} ",
+            f"Sanity: {self.sanity}", # Take this out for release
+            f"Mana: {self.mana} ", 
+            f"Exhaustion: {self.exhaustion_counter} " 
             f"Gold: {self.gold} ",
             f"Killcount: {self.killcount} "
             f"Level: {self.player_level} XP: {self.xp} ",
-            f"AC: {self.armor_class} "
+            f"Location: {self.y}, {self.x}"
         ]
     
     def build_player_from_stats(self):
@@ -110,13 +111,16 @@ class Player(Character):
     def search_chamber(self):
         # Need to add perception mechanic
         # Need to add trap/contest mechanic
+        search_dc = random_integer(2,7)
         loot_list = []
-        loot_count = len(self.current_chamber.chamber_items)
-        inventory_room = self.inventory_size - len(self.inventory)
-        if loot_count > 0 and loot_count <= inventory_room:
+        if self.wis >= search_dc:
+            loot_count = len(self.current_chamber.chamber_items)
+            inventory_room = self.inventory_size - len(self.inventory)
             for item in self.current_chamber.chamber_items:
-                loot_list.append(item.name)
-                self.add_to_inventory(item)
+                if loot_count > 0 and loot_count <= inventory_room:
+                    loot_list.append(item.name)
+                    self.add_to_inventory(item)
+                    inventory_room -= 1
         return loot_list
     
     def print_character_inventory(self):

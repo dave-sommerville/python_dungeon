@@ -106,10 +106,11 @@ class Dungeon:
         
     def generate_items(self):
         loot = []
-        amount = random_integer(1,4)
-        for i in range(amount):
-            loot.append(random_item_factory(self.get_rarity()))
-        return loot
+        if weighted_decision(0.3):
+            amount = random_integer(1,4)
+            for i in range(amount):
+                loot.append(random_item_factory(self.get_rarity()))
+            return loot
     
     def describe_current_chamber(self):
         """Return the description for the chamber the player is currently in.

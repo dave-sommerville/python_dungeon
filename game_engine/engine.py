@@ -114,6 +114,8 @@ class GameEngine:
                 self._call_for_contest_event(dungeon)
             case "search":
                 loot_list = dungeon.player.search_chamber()
+                if len(loot_list) <= 0:
+                    dungeon._msg("Nothing is found in this chamber")
                 for item in loot_list:
                     dungeon._msg(item)
             case "rest":
@@ -125,7 +127,7 @@ class GameEngine:
             case "spells":
                 pass
             case "details":
-                for item in dungeon.player.print_player_info():
+                for item in dungeon.player.print_character_info():
                     self._log(item)
             case "describe":
                 chamber = dungeon.player.current_chamber

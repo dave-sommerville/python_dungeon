@@ -12,11 +12,10 @@ class Character(Entity):
         self.maxHP = 100
         self.armor_class = 8
         self.weapon_primary = Weapon("Sword","Shiny", 10, 5)
-        self.stealth = 0
         self.wis = 0
         self.inventory = []
         self.xp_award = 5
-        # self.armor = None
+        self.armor = None
         
     def don_armor(self, armor):
         pass
@@ -37,7 +36,12 @@ class Character(Entity):
             return damage
         else:
             return 0
-
+    def print_character_info(self):
+        return [
+            f"Health: {self.health}/{self.maxHP} - "
+            f"AC: {self.armor_class}",
+            f"{self.description}"
+        ]
     def dodge_action(self):
         self.is_dodging = True
 
