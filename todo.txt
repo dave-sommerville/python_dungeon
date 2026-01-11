@@ -3,6 +3,7 @@ Core Mechanics
 - Secondary weapon
   - Martial/Range weapons
 - Add effects/spells to combat
+- Add out of combat spell management
 - Only have healing/restoration potions, better by rarity
 - Finish armor donning/doffing
 - Inventory management (Simply throws an error for a full inventory)
@@ -13,15 +14,7 @@ Core Mechanics
     - Poison gas
     - Spike pit
     - Rolling ball
-  - Spells
-    - Stun
-    - Poison
-    - Nerf
-    - Heal self
-    - Fireball
-    - Shield(Mage armor?)
 - Contests should be simple objects
-
 - Master controls for event triggering (on movement)
 - Add passage descriptions 
 - Fix player death sequence
