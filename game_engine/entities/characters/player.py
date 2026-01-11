@@ -1,5 +1,6 @@
 import math
 from .character import Character
+from ...entities.spells.spellindex import SpellIndex
 from ...locations.chamber import Chamber
 from ..items.item import Item
 from ..items.potion import Potion
@@ -57,6 +58,7 @@ class Player(Character):
         self.inventory_size = 5
         self.weapon_secondary = None
         self.magical_item = None
+        self.known_spells = []
 
     def _msg(self, text):
         self.message_buffer.append(text)
