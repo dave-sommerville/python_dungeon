@@ -26,14 +26,17 @@ body {
         0 0 8px #2e9e2e,  
         0 0 15px #2e9e2e; 
     animation: text-flicker-anim 0.5s infinite linear alternate-reverse;
-    padding: 50px;
     position: relative;
 }
+
 #game-container{
-    height: 100svh;
+    padding: 50px;
+    padding-bottom: 120px;
+    display: flex;
+    flex-direction: column;
 }
 #log-panel{
-    height: 70svh;
+    min-height: 70svh;
     min-width: 700px;
     max-width: 900px;
     text-wrap: wrap;
@@ -41,6 +44,10 @@ body {
 #menu-panel {
     width: 200px;
     margin-left: 50px;
+}
+.buffer {
+    height: 20svh;
+    width: 100%;
 }
 .control-panel{
     position: fixed;
@@ -59,7 +66,7 @@ ul {
     align-items: center;
 }
 .menu-item {
-    transition: var(--app-transition); /* Corrected spelling and base state */
+    transition: var(--app-transition); 
 }
 
 .menu-item:hover {
@@ -79,9 +86,15 @@ input::placeholder {
     color: var(--text-secondary-clr);
 }
 form {
+    width: 100%;
+    background-color: var(--bg-clr);
+    height: 120px;
+    display: flex;
+    align-items: center;
     position: fixed;
-    bottom: 50px;
-    left: 50px;
+    bottom: 0;
+    left: 0;
+    padding-left: 50px;
 }
 button {
     width: 80px;

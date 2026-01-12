@@ -14,14 +14,10 @@ const ol = select('#options-list');
 const inputEl = select('#player-input');
 const actionForm = select('#action-form'); // Target the form
 
-/**
- * Helper to type text into an element letter by letter.
- */
-function typeText(element, text, speed = 20) {
+function typeText(element, text, speed = 5) {
     const str = String(text || "");
     return new Promise((resolve) => {
         if (str.length === 0) return resolve();
-
         let i = 0;
         const interval = setInterval(() => {
             if (i < str.length) {
@@ -32,11 +28,13 @@ function typeText(element, text, speed = 20) {
                 clearInterval(interval);
                 resolve();
             }
-            logPanel.scrollTop = logPanel.scrollHeight;
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'instant' // 'instant' is better during a loop to avoid jitter
+            });        
         }, speed);
     });
 }
-
 function getActionValue(index) {
     const opt = currentMenu[index];
     const subMenuCommands = ["use", "discard", "back", "cancel"];
@@ -48,7 +46,6 @@ function getActionValue(index) {
     }
     return opt;
 }
-
 async function sendAction(overrideAction) {
     let action = typeof overrideAction === 'string' ? overrideAction : inputEl.value;
     inputEl.value = '';
@@ -60,7 +57,6 @@ async function sendAction(overrideAction) {
             action = getActionValue(idx);
         }
     }
-
     try {
         const response = await fetch('/action', {
             method: 'POST',

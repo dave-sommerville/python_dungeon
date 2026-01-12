@@ -22,25 +22,23 @@
 </head>
 <body>
     <main id="game-container">
-            <div id="log-panel" >
-                <p>Welcome to the dungeon...</p>
+        <div class="control-panel">
+            <div id="error-panel"></div>
+            <div id="menu-panel">
+                <strong>Available Actions:</strong>
+                <ul id="options-list" ></ul>
             </div>
-            <div class="f-col control-panel">
-                <div id="error-panel"></div>
-                <div id="menu-panel">
-                    <strong>Available Actions:</strong>
-                    <ul id="options-list" ></ul>
-                </div>
-            </div>
-            <form id="action-form" class="flex">                
-                <input type="text" id="player-input" placeholder="Type action or number..." autocomplete="off">
-                <button type="submit">
-                    <i class="fa-solid fa-square-caret-right"></i>
-                </button>
-            </form>
-        </main>
-    <footer>
-        <!-- Footer content here -->
-    </footer>
+        </div>
+        <div id="log-panel" >
+            <p>Welcome to the dungeon...</p>
+        <!-- </div>
+        <div class="buffer"></div> -->
+        <form id="action-form" class="flex">                
+            <input type="text" id="player-input" placeholder="Type action or number..." autocomplete="off">
+            <button type="submit">
+                <i class="fa-solid fa-square-caret-right"></i>
+            </button>
+        </form>
+    </main>
 </body>
 </html>
