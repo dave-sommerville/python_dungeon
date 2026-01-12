@@ -27,11 +27,7 @@ function typeText(element, text, speed = 5) {
             if (i >= str.length) {
                 clearInterval(interval);
                 resolve();
-            }
-            window.scrollTo({
-                top: document.body.scrollHeight,
-                behavior: 'instant' // 'instant' is better during a loop to avoid jitter
-            });        
+            }    
         }, speed);
     });
 }
@@ -49,7 +45,6 @@ function getActionValue(index) {
 async function sendAction(overrideAction) {
     let action = typeof overrideAction === 'string' ? overrideAction : inputEl.value;
     inputEl.value = '';
-
     const numericMatch = action.trim().match(/^\d+$/);
     if (numericMatch) {
         const idx = parseInt(action.trim(), 10) - 1;
@@ -71,12 +66,10 @@ async function sendAction(overrideAction) {
         errorPanel.innerText = String(err);
     }
 }
-
 async function updateUI(data) {
     currentMenu = data.menu || [];
     currentState = data.state || null;
     isEventMenu = data.event || false;
-
     if (data.logs) {
         for (const msg of data.logs) {
             const p = create('p');
@@ -85,7 +78,6 @@ async function updateUI(data) {
             await typeText(p, msg);
         }
     }
-
     ol.innerHTML = '';
     currentMenu.forEach((opt, i) => {
         const li = create('li');
