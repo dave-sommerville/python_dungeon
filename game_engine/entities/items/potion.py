@@ -8,6 +8,14 @@ class Potion(Item):
         self.potency = random_integer(1, 10)
 
     def use_item(self, character):
+        if self.potency < 3:
+            hp_amount = random_integer(10,30)
+            character.heal_self(hp_amount)
+        elif self.potency < 8:
+            hp_amount = random_integer(25,50)
+            character.heal_self(hp_amount)
+        else:
+            character.full_restore_self()
         character.health += self.potency
         if character.health > character.maxHP:
             character.health = character.maxHP

@@ -66,3 +66,9 @@ class Character(Entity):
             inventory_list.append(f"{item.name} - {item.durability}")
         inventory_list.append("back")
         return inventory_list
+    def heal_self(self, hp_amount):
+        self.health =+ hp_amount
+        if self.health > self.maxHP:
+            self.health = self.maxHP
+    def full_restore_self(self):
+        self.health = self.maxHP

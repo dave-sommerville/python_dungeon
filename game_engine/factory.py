@@ -39,11 +39,12 @@ def armor_factory(rarity):
   armor = Armor(name, description, ac_bonus)
   return armor
 
-def potion_factory():
+def potion_factory(rarity):
   info_obj = potion_description()
   name = info_obj[0]
   description = info_obj[1]
   potion = Potion(name, description)
+  potion.potency = rarity
   return potion
 
 def random_item_factory(rarity):

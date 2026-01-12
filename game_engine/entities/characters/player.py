@@ -111,8 +111,6 @@ class Player(Character):
         return random_list_element(move_list)
 
     def search_chamber(self):
-        # Need to add perception mechanic
-        # Need to add trap/contest mechanic
         search_dc = random_integer(2,7)
         loot_list = []
         if self.wis >= search_dc:
@@ -162,6 +160,11 @@ class Player(Character):
                 self.cha += 1
             case "wis":
                 self.wis += 1
+    
+    def full_restore_self(self):
+        super().full_restore_self()
+        self.mana += 5
+        self.exhaustion_counter = 0
 
 
 

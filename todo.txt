@@ -1,39 +1,33 @@
-Core Mechanics
+Combat Mechanics
 - Combat round counter
 - Secondary weapon
   - Martial/Range weapons
 - Add effects/spells to combat
-- Add out of combat spell management
+- Retreat Mechanic
+
+Contests
+- Fire Bomb
+- Wall Arrows
+- Poison gas
+- Spike pit
+- Rolling ball
+
+Other
+- Out of combat spell management
 - Only have healing/restoration potions, better by rarity
 - Finish armor donning/doffing
 - Inventory management (Simply throws an error for a full inventory)
-- Function parameters
-  - Contests
-    - Fire Bomb
-    - Wall Arrows
-    - Poison gas
-    - Spike pit
-    - Rolling ball
-- Contests should be simple objects
 - Master controls for event triggering (on movement)
 - Add passage descriptions 
 - Fix player death sequence
 - Add D20 equivalent
 - ASCII Printouts
-- Combat Retreat: Add rushing effect (moves to visited chamber at random in the top slice)
 - File/class/function maintenance
   - Add more error warning classes
   - Refactor JavaScript file to match my style
-- UI/Frontend
-  - Tpying animation
-  - Dark background
-  - Code style font
-  - Naturalize appearance of input UI
-  - Fix size of menu options
-  - Fix hover effects/pointers for clicking UI
-  - Loading screen animation
+- UI/Frontend Effects
 
-Other
+Later
 - Database
 - User authorization
 - Containerization
