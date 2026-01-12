@@ -51,17 +51,13 @@ class Dungeon:
         # Determine target chamber before describing it
         next_id = self.player.print_next_location(direction)
         t_x, t_y = map(int, next_id.split(','))
-
         next_chamber = next((c for c in self.visited_locations if c.id == next_id), None)
-
         if not next_chamber:
             next_chamber = self.generate_chamber(next_id)
             next_chamber.add_reverse_passage(self.reverse_direction(direction))
             self.visited_locations.append(next_chamber)
-
         if weighted_decision(0.6):
             self.player.exhaustion_counter += 1
-
         self.player.current_chamber = next_chamber
         self.player.x = t_x
         self.player.y = t_y
@@ -69,6 +65,7 @@ class Dungeon:
         self._msg(f"{self.describe_current_chamber()}")
         self._msg(f"What do you do next?")
         self._msg("")
+
     def generate_chamber(self, next_id):
         description = chamber_description()
         loot = self.generate_items()
