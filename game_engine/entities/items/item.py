@@ -8,7 +8,7 @@ class Item:
         self.durability = 1
         self.cost = 5
 
-    def use_item(self):
+    def use_item(self, character):
         return ('You cannot use this item')
 
     def item_description(self):

@@ -1,11 +1,11 @@
-from .utilities.desc_utitlities import enemy_description, weapon_description, base_item_description, armor_description, potion_description
+from .utilities.desc_utitlities import enemy_description, weapon_description, base_item_description, armor_description, potion_description, trap_description
 from .utilities.rng_utilities import random_integer
 from .entities.characters.character import Character
 from .entities.items.item import Item
 from .entities.items.weapon import Weapon
 from .entities.items.armor import Armor
 from .entities.items.potion import Potion
-
+from .entities.contest_object import ContestObject
 def enemy_factory():
   enemy_info = enemy_description(2)
   name = enemy_info[0]
@@ -32,7 +32,7 @@ def weapon_factory(rarity):
   return weapon
 
 def armor_factory(rarity):
-  info_obj = weapon_description(rarity)
+  info_obj = armor_description(rarity)
   name = info_obj[0]
   description = info_obj[1]
   ac_bonus = random_integer(rarity,(rarity * 2))
@@ -56,7 +56,7 @@ def random_item_factory(rarity):
   elif choice > 30:
     return armor_factory(rarity)
   else:
-    return potion_factory()
+    return potion_factory(rarity)
 # Add cost randomizer based on CHA
 def merchant_factory():
   merchant = Character("Jeff", "A small mushroom man.")
@@ -67,5 +67,11 @@ def merchant_factory():
     merchant.inventory.append(item)
   return merchant
 def trap_factory():
-  pass
+  info_obj = trap_description()
+  name = info_obj[0]
+  desc = info_obj[1]
+  skill_type = info_obj[2]
+  skill_dc = random_integer(1,5)
+  trap = ContestObject(name, desc, skill_type, skill_dc)
+  return trap
 

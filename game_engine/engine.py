@@ -7,7 +7,7 @@ from .events.skill_contest import SkillContestEvent
 from .events.merchant_interaction import MerchantEvent
 from .events.inventory_item import InventoryItemEvent
 from .utilities.rng_utilities import weighted_decision
-from .factory import enemy_factory, merchant_factory
+from .factory import enemy_factory, merchant_factory, trap_factory
 from .entities.contest_object import ContestObject
 from .entities.characters.npc import NPC
 from .entities.items.item import Item
@@ -33,6 +33,7 @@ class GameEngine:
             self.error = str(e)
         finally:
             # This block runs NO MATTER WHAT (success or error)
+            self.game_over_check(dungeon)
             dungeon.message_buffer.extend(self.logs)
             self.logs = dungeon.message_buffer
             dungeon.message_buffer = []
@@ -82,13 +83,12 @@ class GameEngine:
     def _take_half_damage(self):
         self._log("You take half damage")
 
-    def _call_for_contest_event(self, dungeon):
-        dungeon.state = GameState.INVENTORY_MANAGEMENT
-        contest_obj = ContestObject("Acid spray", "A spray of acid", "Duck away", ["Jump away", "Ignore"], "dex", 15, [self._take_damage, self._take_half_damage])
-        contest = SkillContestEvent(contest_obj)
-        self._log(f"You see a {contest_obj.description}")
-        self._log(f"You attempt to {contest_obj.objective_description}")
-        dungeon.current_event = contest
+    def _call_for_contest(self, dungeon):
+        contest_obj = trap_factory()
+        self._log(f"You see a {contest_obj.name} trigger ahead of you")
+        self._log(f"It is {contest_obj.description}")
+        result = contest_obj.trigger_trap(dungeon.player)
+        self._log(result)
 
     def _call_for_merchant_event(self, dungeon):
         dungeon.state = GameState.INVENTORY_MANAGEMENT
@@ -111,7 +111,7 @@ class GameEngine:
                 self._call_for_combat_event(dungeon)
             case "move west":  # Sub events
                 dungeon.move_player("west")
-                self._call_for_contest_event(dungeon)
+                self._call_for_contest(dungeon)
             case "search":
                 loot_list = dungeon.player.search_chamber()
                 if len(loot_list) <= 0:
@@ -134,6 +134,13 @@ class GameEngine:
                 self._log(chamber.description)
             case _:
                 raise GameActionError("Invalid Action")
+
+    def game_over_check(self, dungeon):
+        if dungeon.player.character_death_check():
+            self._log("You died")
+            dungeon.current_event = None
+            dungeon.state = GameState.GAME_OVER
+            print("You died")
 
     def _resolve_inventory_management_menu(self, dungeon, action):
         player = dungeon.player

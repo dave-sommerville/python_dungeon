@@ -1,32 +1,21 @@
 Combat Mechanics
 - Combat round counter
-- Secondary weapon
-  - Martial/Range weapons
 - Add effects/spells to combat
 - Retreat Mechanic
 
-Contests
-- Fire Bomb
-- Wall Arrows
-- Poison gas
-- Spike pit
-- Rolling ball
-
 Other
+- Add user initialization/ending sequence
 - Out of combat spell management
-- Only have healing/restoration potions, better by rarity
-- Finish armor donning/doffing
 - Inventory management (Simply throws an error for a full inventory)
 - Master controls for event triggering (on movement)
 - Add passage descriptions 
-- Fix player death sequence
 - Add D20 equivalent
 - ASCII Printouts
 - File/class/function maintenance
   - Add more error warning classes
   - Refactor JavaScript file to match my style
 - UI/Frontend Effects
-
+- Fix balancing
 Later
 - Database
 - User authorization
@@ -47,6 +36,8 @@ Unmade Mechanics
 - Sanity challenges
 - Progress map
 - Sneak/Surprise mechanics
+- Secondary weapon
+  - Martial/Range weapons
 
 Plot Edits
 - Serpent introduction and help

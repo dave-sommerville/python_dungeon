@@ -22,7 +22,6 @@ class Dungeon:
         # Track visited chambers (start with player's initial chamber)
         self.visited_locations = [self.player.current_chamber]
         self.current_event = None
-
     def _msg(self, text):
         self.message_buffer.append(text)
 

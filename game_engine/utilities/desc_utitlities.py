@@ -170,3 +170,19 @@ def enemy_description(cr):
       end_index = start_index + chunk_size
       monster_pool = dungeon_enemies[start_index:end_index]
   return random.choice(monster_pool)
+dungeon_traps = [
+    ("Fire Bomb", "A hidden pressure plate ignites an explosive canister.", "dex"),
+    ("Wall Arrows", "Mechanical sensors trigger a volley of poison-tipped arrows.", "dex"),
+    ("Poison Gas", "A hollow floor tile releases a cloud of toxic emerald vapors.", "con"),
+    ("Spike Pit", "A section of the floor hinges open to reveal a 20ft drop.", "dex"),
+    ("Rolling Ball", "A massive stone sphere is released from the ceiling.", "dex"),
+    ("Crushing Ceiling", "The exit doors lock as the ceiling slowly descends.", "dex"),
+    ("Electric Floor", "Metal floor plates become electrified, stunning the victim.", "con"),
+    ("Spectral Scythe", "An enchanted blade swings from a hidden groove.", "wis"),
+    ("Teleportation Loop", "A shimmering rune that teleports the victim back to the start.", "cha"),
+    ("Acid Spray", "Vents in the masonry spray a fine mist of corrosive acid.", "con"),
+    ("Siren's Mirror", "A cursed glass that compels the viewer to walk toward it.", "cha"),
+    ("Hidden Tripwire", "A thin wire nearly invisible to the naked eye.", "wis")
+]
+def trap_description():
+  return random_list_element(dungeon_traps)

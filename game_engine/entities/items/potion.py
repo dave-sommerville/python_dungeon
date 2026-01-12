@@ -16,6 +16,4 @@ class Potion(Item):
             character.heal_self(hp_amount)
         else:
             character.full_restore_self()
-        character.health += self.potency
-        if character.health > character.maxHP:
-            character.health = character.maxHP
+

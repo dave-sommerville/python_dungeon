@@ -11,16 +11,22 @@ class Character(Entity):
         self.health = 70
         self.maxHP = 100
         self.armor_class = 8
+        self.current_armor = None
         self.weapon_primary = Weapon("Sword","Shiny", 10, 5)
         self.wis = 0
         self.inventory = []
         self.xp_award = 5
-        self.armor = None
         
     def don_armor(self, armor):
-        pass
+        if self.current_armor:
+            self.doff_armor()
+        self.current_armor = armor
+        self.armor_class += armor.ac_bonus
+
     def doff_armor(self):
-        pass
+        self.armor_class -= self.current_armor.ac_bonus
+        self.current_armor = None
+
     def attack_action(self, character):
         attack  = self.modifer + random_integer(2,8)
         damage = random_integer(10, 30)
@@ -36,12 +42,14 @@ class Character(Entity):
             return damage
         else:
             return 0
+
     def print_character_info(self):
         return [
             f"Health: {self.health}/{self.maxHP} - "
             f"AC: {self.armor_class}",
             f"{self.description}"
         ]
+
     def dodge_action(self):
         self.is_dodging = True
 
@@ -57,10 +65,6 @@ class Character(Entity):
             self.health = self.maxHP
 
     def print_character_inventory(self):
-        """Return inventory entries WITHOUT numeric prefixes.
-        The UI is responsible for adding 1-based numbering. This avoids
-        duplicated numbers when the frontend also numbers options.
-        """
         inventory_list = []
         for item in self.inventory:
             inventory_list.append(f"{item.name} - {item.durability}")

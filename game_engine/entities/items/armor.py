@@ -10,3 +10,5 @@ class Armor(Item):
         self.ac_bonus = ac_bonus
         self.dex_impairment = False
     
+    def use_item(self, character):
+        character.don_armor(self)
