@@ -23,10 +23,8 @@ class InventoryManagementEvent(Event):
         # Accept a plain digit (sent from the UI as the index), or a leading-index form like "0: Sword"
         if isinstance(action, str) and action.isdigit():
             index = int(action)
-            if 0 <= index < len(player.inventory):
-                item = player.inventory[index]
-                dungeon._msg(item.item_description())
-                dungeon.current_event = InventoryItemEvent(item, index)
+            if 0 <= index < len(self.entity.loot_items):
+                del self.entity.loot_items[index]
                 return
         # Backwards-compatible: parse "0: Name" style
         if isinstance(action, str) and ":" in action:
