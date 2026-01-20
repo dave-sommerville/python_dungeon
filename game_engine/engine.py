@@ -1,3 +1,4 @@
+from Python_Dungeon.game_engine.events.inventory.inventory_management import InventoryManagementEvent
 from .game_states import GameState
 from .errors.game_action_error import GameActionError
 from .events.combat.combat import CombatEvent
@@ -73,10 +74,10 @@ class GameEngine:
                     ["search", "rest", "inventory", "spells", "details", "describe"]
                 )
                 return actions_list
-            case GameState.INVENTORY_MANAGEMENT:
-                return dungeon.player.print_character_inventory()
-            case GameState.SPELL_MANAGEMENT:
-                return ["cast", "inspect", "back"]
+            # case GameState.INVENTORY_MANAGEMENT:
+            #     return dungeon.player.print_character_inventory()
+            # case GameState.SPELL_MANAGEMENT:
+            #     return ["cast", "inspect", "back"]
             case _:
                 raise GameActionError("Invalid Action")
 
@@ -97,8 +98,6 @@ class GameEngine:
                 self._call_for_contest(dungeon)
             case "search":
                 loot_list = dungeon.player.search_chamber()
-                if len(loot_list) <= 0:
-                    dungeon._msg("Nothing is found in this chamber")
                 for item in loot_list:
                     dungeon._msg(item)
             case "rest":
@@ -106,7 +105,7 @@ class GameEngine:
             case "inventory":
                 dungeon.state = GameState.INVENTORY_MANAGEMENT
                 self._log("Select item")
-                pass
+                dungeon.current_event = InventoryManagementEvent(dungeon.player)
             case "spells":
                 pass
             case "details":
@@ -117,33 +116,31 @@ class GameEngine:
                 self._log(chamber.description)
             case _:
                 raise GameActionError("Invalid Action")
-    def _resolve_inventory_management_menu(self, dungeon, action):
-        player = dungeon.player
-        if action == "back":
-            dungeon.state = GameState.MAIN_MENU
-            return
-        # Accept a plain digit (sent from the UI as the index), or a leading-index form like "0: Sword"
-        if isinstance(action, str) and action.isdigit():
-            index = int(action)
-            if 0 <= index < len(player.inventory):
-                item = player.inventory[index]
-                self._log(item.item_description())
-                dungeon.current_event = InventoryItemEvent(item, index)
-                return
-        # Backwards-compatible: parse "0: Name" style
-        if isinstance(action, str) and ":" in action:
-            index_part = action.split(":")[0].strip()
-            if index_part.isdigit():
-                index = int(index_part)
-                if 0 <= index < len(player.inventory):
-                    item = player.inventory[index]
-                    self._log(item.item_description())
-                    dungeon.current_event = InventoryItemEvent(item, index)
-                    return
-        raise GameActionError("Invalid input")
-
-    def _resolve_spell_management_menu(self, dungeon, action):
-        pass
+            
+    # def _resolve_inventory_management_menu(self, dungeon, action):
+    #     player = dungeon.player
+    #     if action == "back":
+    #         dungeon.state = GameState.MAIN_MENU
+    #         return
+    #     # Accept a plain digit (sent from the UI as the index), or a leading-index form like "0: Sword"
+    #     if isinstance(action, str) and action.isdigit():
+    #         index = int(action)
+    #         if 0 <= index < len(player.inventory):
+    #             item = player.inventory[index]
+    #             self._log(item.item_description())
+    #             dungeon.current_event = InventoryItemEvent(item, index)
+    #             return
+    #     # Backwards-compatible: parse "0: Name" style
+    #     if isinstance(action, str) and ":" in action:
+    #         index_part = action.split(":")[0].strip()
+    #         if index_part.isdigit():
+    #             index = int(index_part)
+    #             if 0 <= index < len(player.inventory):
+    #                 item = player.inventory[index]
+    #                 self._log(item.item_description())
+    #                 dungeon.current_event = InventoryItemEvent(item, index)
+    #                 return
+    #     raise GameActionError("Invalid input")
             
     def _call_for_combat_event(self, dungeon):
         if weighted_decision(0.5):

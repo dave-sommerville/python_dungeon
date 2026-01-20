@@ -139,7 +139,8 @@ class Player(Character):
         if len(self.inventory) >= self.inventory_size:
             raise GameActionError("Inventory is currently full")
         self.inventory.append(item)
-
+    def get_inventory_room(self):
+        return self.inventory_size - len(self.inventory)
     def exhaustion_check(self, dungeon):
         if weighted_decision(0.6):
             if self.exhaustion_counter > 6:

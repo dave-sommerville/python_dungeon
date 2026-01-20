@@ -6,11 +6,8 @@ from ..entities.characters.character import Character
 from ..events.combat.combat import CombatEvent
 from ..game_states import GameState
 from ..utilities.rng_utilities import random_integer, weighted_decision, random_list_element
-from ..entities.items.item import Item
-from ..entities.items.armor import Armor
-from ..entities.items.potion import Potion
-from ..entities.items.weapon import Weapon
 from ..factory import random_item_factory
+from ..entities.lootbag import LootBag
 
 class Dungeon:
     current_event = None
@@ -143,4 +140,22 @@ class Dungeon:
         for item in self.player.inventory:
             self._msg(f"{item}")
 
-
+    def search_chamber(self):
+        search_dc = random_integer(2,7)
+        loot_list = []
+        loot_count = len(self.player.current_chamber.chamber_items)
+        inventory_room = self.player.get_inventory_room()
+        if self.player.wis < search_dc or loot_count <= 0:
+            loot_list.append("Nothing is found in this chamber")
+        else:
+            if loot_count <= inventory_room:
+                loot_list.append(f"You find {loot_count} items:")
+                for item in self.player.current_chamber.chamber_items:
+                    loot_list.append(item.name)
+                    self.player.add_to_inventory(item)
+            else:
+                loot_list.append("You have found some items but your inventory is full")
+                item_options = self.player.current_chamber.chamber_items
+                item_options.extend(self.player.inventory)
+                loot_bag = LootBag(item_options)
+        return loot_list
