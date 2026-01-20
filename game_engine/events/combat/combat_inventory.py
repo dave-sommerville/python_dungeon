@@ -1,7 +1,7 @@
-from .event import Event
-from .combat_item import CombatItemEvent
-from ..game_action_error import GameActionError
-from ..game_states import GameState
+from ..event import Event
+from .combat_use_item import CombatItemEvent
+from ...errors.game_action_error import GameActionError
+from ...game_states import GameState
 
 class CombatInventoryEvent(Event):
     def __init__(self, entity, prev_event, player):

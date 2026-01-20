@@ -1,27 +1,22 @@
 Combat Mechanics
 - Combat round counter
 - Add effects/spells to combat
-- Retreat Mechanic
 
 Other
 - Add user initialization/ending sequence
 - Out of combat spell management
 - Inventory management (Simply throws an error for a full inventory)
 - Master controls for event triggering (on movement)
-- Add passage descriptions 
-- Add D20 equivalent
+- Add passage descriptions (on creation)
 - ASCII Printouts
-- File/class/function maintenance
-  - Add more error warning classes
-  - Refactor JavaScript file to match my style
+- Add more error warning classes
 - UI/Frontend Effects
-- Fix balancing
+
 Later
+- Containerization
 - Database
 - User authorization
-- Containerization
 - Deployment
-
 Unmade Mechanics
 - Boss battles
 - Interactions

@@ -1,5 +1,5 @@
-from .event import Event
-from ..game_states import GameState
+from ..event import Event
+from ...game_states import GameState
 class CombatItemEvent(Event):
     def __init__(self, entity, index, prev_event):
         super().__init__(entity)

@@ -4,7 +4,7 @@ from ...entities.spells.spellindex import SpellIndex
 from ...locations.chamber import Chamber
 from ..items.item import Item
 from ..items.potion import Potion
-from ...game_action_error import GameActionError
+from ...errors.game_action_error import GameActionError
 from ...utilities.rng_utilities import weighted_decision, random_list_element, random_integer
     # prisoner_status = ''
 

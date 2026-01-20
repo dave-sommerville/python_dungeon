@@ -3,7 +3,7 @@ from ..entities.characters.npc import NPC
 from ..utilities.desc_utitlities import chamber_description
 from .chamber import Chamber
 from ..entities.characters.character import Character
-from ..events.combat import CombatEvent
+from ..events.combat.combat import CombatEvent
 from ..game_states import GameState
 from ..utilities.rng_utilities import random_integer, weighted_decision, random_list_element
 from ..entities.items.item import Item
