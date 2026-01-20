@@ -1,5 +1,5 @@
 from ..entities.entity import Entity
-from ..game_action_error import GameActionError
+from ..errors.game_action_error import GameActionError
 from ..utilities.rng_utilities import random_integer
 class ContestObject(Entity):
   def __init__(self, name, description, skill_type, skill_dc):

@@ -1,5 +1,5 @@
 from event import Event
-from ..game_action_error import GameActionError
+from ..errors.game_action_error import GameActionError
 class LevelUpEvent(Event):
     def __init__(self):
         super().__init__(entity=None)

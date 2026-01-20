@@ -1,7 +1,7 @@
-from .event import Event
-from ..game_states import GameState
-from ..game_action_error import GameActionError
-from ..events.merchant_item import MerchantItemEvent
+from ..event import Event
+from ...game_states import GameState
+from ...errors.game_action_error import GameActionError
+from .merchant_item import MerchantItemEvent
 class MerchantEvent(Event):
   def __init__(self, entity):
     super().__init__(entity)
