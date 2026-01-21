@@ -1,39 +1,48 @@
 from ..event import Event
 from ...errors.game_action_error import GameActionError
 from ...game_states import GameState
-class InventoryManagementEvent(Event):
+class InventoryReductionEvent(Event):
 
     def __init__(self, entity):
         super().__init__(entity)
-        self.item_counter = 0
+        self.confirmed = False
+        self.item_index = None
     def get_options(self):
-        option = []
-        for item in self.entity.loot_items:
-            option.append(item.name)
-        return option
+        if self.confirmed:
+            return ["confirm", "back"]
+        else:
+            options = []
+            for item in self.entity.loot_items:
+                options.append(item.name)
+            return options
     def resolve(self, dungeon, action):
-        self.item_counter = len(self.entity.loot_items) - dungeon.player.get_inventory_room()
-        if len(self.item_counter) <= 0:
-            dungeon.current_event = None
-            dungeon.state = GameState.MAIN_MENU
-            return
         if action == "back":
             dungeon.state = GameState.MAIN_MENU
             return
+        if not self.confirmed:
+            if action == "confirm":
+                self.confirmed = True
+                del self.entity.loot_items[self.item_index]
+                return
         # Accept a plain digit (sent from the UI as the index), or a leading-index form like "0: Sword"
         if isinstance(action, str) and action.isdigit():
             index = int(action)
             if 0 <= index < len(self.entity.loot_items):
-                del self.entity.loot_items[index]
+                self.is_complete(dungeon, index)
                 return
         # Backwards-compatible: parse "0: Name" style
         if isinstance(action, str) and ":" in action:
             index_part = action.split(":")[0].strip()
             if index_part.isdigit():
                 index = int(index_part)
-                if 0 <= index < len(player.inventory):
-                    item = player.inventory[index]
-                    dungeon._msg(item.item_description())
-                    dungeon.current_event = InventoryItemEvent(item, index)
-                    return
+                self.is_complete(dungeon, index)
+                return
         raise GameActionError("Invalid input")
+    def is_complete(self, dungeon, index):
+        dungeon._msg(f"Are you sure you want to discard {self.entity.loot_items[index].name}?")
+        self.item_index = index
+        self.confirmed = False
+        if len(self.entity.loot_items) == dungeon.player.max_inventory_size:
+            dungeon.player.inventory = self.entity.loot_items.copy()
+            dungeon.state = GameState.MAIN_MENU
+            dungeon.current_event = None

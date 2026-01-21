@@ -45,6 +45,7 @@ body {
     width: 200px;
     margin-left: 50px;
 }
+
 .buffer {
     height: 20svh;
     width: 100%;
@@ -56,6 +57,7 @@ body {
 }
 ul {
     list-style-type: none;
+    overflow: scroll;
 }
 #error-panel {
     height: 100px;

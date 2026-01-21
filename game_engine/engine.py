@@ -7,10 +7,9 @@ from .events.inventory.inventory_item import InventoryItemEvent
 from .utilities.rng_utilities import weighted_decision
 from .factory import enemy_factory, merchant_factory, trap_factory
 # Use a stack to hold events instead of referring to them within the object
-# Remove Inventory as a resolution and move it into an event
 # Leave main menu as the only resolution in the engine
 # Instead of switching between states, only switch between numeric and string values
-# Will have to consider all log effects to see if this is the best architecture
+# Will have to consider all log effects to see the best architecture
 class GameEngine:
     def __init__(self):
         self.logs = []
@@ -97,7 +96,7 @@ class GameEngine:
                 dungeon.move_player("west")
                 self._call_for_contest(dungeon)
             case "search":
-                loot_list = dungeon.player.search_chamber()
+                loot_list = dungeon.search_chamber()
                 for item in loot_list:
                     dungeon._msg(item)
             case "rest":

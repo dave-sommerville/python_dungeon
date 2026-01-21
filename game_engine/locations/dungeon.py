@@ -1,3 +1,4 @@
+from Python_Dungeon.game_engine.events.inventory.inventory_reduction import InventoryReductionEvent
 from ..entities.characters.player import Player
 from ..entities.characters.npc import NPC
 from ..utilities.desc_utitlities import chamber_description
@@ -69,7 +70,6 @@ class Dungeon:
         return Chamber(next_id, description, loot)
     
     def attempt_to_rest(self):
-        # Need to add surprise combat mechanic
         if weighted_decision(0.2):
             character = Character("Jeff", "The Skeleton")
             self._msg(f"Before you can rest, you are {character.name}")
@@ -158,4 +158,5 @@ class Dungeon:
                 item_options = self.player.current_chamber.chamber_items
                 item_options.extend(self.player.inventory)
                 loot_bag = LootBag(item_options)
+                self.current_event = InventoryReductionEvent(loot_bag)
         return loot_list
