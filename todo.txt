@@ -1,40 +1,40 @@
 Combat Mechanics
 - Combat round counter
 - Add effects/spells to combat
+- Add interactions to combat
+
+Spell Management
+- After introducing non-combat spells
+Interactions
+- Dialogue options
+- Cha vs Wis checks
+    - Pick pocketing
+    - Convincing them by charm, deception, or intimidation
+    - Add combat interactions
 
 Other
 - Add user initialization/ending sequence
-- Out of combat spell management
-- Inventory management (Simply throws an error for a full inventory)
-- Master controls for event triggering (on movement)
+- Master controls for balancing
 - Add passage descriptions 
-- Add D20 equivalent
-- ASCII Printouts
-- File/class/function maintenance
-  - Add more error warning classes
-  - Refactor JavaScript file to match my style
-- UI/Frontend Effects
-- Fix balancing
+- ASCII Printouts (JS and Python)
+- Add more error warning classes
+
+
 Later
+- Containization
 - Database
 - User authorization
 - Deployment
+
 Unmade Mechanics
 - UI/Frontend Effects
   - ASCII Printouts
 - Boss battles
-- Interactions
-    - Dialogue options
-    - Cha vs Wis checks
-        - Pick pocketing
-        - Convincing them by charm, deception, or intimidation
-        - Add combat interactions
 - Magical Items
   - Bag of holding
   - Displacer Cloak
 - Sanity challenges
 - Progress map
-- Sneak/Surprise mechanics
 - Secondary weapon
   - Martial/Range weapons
 

@@ -2,6 +2,7 @@
 # Distribution property
 from ..entities.items.item import Item
 from ..utilities.rng_utilities import weighted_decision, random_integer
+from ..utilities.desc_utitlities import passageway_descriptions
 class Chamber():
 
     def __init__(self, id, description="", chamber_items=None):
@@ -40,3 +41,15 @@ class Chamber():
         if self.west_passage:
             actions_list.append("move west")
         return actions_list
+    
+    def establish_passageways(self):
+        room_description = self.description
+        if self.north_passage:
+            room_description += f"To the North {passageway_descriptions()}" 
+        if self.east_passage:
+            room_description += f"To the East {passageway_descriptions()}"
+        if self.south_passage:
+            room_description += f"To the South {passageway_descriptions()}"
+        if self.west_passage:
+            room_description += f"To the West {passageway_descriptions()}"
+        self.description = room_description

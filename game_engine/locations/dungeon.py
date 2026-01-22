@@ -1,14 +1,15 @@
-from ..events.inventory.inventory_reduction import InventoryReductionEvent
-from ..entities.characters.player import Player
-from ..entities.characters.npc import NPC
-from ..utilities.desc_utitlities import chamber_description
 from .chamber import Chamber
-from ..entities.characters.character import Character
-from ..events.combat.combat import CombatEvent
-from ..game_states import GameState
-from ..utilities.rng_utilities import random_integer, weighted_decision, random_list_element
-from ..factory import random_item_factory
 from ..entities.lootbag import LootBag
+from ..entities.characters.player import Player
+from ..entities.characters.character import Character
+from ..entities.characters.npc import NPC
+from ..events.inventory.inventory_reduction import InventoryReductionEvent
+from ..events.combat.combat import CombatEvent
+from ..utilities.desc_utitlities import chamber_description
+from ..utilities.rng_utilities import random_integer, weighted_decision, random_list_element
+from ..utilities.support_utilities import reverse_direction, get_rarity
+from ..game_states import GameState
+from ..factory import random_item_factory
 
 class Dungeon:
     current_event = None
@@ -52,7 +53,7 @@ class Dungeon:
         next_chamber = next((c for c in self.visited_locations if c.id == next_id), None)
         if not next_chamber:
             next_chamber = self.generate_chamber(next_id)
-            next_chamber.add_reverse_passage(self.reverse_direction(direction))
+            next_chamber.add_reverse_passage(reverse_direction(direction))
             self.visited_locations.append(next_chamber)
         if weighted_decision(0.6):
             self.player.exhaustion_counter += 1
@@ -67,7 +68,9 @@ class Dungeon:
     def generate_chamber(self, next_id):
         description = chamber_description()
         loot = self.generate_items()
-        return Chamber(next_id, description, loot)
+        chamber = Chamber(next_id, description, loot)
+        chamber.establish_passageways()
+        return chamber
     
     def attempt_to_rest(self):
         if weighted_decision(0.2):
@@ -81,27 +84,12 @@ class Dungeon:
             self.player.exhaustion_counter = 0
             self._msg("You manage to rest safely and feel much better")
             return True
-    # Conversion Function *****
-    def get_rarity(self):
-        index = random_integer(1, 100)
-        if index > 95:
-            return 10
-        elif index > 85:
-            return 8
-        elif index > 70:
-            return 7
-        elif index > 50:
-            return 5
-        elif index > 20:
-            return 3
-        else:
-            return 1
         
     def generate_items(self):
         loot = []
         amount = random_integer(1,4)
         for i in range(amount):
-            loot.append(random_item_factory(self.get_rarity()))
+            loot.append(random_item_factory(get_rarity()))
         return loot
     
     def describe_current_chamber(self):
@@ -121,20 +109,6 @@ class Dungeon:
             return self.player.current_chamber.description
         return "You see nothing of interest."
     
-    @staticmethod
-    def reverse_direction(direction):
-        match direction:
-            case "north":
-                return "south"
-            case "east":
-                return "west"
-            case "south":
-                return "north"
-            case "west":
-                return "east"
-            case _:
-                raise ValueError("Invalid direction")
-
     def display_player_inventory(self):
         for item in self.player.inventory:
             self._msg(f"{item}")

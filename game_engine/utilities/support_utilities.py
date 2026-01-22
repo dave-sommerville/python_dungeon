@@ -1,5 +1,5 @@
 from .rng_utilities import random_integer
-def get_rarity(self):
+def get_rarity():
     index = random_integer(1, 100)
     if index > 95:
         return 10
@@ -14,7 +14,6 @@ def get_rarity(self):
     else:
         return 1
     
-@staticmethod
 def reverse_direction(direction):
     match direction:
         case "north":

@@ -80,7 +80,6 @@ class GameEngine:
             case _:
                 raise GameActionError("Invalid Action")
 
-
     def _resolve_main_menu(self, dungeon, action):
         match action:
             case "move north":  # Sub events
