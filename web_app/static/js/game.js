@@ -3,7 +3,20 @@ import {
   listen, 
   create, 
 } from './utils.js';
-
+let door = [
+    "      ______",
+    "   ,-' ;  ! `-.",
+    "  / :  !  :  . \\",
+    " |_ ;   __:  ;  |",
+    " )| .  :)(.  !  |",
+    " |\"    (##)  _  |",
+    " |  :  ;`'  (_) (",
+    " |  :  :  .     |",
+    " )_ !  ,  ;  ;  |",
+    " || .  .  :  :  |",
+    " |\" .  |  :  .  |",
+    " |mt-2_;----.___|"
+];
 let currentMenu = [];
 let currentState = null;
 let isEventMenu = false;
@@ -95,6 +108,12 @@ async function updateUI(data) {
 // Initial Load
 listen('DOMContentLoaded', window, () => {
     (async () => {
+    for (let i = 0; i < door.length; i++) {
+        const p = create('p');
+        p.textContent = '> '; 
+        logPanel.appendChild(p);
+        await typeText(p, door[i]);
+    }
         try {
             const resp = await fetch('/reset', {
                 method: 'POST',
