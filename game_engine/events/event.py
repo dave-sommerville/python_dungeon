@@ -11,5 +11,5 @@ class Event():
         pass
     
     @abstractmethod
-    def resolve(self, action, dungeon):
+    def resolve(self, dungeon, action):
         pass

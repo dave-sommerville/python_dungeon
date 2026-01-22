@@ -55,7 +55,7 @@ class Player(Character):
 
         # Item Management
         self.inventory = [Potion("Potion", "of healing")]
-        self.inventory_size = 5
+        self.inventory_size = 2
         self.weapon_secondary = None
         self.magical_item = None
         self.known_spells = []

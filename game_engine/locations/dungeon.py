@@ -1,4 +1,4 @@
-from Python_Dungeon.game_engine.events.inventory.inventory_reduction import InventoryReductionEvent
+from ..events.inventory.inventory_reduction import InventoryReductionEvent
 from ..entities.characters.player import Player
 from ..entities.characters.npc import NPC
 from ..utilities.desc_utitlities import chamber_description
@@ -99,11 +99,10 @@ class Dungeon:
         
     def generate_items(self):
         loot = []
-        if weighted_decision(0.3):
-            amount = random_integer(1,4)
-            for i in range(amount):
-                loot.append(random_item_factory(self.get_rarity()))
-            return loot
+        amount = random_integer(1,4)
+        for i in range(amount):
+            loot.append(random_item_factory(self.get_rarity()))
+        return loot
     
     def describe_current_chamber(self):
         """Return the description for the chamber the player is currently in.
@@ -155,8 +154,10 @@ class Dungeon:
                     self.player.add_to_inventory(item)
             else:
                 loot_list.append("You have found some items but your inventory is full")
-                item_options = self.player.current_chamber.chamber_items
-                item_options.extend(self.player.inventory)
-                loot_bag = LootBag(item_options)
-                self.current_event = InventoryReductionEvent(loot_bag)
+                loot_list.append(f"You need to discard {loot_count - inventory_room} item(s) to pick up the found items")
+                # Create loot bag with all items (found + inventory) and track which are found
+                all_items = list(self.player.current_chamber.chamber_items)
+                all_items.extend(self.player.inventory)
+                loot_bag = LootBag(all_items)
+                self.current_event = InventoryReductionEvent(loot_bag, self.player, self.player.current_chamber.chamber_items)
         return loot_list

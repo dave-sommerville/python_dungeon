@@ -1,4 +1,4 @@
-from Python_Dungeon.game_engine.events.inventory.inventory_management import InventoryManagementEvent
+from .events.inventory.inventory_management import InventoryManagementEvent
 from .game_states import GameState
 from .errors.game_action_error import GameActionError
 from .events.combat.combat import CombatEvent

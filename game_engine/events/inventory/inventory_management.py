@@ -14,6 +14,7 @@ class InventoryManagementEvent(Event):
         player = dungeon.player
         if action == "back":
             dungeon.state = GameState.MAIN_MENU
+            dungeon.current_event = None
             return
         # Accept a plain digit (sent from the UI as the index), or a leading-index form like "0: Sword"
         if isinstance(action, str) and action.isdigit():
