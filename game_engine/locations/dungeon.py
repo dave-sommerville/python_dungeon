@@ -20,7 +20,34 @@ class Dungeon:
         self.player = Player("Gal", "Guy")
         # Track visited chambers (start with player's initial chamber)
         self.visited_locations = [self.player.current_chamber]
-        self.current_event = None
+        self.event_stack = []  # Stack for managing event transitions
+    
+    @property
+    def current_event(self):
+        """Get the current event from the top of the stack."""
+        return self.event_stack[-1] if self.event_stack else None
+    
+    @current_event.setter
+    def current_event(self, event):
+        """Set the current event. For backward compatibility, replaces the entire stack if provided."""
+        if event is None:
+            self.event_stack = []
+        else:
+            self.event_stack = [event]
+    
+    def push_event(self, event):
+        """Push a new event onto the event stack."""
+        self.event_stack.append(event)
+    
+    def pop_event(self):
+        """Pop the current event from the stack and return it."""
+        if self.event_stack:
+            return self.event_stack.pop()
+        return None
+    
+    def peek_event(self):
+        """Peek at the current event without removing it."""
+        return self.current_event
     def _msg(self, text):
         self.message_buffer.append(text)
 
@@ -133,5 +160,5 @@ class Dungeon:
                 all_items = list(self.player.current_chamber.chamber_items)
                 all_items.extend(self.player.inventory)
                 loot_bag = LootBag(all_items)
-                self.current_event = InventoryReductionEvent(loot_bag, self.player, self.player.current_chamber.chamber_items)
+                self.push_event(InventoryReductionEvent(loot_bag, self.player, self.player.current_chamber.chamber_items))
         return loot_list

@@ -103,7 +103,7 @@ class GameEngine:
             case "inventory":
                 dungeon.state = GameState.INVENTORY_MANAGEMENT
                 self._log("Select item")
-                dungeon.current_event = InventoryManagementEvent(dungeon.player)
+                dungeon.push_event(InventoryManagementEvent(dungeon.player, mode="both"))
             case "spells":
                 pass
             case "details":
@@ -148,7 +148,7 @@ class GameEngine:
             self._log(f"{character.name}")
             self._log(f"{character.description}")
             self._log("Choose your next action wisely")
-            dungeon.current_event = event
+            dungeon.push_event(event)
 
     def _call_for_contest(self, dungeon):
         contest_obj = trap_factory()
@@ -163,11 +163,11 @@ class GameEngine:
         merchant_interaction = MerchantEvent(merchant)
         self._log(f"You meet a merchant named {merchant.name}")
         self._log("Select an item to purchase if you wish")
-        dungeon.current_event = merchant_interaction
+        dungeon.push_event(merchant_interaction)
 
     def _game_over_check(self, dungeon):
         if dungeon.player.character_death_check():
             self._log("You died")
-            dungeon.current_event = None
+            dungeon.event_stack = []
             dungeon.state = GameState.GAME_OVER
             print("You died")

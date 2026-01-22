@@ -9,7 +9,7 @@ class CombatEvent(Event):
         super().__init__(entity)
     def enemy_death(self, dungeon):
         if self.entity.character_death_check():
-            dungeon.current_event = None
+            dungeon.pop_event()
             dungeon.state = GameState.MAIN_MENU
             dungeon.player.xp += self.entity.xp_award
             dungeon.player.killcount += 1
@@ -38,7 +38,7 @@ class CombatEvent(Event):
                         dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
                 case "interact": # Sub events
                     dungeon._msg("You said hi and they left")
-                    dungeon.current_event = None
+                    dungeon.pop_event()
                     dungeon.state = GameState.MAIN_MENU
                 case "dodge":
                     dungeon._msg("You dodged")
@@ -55,7 +55,7 @@ class CombatEvent(Event):
                         dungeon._msg(f"{self.entity.name} attacks you but misses")
                     else:
                         dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
-                    dungeon.current_event = None
+                    dungeon.pop_event()
                     if dungeon.player.health > 0:
                         dungeon._msg("You retreat to a previous chamber")
                         direction = dungeon.player.get_possible_player_moves()
@@ -64,7 +64,7 @@ class CombatEvent(Event):
                 case "use item": # Sub events
                     dungeon._msg("Select an item to use")
                     dungeon.state = GameState.INVENTORY_MANAGEMENT
-                    dungeon.current_event = CombatInventoryEvent(self.entity, self, dungeon.player)
+                    dungeon.push_event(CombatInventoryEvent(self.entity, dungeon.player))
                     pass
                 case _:
                     raise GameActionError("Invalid action")

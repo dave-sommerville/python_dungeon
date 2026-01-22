@@ -1,12 +1,13 @@
 from ..event import Event
-from .combat_use_item import CombatItemEvent
+from ..inventory.inventory_management import InventoryManagementEvent
 from ...errors.game_action_error import GameActionError
 from ...game_states import GameState
 
 class CombatInventoryEvent(Event):
-    def __init__(self, entity, prev_event, player):
+    """Event for managing inventory during combat. Only allows 'use' action."""
+    
+    def __init__(self, entity, player):
         super().__init__(entity)
-        self.prev_event = prev_event
         self.player = player
 
     def get_options(self):
@@ -14,26 +15,42 @@ class CombatInventoryEvent(Event):
     
     def resolve(self, dungeon, action):
         if action == "back":
-            dungeon.current_event = self.prev_event
+            # Pop this event and return to combat
+            dungeon.pop_event()
             dungeon.state = GameState.MAIN_MENU
             return
-        # Accept a plain digit (sent from the UI as the index), or a leading-index form like "0: Sword"
+        
+        index = self._parse_index_from_action(action, len(self.player.inventory))
+        if index is None:
+            raise GameActionError("Invalid selection")
+        
+        item = self.player.inventory[index]
+        dungeon._msg(item.item_description())
+        
+        # Push unified inventory management event with 'use' mode only
+        inventory_event = InventoryManagementEvent(
+            entity=self.player,
+            mode="use",
+            items_list=self.player.inventory,
+            is_combat=True
+        )
+        # Pre-select the item for immediate use confirmation
+        inventory_event.selected_index = index
+        inventory_event.stage = 1  # Skip to action selection stage
+        dungeon.push_event(inventory_event)
+
+    def _parse_index_from_action(self, action, max_index):
+        """Parse an index from action string. Handles both plain digits and "0: Item Name" format."""
         if isinstance(action, str) and action.isdigit():
             index = int(action)
-            if 0 <= index < len(self.player.inventory):
-                item = self.player.inventory[index]
-                dungeon._msg(item.item_description())
-                dungeon.current_event = CombatItemEvent(item, index, self)
-                return
-        # Backwards-compatible: parse "0: Name" style
-        if isinstance(action, str) and ":" in action:
+            if 0 <= index < max_index:
+                return index
+        elif isinstance(action, str) and ":" in action:
             index_part = action.split(":")[0].strip()
             if index_part.isdigit():
                 index = int(index_part)
-                if 0 <= index < len(self.player.inventory):
-                    item = self.player.inventory[index]
-                    dungeon._msg(item.item_description())
-                    dungeon.current_event = CombatItemEvent(item, index, self)
-                    return
-        raise GameActionError("Invalid input")
+                if 0 <= index < max_index:
+                    return index
+        return None
+
 

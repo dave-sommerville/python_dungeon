@@ -11,7 +11,7 @@ class MerchantEvent(Event):
   def resolve(self, dungeon, action):
         print(action)
         if action == "back":
-            dungeon.current_event = None
+            dungeon.pop_event()
             dungeon.state = GameState.MAIN_MENU
             return
         # Accept a plain digit (sent from the UI as the index), or a leading-index form like "0: Sword"
@@ -20,7 +20,7 @@ class MerchantEvent(Event):
             if 0 <= index < len(self.entity.inventory):
                 item = self.entity.inventory[index]
                 dungeon._msg(f"It is a {item.item_description()} for {item.cost} gold pieces")
-                dungeon.current_event = MerchantItemEvent(item, index, self)
+                dungeon.push_event(MerchantItemEvent(item, index, self))
                 dungeon.state = GameState.MAIN_MENU
                 return
         # Backwards-compatible: parse "0: Name" style
@@ -31,7 +31,7 @@ class MerchantEvent(Event):
                 if 0 <= index < len(self.entity.inventory):
                     item = self.entity.inventory[index]
                     dungeon._msg(f"It is a {item.item_description()} for {item.cost} gold pieces")
-                    dungeon.current_event = MerchantItemEvent(item, index, self)
+                    dungeon.push_event(MerchantItemEvent(item, index, self))
                     return
         raise GameActionError("Invalid input")
 
