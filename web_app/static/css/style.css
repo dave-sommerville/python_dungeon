@@ -40,6 +40,7 @@ body {
     min-width: 700px;
     max-width: 900px;
     text-wrap: wrap;
+    white-space: pre;
 }
 #menu-panel {
     width: 200px;
