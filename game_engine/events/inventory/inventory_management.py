@@ -8,7 +8,7 @@ class InventoryManagementEvent(Event):
     Args:
         entity: The character whose inventory is being managed
         mode: One of 'use', 'discard', or 'both' - determines available actions
-        items_list: List of items to display (usually from player.inventory)
+        items_list: List of items to display 
         is_combat: Boolean flag indicating if this is being used in combat context
     
     Stages:
@@ -48,7 +48,6 @@ class InventoryManagementEvent(Event):
             if dungeon.current_event is None:
                 dungeon.state = GameState.MAIN_MENU
             return
-
         if self.stage == 0:
             self._handle_item_selection(dungeon, action)
         elif self.stage == 1:
@@ -65,12 +64,10 @@ class InventoryManagementEvent(Event):
                 dungeon._msg(item.item_description())
                 self.stage = 1
                 return
-        
         # Otherwise try to parse as index
         index = self._parse_index_from_action(action, len(self.items_list))
         if index is None:
             raise GameActionError("Invalid selection")
-        
         self.selected_index = index
         item = self.items_list[index]
         dungeon._msg(item.item_description())
@@ -79,7 +76,6 @@ class InventoryManagementEvent(Event):
     def _handle_action_selection(self, dungeon, action):
         """Handle action selection for the item (stage 1)."""
         action_lower = action.lower()
-        
         if action_lower == "use" and self.mode in ["use", "both"]:
             self._perform_use(dungeon)
         elif action_lower == "discard" and self.mode in ["discard", "both"]:
@@ -144,9 +140,12 @@ class InventoryManagementEvent(Event):
         dungeon._msg(f"{item.name} discarded.")
         
         # Pop this event and return to previous context
-        dungeon.pop_event()
-        if dungeon.current_event is None:
-            dungeon.state = GameState.MAIN_MENU
+        if len(self.entity.inventory_size) is not len(self.items_list):
+            dungeon.pop_event()
+            if dungeon.current_event is None:
+                dungeon.state = GameState.MAIN_MENU
+        else:
+            dungeon._msg("Select another item to discard.")
 
     def _get_item_list(self):
         """Return list of items as options."""

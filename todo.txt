@@ -1,24 +1,24 @@
+Event Issues
+- Review/Refactor AI code
+- Rework search function to use the inventory management class only
+- Examine for further modularity
+
+Event Creation
+- Spell Management
+- Interactions
+- Initialization
+
 Combat Mechanics
 - Combat round counter
 - Add effects/spells to combat
 - Add interactions to combat
 
-Spell Management
-- After introducing non-combat spells
-Interactions
-- Dialogue options
-- Cha vs Wis checks
-    - Pick pocketing
-    - Convincing them by charm, deception, or intimidation
-    - Add combat interactions
-
 Other
 - Add user initialization/ending sequence
 - Master controls for balancing
-- Add passage descriptions 
-- ASCII Printouts (JS and Python)
 - Add more error warning classes
-
+- Create Enums class
+- Fix room description
 
 Later
 - Containization
@@ -29,6 +29,7 @@ Later
 Unmade Mechanics
 - UI/Frontend Effects
   - ASCII Printouts
+  - Theme selection
 - Boss battles
 - Magical Items
   - Bag of holding
@@ -37,6 +38,10 @@ Unmade Mechanics
 - Progress map
 - Secondary weapon
   - Martial/Range weapons
+- Cha vs Wis checks
+    - Pick pocketing
+    - Convincing them by charm, deception, or intimidation
+    - Add combat interactions
 
 Plot Edits
 - Serpent introduction and help

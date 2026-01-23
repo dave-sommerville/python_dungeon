@@ -50,15 +50,6 @@ class Dungeon:
         return self.current_event
     def _msg(self, text):
         self.message_buffer.append(text)
-
-    def name_player(self, name):
-        self.player.name = name
-
-    def describe_player(self, description):
-        self.player.description - description
-
-    def create_player(self):
-        pass
     
     def move_player(self, direction):
         if direction == "north" and not self.player.current_chamber.north_passage:
