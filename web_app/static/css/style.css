@@ -25,7 +25,7 @@ body {
         0 0 2px #39c639,  
         0 0 8px #2e9e2e,  
         0 0 15px #2e9e2e; 
-    animation: text-flicker-anim 0.5s infinite linear alternate-reverse;
+    /* animation: text-flicker-anim 0.5s infinite linear alternate-reverse; */
     position: relative;
 }
 

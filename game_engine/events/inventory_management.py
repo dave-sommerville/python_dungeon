@@ -1,6 +1,6 @@
-from ..event import Event
-from ...game_states import GameState
-from ...errors.game_action_error import GameActionError
+from .event import Event
+from ..game_states import GameState
+from ..errors.game_action_error import GameActionError
 
 class InventoryManagementEvent(Event):
     """Unified inventory management event that handles use, discard, or both actions.
@@ -39,7 +39,6 @@ class InventoryManagementEvent(Event):
             return ["yes", "no"]
         else:
             raise GameActionError("Invalid stage")
-
     def resolve(self, dungeon, action):
         """Process user action based on current stage."""
         if action == "back":
@@ -114,16 +113,7 @@ class InventoryManagementEvent(Event):
         dungeon._msg(f"{item.name} used.")
         dungeon.pop_event()
         # If in combat, handle enemy turn
-        if self.is_combat and dungeon.current_event is not None:
-            # The combat event is still on the stack
-            # Trigger an enemy attack
-            combat_event = dungeon.current_event
-            enemy_damage = combat_event.entity.attack_action(dungeon.player)
-            if enemy_damage == 0:
-                dungeon._msg(f"{combat_event.entity.name} attacks you but misses")
-            else:
-                dungeon._msg(f"{combat_event.entity.name} attacks you and hits you for {enemy_damage} points of damage")
-        elif dungeon.current_event is None:
+        if dungeon.current_event is None:
             dungeon.state = GameState.MAIN_MENU
 
     def _perform_discard(self, dungeon):

@@ -1,9 +1,8 @@
-from .events.inventory.inventory_management import InventoryManagementEvent
+from .events.inventory_management import InventoryManagementEvent
 from .game_states import GameState
 from .errors.game_action_error import GameActionError
 from .events.combat.combat import CombatEvent
 from .events.npcs.merchant_interaction import MerchantEvent
-from .events.inventory.inventory_item import InventoryItemEvent
 from .utilities.rng_utilities import weighted_decision
 from .factory import enemy_factory, merchant_factory, trap_factory
 # Use a stack to hold events instead of referring to them within the object

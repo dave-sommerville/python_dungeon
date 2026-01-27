@@ -1,5 +1,5 @@
 from ..event import Event
-from ..inventory.inventory_management import InventoryManagementEvent
+from ..inventory_management import InventoryManagementEvent
 from ...errors.game_action_error import GameActionError
 from ...game_states import GameState
 

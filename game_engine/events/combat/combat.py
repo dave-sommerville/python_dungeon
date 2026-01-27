@@ -1,5 +1,5 @@
 from ..event import Event
-from .combat_inventory import CombatInventoryEvent
+from ..inventory_management import InventoryManagementEvent
 from ...errors.game_action_error import GameActionError
 from ...game_states import GameState
 from ...entities.characters.character import Character
@@ -64,8 +64,13 @@ class CombatEvent(Event):
                 case "use item": # Sub events
                     dungeon._msg("Select an item to use")
                     dungeon.state = GameState.INVENTORY_MANAGEMENT
-                    dungeon.push_event(CombatInventoryEvent(self.entity, dungeon.player))
-                    pass
+                    dungeon.push_event(InventoryManagementEvent(dungeon.player, mode="use"))
+                    dungeon.state = GameState.MAIN_MENU
+                    enemy_damage = self.entity.attack_action(dungeon.player)
+                    if enemy_damage == 0:
+                        dungeon._msg(f"{self.entity.name} attacks you but misses")
+                    else:
+                        dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
                 case _:
                     raise GameActionError("Invalid action")
             
