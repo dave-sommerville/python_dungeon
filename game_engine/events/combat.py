@@ -1,8 +1,8 @@
-from ..event import Event
-from ..inventory_management import InventoryManagementEvent
-from ...errors.game_action_error import GameActionError
-from ...game_states import GameState
-from ...entities.characters.character import Character
+from .event import Event
+from .inventory_management import InventoryManagementEvent
+from ..errors.game_action_error import GameActionError
+from ..game_states import GameState
+from ..entities.characters.character import Character
 class CombatEvent(Event):
 
     def __init__(self, entity):

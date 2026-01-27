@@ -1,7 +1,7 @@
 from .events.inventory_management import InventoryManagementEvent
 from .game_states import GameState
 from .errors.game_action_error import GameActionError
-from .events.combat.combat import CombatEvent
+from .events.combat import CombatEvent
 from .events.npcs.merchant_interaction import MerchantEvent
 from .utilities.rng_utilities import weighted_decision
 from .factory import enemy_factory, merchant_factory, trap_factory

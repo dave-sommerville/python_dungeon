@@ -2,7 +2,7 @@ from .chamber import Chamber
 from ..entities.characters.player import Player
 from ..entities.characters.character import Character
 from ..events.inventory_management import InventoryManagementEvent
-from ..events.combat.combat import CombatEvent
+from ..events.combat import CombatEvent
 from ..utilities.desc_utitlities import chamber_description
 from ..utilities.rng_utilities import random_integer, weighted_decision, random_list_element
 from ..utilities.support_utilities import reverse_direction, get_rarity

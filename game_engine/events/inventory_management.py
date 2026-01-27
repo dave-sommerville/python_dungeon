@@ -9,7 +9,6 @@ class InventoryManagementEvent(Event):
         entity: The character whose inventory is being managed
         mode: One of 'use', 'discard', or 'both' - determines available actions
         items_list: List of items to display 
-        is_combat: Boolean flag indicating if this is being used in combat context
     
     Stages:
         0: Display item list
@@ -17,14 +16,13 @@ class InventoryManagementEvent(Event):
         2: Confirm action (for destructive actions like discard)
     """
 
-    def __init__(self, entity, mode="both", items_list=None, is_combat=False):
+    def __init__(self, entity, mode="both", items_list=None):
         super().__init__(entity)
         self.stage = 0
         self.mode = mode  # 'use', 'discard', or 'both'
         self.items_list = items_list if items_list is not None else entity.inventory
         self.selected_index = None
         self.selected_action = None
-        self.is_combat = is_combat  # Flag to indicate combat context
 
     def get_options(self):
         """Return options based on current stage."""
