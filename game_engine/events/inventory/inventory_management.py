@@ -82,7 +82,6 @@ class InventoryManagementEvent(Event):
             # Ask for confirmation before discarding
             item = self.items_list[self.selected_index]
             dungeon._msg(f"Are you sure you want to discard {item.name}?")
-            self.selected_action = "discard"
             self.stage = 2
         else:
             raise GameActionError("Invalid action")
@@ -90,20 +89,16 @@ class InventoryManagementEvent(Event):
     def _handle_confirmation(self, dungeon, action):
         """Handle yes/no confirmation (stage 2)."""
         action_str = str(action).lower().strip()
-        
         # Handle indexed format like "0: yes" or "1: no"
         if ":" in action_str:
             action_str = action_str.split(":", 1)[1].strip()
-        
         # Handle pure numeric indices (0 = yes, 1 = no)
         if action_str == "0":
             action_str = "yes"
         elif action_str == "1":
             action_str = "no"
-        
         if action_str == "yes":
-            if self.selected_action == "discard":
-                self._perform_discard(dungeon)
+            self._perform_discard(dungeon)
         elif action_str == "no":
             # Go back to action options
             self.stage = 1
@@ -114,12 +109,10 @@ class InventoryManagementEvent(Event):
         """Use the selected item and clean up."""
         item = self.items_list[self.selected_index]
         item.use_item(self.entity)
-        dungeon.player.inventory.remove(item)
+        self.items_list.remove(item)
+        self.entity.inventory = self.items_list
         dungeon._msg(f"{item.name} used.")
-        
-        # Pop this event and return to previous context
         dungeon.pop_event()
-        
         # If in combat, handle enemy turn
         if self.is_combat and dungeon.current_event is not None:
             # The combat event is still on the stack
@@ -136,16 +129,22 @@ class InventoryManagementEvent(Event):
     def _perform_discard(self, dungeon):
         """Discard the selected item and clean up."""
         item = self.items_list[self.selected_index]
-        dungeon.player.inventory.remove(item)
+        self.items_list.remove(item)
         dungeon._msg(f"{item.name} discarded.")
-        
         # Pop this event and return to previous context
-        if len(self.entity.inventory_size) is not len(self.items_list):
+        if self.selected_action == "discard":
+            if len(self.entity.inventory_size) is len(self.items_list):
+                self.entity.inventory = self.items_list
+                dungeon.pop_event()
+                if dungeon.current_event is None:
+                    dungeon.state = GameState.MAIN_MENU
+            else:
+                dungeon._msg("Select another item to discard.")
+        else:
+            self.entity.inventory = self.items_list
             dungeon.pop_event()
             if dungeon.current_event is None:
                 dungeon.state = GameState.MAIN_MENU
-        else:
-            dungeon._msg("Select another item to discard.")
 
     def _get_item_list(self):
         """Return list of items as options."""

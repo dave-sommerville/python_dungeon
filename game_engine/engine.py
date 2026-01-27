@@ -114,32 +114,7 @@ class GameEngine:
                 self._log(chamber.description)
             case _:
                 raise GameActionError("Invalid Action")
-            
-    # def _resolve_inventory_management_menu(self, dungeon, action):
-    #     player = dungeon.player
-    #     if action == "back":
-    #         dungeon.state = GameState.MAIN_MENU
-    #         return
-    #     # Accept a plain digit (sent from the UI as the index), or a leading-index form like "0: Sword"
-    #     if isinstance(action, str) and action.isdigit():
-    #         index = int(action)
-    #         if 0 <= index < len(player.inventory):
-    #             item = player.inventory[index]
-    #             self._log(item.item_description())
-    #             dungeon.current_event = InventoryItemEvent(item, index)
-    #             return
-    #     # Backwards-compatible: parse "0: Name" style
-    #     if isinstance(action, str) and ":" in action:
-    #         index_part = action.split(":")[0].strip()
-    #         if index_part.isdigit():
-    #             index = int(index_part)
-    #             if 0 <= index < len(player.inventory):
-    #                 item = player.inventory[index]
-    #                 self._log(item.item_description())
-    #                 dungeon.current_event = InventoryItemEvent(item, index)
-    #                 return
-    #     raise GameActionError("Invalid input")
-            
+                        
     def _call_for_combat_event(self, dungeon):
         if weighted_decision(0.5):
             character = enemy_factory()

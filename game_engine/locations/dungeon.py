@@ -1,9 +1,7 @@
 from .chamber import Chamber
-from ..entities.lootbag import LootBag
 from ..entities.characters.player import Player
 from ..entities.characters.character import Character
-from ..entities.characters.npc import NPC
-from ..events.inventory.inventory_reduction import InventoryReductionEvent
+from ..events.inventory.inventory_management import InventoryManagementEvent
 from ..events.combat.combat import CombatEvent
 from ..utilities.desc_utitlities import chamber_description
 from ..utilities.rng_utilities import random_integer, weighted_decision, random_list_element
@@ -150,6 +148,5 @@ class Dungeon:
                 # Create loot bag with all items (found + inventory) and track which are found
                 all_items = list(self.player.current_chamber.chamber_items)
                 all_items.extend(self.player.inventory)
-                loot_bag = LootBag(all_items)
-                self.push_event(InventoryReductionEvent(loot_bag, self.player, self.player.current_chamber.chamber_items))
+                self.push_event(InventoryManagementEvent(self.player, mode="discard", items_list=all_items))
         return loot_list
