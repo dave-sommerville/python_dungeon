@@ -1,5 +1,6 @@
 from .event import Event
 from .inventory_management import InventoryManagementEvent
+from .spell_management import SpellManagementEvent
 from ..errors.game_action_error import GameActionError
 from ..game_states import GameState
 from ..entities.characters.character import Character
@@ -18,7 +19,7 @@ class CombatEvent(Event):
             return False
 
     def get_options(self):
-        return ["attack", "interact", "dodge", "retreat", "use item"]
+        return ["attack", "interact", "dodge", "retreat", "use item", "cast spell"]
     def resolve(self, dungeon, action):
         if isinstance(self.entity, Character) and dungeon.player.health > 0:
             match action:
@@ -60,7 +61,11 @@ class CombatEvent(Event):
                         dungeon._msg("You retreat to a previous chamber")
                         direction = dungeon.player.get_possible_player_moves()
                         dungeon.move_player(direction)
-
+                case "cast spell":
+                    dungeon._msg("Select a spell to case")
+                    dungeon.state = GameState.INVENTORY_MANAGEMENT
+                    dungeon.push_event(SpellManagementEvent(dungeon.player, self.entity))
+                    dungeon.state = GameState.MAIN_MENU
                 case "use item": # Sub events
                     dungeon._msg("Select an item to use")
                     dungeon.state = GameState.INVENTORY_MANAGEMENT

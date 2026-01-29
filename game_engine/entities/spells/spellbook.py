@@ -1,13 +1,13 @@
 class SpellBook:
-  def stun(player):
+  def stun(player, target, potency):
     pass
-  def poison_spray(player):
+  def poison_spray(player, target, potency):
     pass
-  def life_drain(player):
+  def life_drain(player, target, potency):
     pass
-  def heal(player):
+  def heal(player, target, potency):
     pass
-  def fireball(player):
+  def fireball(player, target, potency):
     pass
-  def shield(player):
+  def shield(player, target, potency):
     pass
