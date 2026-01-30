@@ -1,27 +1,28 @@
-Event Issues
-- Review/Refactor AI code
-- Rework search function to use the inventory management class only
-- Examine for further modularity
+Bugs
+- General Issue: Game Logs/Actions don't always make sense
+- Overstock only forces you to discard single item
+- No options for Merchant overstock
+- Back escapes discard/interaction sequence
+- Room descriptions
+- Likely redundancy with numeric/index vs. string/input
+  - In Python and JS
 
-Event Creation
-- Spell Management
+
+Features
+- Action Menu Should have status bar 
+  - Player details?
+- Combat Rounds
 - Interactions
-- Initialization
-
-Combat Mechanics
-- Combat round counter
-- Add effects/spells to combat
-- Add interactions to combat
-
-Other
-- Add user initialization/ending sequence
+- Initialization/Game Over
 - Master controls for balancing
 - Add more error warning classes
-- Create Enums class
-- Fix room description
+- Create Enums classes
+- Fix Game Logs
+- Fix UI
+
+- Containerize and deploy
 
 Later
-- Containization
 - Database
 - User authorization
 - Deployment

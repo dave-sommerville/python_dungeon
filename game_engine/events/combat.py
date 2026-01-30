@@ -32,11 +32,7 @@ class CombatEvent(Event):
                     if self.enemy_death(dungeon):
                         dungeon._msg("Your attack is enough to vanquish your enemy")
                         return
-                    enemy_damage = self.entity.attack_action(dungeon.player)
-                    if enemy_damage == 0:
-                        dungeon._msg(f"{self.entity.name} attacks you but misses")
-                    else:
-                        dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
+                    self._enemy_attack(dungeon)
                 case "interact": # Sub events
                     dungeon._msg("You said hi and they left")
                     dungeon.pop_event()
@@ -44,22 +40,14 @@ class CombatEvent(Event):
                 case "dodge":
                     dungeon._msg("You dodged")
                     dungeon.player.dodge_action()
-                    enemy_damage = self.entity.attack_action(dungeon.player)
-                    if enemy_damage == 0:
-                        dungeon._msg(f"{self.entity.name} attacks you but misses")
-                    else:
-                        dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
+                    self._enemy_attack(dungeon)
                 case "retreat":
                     dungeon._msg("you retreat from the battle, but they get one attack")
                     enemy_damage = self.entity.attack_action(dungeon.player)
-                    if enemy_damage == 0:
-                        dungeon._msg(f"{self.entity.name} attacks you but misses")
-                    else:
-                        dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
-                    dungeon.pop_event()
+                    self._enemy_attack(dungeon)
                     if dungeon.player.health > 0:
-                        dungeon._msg("You retreat to a previous chamber")
                         direction = dungeon.player.get_possible_player_moves()
+                        dungeon._msg(f"You retreat {direction} to a previous chamber")
                         dungeon.move_player(direction)
                 case "cast spell":
                     dungeon._msg("Select a spell to case")
@@ -71,12 +59,14 @@ class CombatEvent(Event):
                     dungeon.state = GameState.INVENTORY_MANAGEMENT
                     dungeon.push_event(InventoryManagementEvent(dungeon.player, mode="use"))
                     dungeon.state = GameState.MAIN_MENU
-                    enemy_damage = self.entity.attack_action(dungeon.player)
-                    if enemy_damage == 0:
-                        dungeon._msg(f"{self.entity.name} attacks you but misses")
-                    else:
-                        dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
+                    self._enemy_attack(dungeon)
                 case _:
                     raise GameActionError("Invalid action")
-            
+    def _enemy_attack(self, dungeon):
+        enemy_damage = self.entity.attack_action(dungeon.player)
+        if enemy_damage == 0:
+            dungeon._msg(f"{self.entity.name} attacks you but misses")
+        else:
+            dungeon._msg(f"{self.entity.name} attacks you and hits you for {enemy_damage} points of damage")
+
         # Resolution for victory/defeat
