@@ -57,6 +57,7 @@ def random_item_factory(rarity):
     return armor_factory(rarity)
   else:
     return potion_factory(rarity)
+  
 # Add cost randomizer based on CHA
 def merchant_factory():
   merchant = Character("Jeff", "A small mushroom man.")
@@ -66,6 +67,7 @@ def merchant_factory():
     item = random_item_factory(rarity)
     merchant.inventory.append(item)
   return merchant
+
 def trap_factory():
   info_obj = trap_description()
   name = info_obj[0]

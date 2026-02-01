@@ -7,9 +7,10 @@
 - Back escapes discard/interaction sequence
 - Likely redundancy with numeric/index vs. string/input
   - In Python and JS
+- Shouldn't be able to use most base items
 - Test game over, add to description
 - Base game spell management
-- Add move counter
+- Add move counter/effects
 - States/classes/enums need more consistency
   - Player Level
   - Combat/Traps
@@ -44,6 +45,7 @@ Later
 
 Future Mechanics
 - Classes
+- RNG based dialogue generation
 - Testing/Error handling
 - UI/Frontend Effects
   - ASCII Printouts
@@ -56,11 +58,20 @@ Future Mechanics
 - Progress map
 - Secondary weapon
   - Martial/Range weapons
-- NPC Interactions
-  - Cha vs Wis checks
-      - Pick pocketing
-      - Convincing them by charm, deception, or intimidation
-      - Add combat interactions
+- Skill Contests/Build benefits
+  - Bargaining 
+  - Stealth vs. Wisdom
+    - Avoiding/Making surprise attack 
+    - Trap avoidance
+  - Pick poketing
+  - Being poison
+  - Area trap avoidance
+  - Interactions
+    - Lying
+    - Intimidation
+    - Charm
+  - Lore Checks
+  - Magic casting
 
 Plot Edits
 - Serpent introduction and help

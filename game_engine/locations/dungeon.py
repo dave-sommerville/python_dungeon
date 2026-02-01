@@ -13,8 +13,9 @@ class Dungeon:
     current_event = None
     state = GameState.MAIN_MENU
 
-    def __init__(self):
+    def __init__(self, engine=None):
         self.message_buffer = []
+        self.engine = engine
         self.player = Player("Gal", "Guy")
         # Track visited chambers (start with player's initial chamber)
         self.visited_locations = [self.player.current_chamber]
@@ -47,7 +48,10 @@ class Dungeon:
         """Peek at the current event without removing it."""
         return self.current_event
     def _msg(self, text):
-        self.message_buffer.append(text)
+        if self.engine:
+            self.engine._log(text)
+        else:
+            self.message_buffer.append(text)
     
     def move_player(self, direction):
         if direction == "north" and not self.player.current_chamber.north_passage:

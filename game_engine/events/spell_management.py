@@ -3,18 +3,6 @@ from ..game_states import GameState
 from ..errors.game_action_error import GameActionError
 
 class SpellManagementEvent(Event):
-    """Unified inventory management event that handles use, discard, or both actions.
-    
-    Args:
-        entity: The character whose inventory is being managed
-        mode: One of 'use', 'discard', or 'both' - determines available actions
-        items_list: List of items to display 
-    
-    Stages:
-        0: Display item list
-        1: Show action options for selected item
-        2: Confirm action (for destructive actions like discard)
-    """
 
     def __init__(self, entity, enemy):
         super().__init__(entity)

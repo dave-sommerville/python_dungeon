@@ -15,6 +15,9 @@ class GameEngine:
         self.error = None
 
     def resolve_action(self, dungeon, action: str):
+        # Set engine reference for logging if not already set
+        if not dungeon.engine:
+            dungeon.engine = self
         self.logs = []
         self.error = None
         try:
