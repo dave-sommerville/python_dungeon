@@ -13,9 +13,9 @@ class Character(Entity):
         self.armor_class = 8
         self.current_armor = None
         self.weapon_primary = Weapon("Sword","Shiny", 10, 5)
-        self.wis = 0
+        # self.wis = 0
         self.inventory = []
-        self.xp_award = 5
+        self.xp = 0
         
     def don_armor(self, armor):
         if self.current_armor:

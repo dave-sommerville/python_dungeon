@@ -29,8 +29,6 @@ class GameEngine:
         finally:
             self._game_over_check(dungeon)
             dungeon.message_buffer.extend(self.logs)
-            self.logs = dungeon.message_buffer
-            dungeon.message_buffer = []
         return {
             "logs": self.logs,
             "menu": self.get_current_menu(dungeon),

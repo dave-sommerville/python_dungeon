@@ -1,23 +1,39 @@
 Bugs
-- General Issue: Game Logs/Actions don't always make sense
 - Overstock only forces you to discard single item
-- No options for Merchant overstock
 - Back escapes discard/interaction sequence
-- Room descriptions
+- Game Logs/Actions don't always make sense
+- Room descriptions don't quite make sense
 - Likely redundancy with numeric/index vs. string/input
   - In Python and JS
-
+- Test game over, add to description
+- States/classes/enums need more consistency
+  - Player Level
+  - Combat/Traps
+    - Damage success chance
+    - Average damage range
+    - Frequency
+  - Loot Generation (Chambers/NPCs)
+  - Item rarity
+  - Healing spell/potion frequency
+  - Exhaustion
+  - Skill Levels 
 
 Features
 - Action Menu Should have status bar 
   - Player details?
 - Combat Rounds
 - Interactions
-- Initialization/Game Over
-- Master controls for balancing
+  - Built into merchant
+- Initialization
+  - Enter name
+  - Enter description
+  - Choose skills
+  - Generate Stats
+- Level Up
+  - Gain n amount of hp
+  - Choose a skill to add to
+  - Rebuild character
 - Add more error warning classes
-- Create Enums classes
-- Fix Game Logs
 - Fix UI
 
 - Containerize and deploy
@@ -28,6 +44,7 @@ Later
 - Deployment
 
 Unmade Mechanics
+- Classes
 - UI/Frontend Effects
   - ASCII Printouts
   - Theme selection
@@ -39,10 +56,11 @@ Unmade Mechanics
 - Progress map
 - Secondary weapon
   - Martial/Range weapons
-- Cha vs Wis checks
-    - Pick pocketing
-    - Convincing them by charm, deception, or intimidation
-    - Add combat interactions
+- NPC Interactions
+  - Cha vs Wis checks
+      - Pick pocketing
+      - Convincing them by charm, deception, or intimidation
+      - Add combat interactions
 
 Plot Edits
 - Serpent introduction and help

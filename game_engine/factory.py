@@ -60,7 +60,7 @@ def random_item_factory(rarity):
 # Add cost randomizer based on CHA
 def merchant_factory():
   merchant = Character("Jeff", "A small mushroom man.")
-  shop_size = random_integer(2, 8)
+  shop_size = random_integer(1, 4)
   for i in range(shop_size):
     rarity = random_integer(1,10)
     item = random_item_factory(rarity)

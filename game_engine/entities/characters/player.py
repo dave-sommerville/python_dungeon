@@ -35,9 +35,10 @@ class Player(Character):
 
         # Player Base Upgrades
         self.modifer = 0 # super(): 0
-        self.health = 80 # super(): 30
+        self.health = 80 # super(): 70
         self.maxHP = 100 # super(): 100
         self.armor_class = 10 # super(): 8
+        self.combat_round = None
         
         self.killcount = 0
         self.exhaustion_counter = 0
@@ -47,11 +48,11 @@ class Player(Character):
 
         # Player Characteristics 
         self.player_level = 0
-        self.xp = 5
+        self.xp = 0
         self.dex = 5
         self.con = 5
-        self.cha = 5
-        self.wis = 5
+        # self.cha = 5
+        # self.wis = 5
         # self.stealth = 0
 
         # Item Management
@@ -60,9 +61,6 @@ class Player(Character):
         self.weapon_secondary = None
         self.magical_item = None
         self.known_spells = [Spell("Healing", "Spell of healing", SpellBook.shield, 2, 2)]
-
-    def _msg(self, text):
-        self.message_buffer.append(text)
 
     def print_character_info(self):
         return [
@@ -111,19 +109,6 @@ class Player(Character):
             move_list.append("west")
         return random_list_element(move_list)
 
-    def search_chamber(self):
-        search_dc = random_integer(2,7)
-        loot_list = []
-        if self.wis >= search_dc:
-            loot_count = len(self.current_chamber.chamber_items)
-            inventory_room = self.inventory_size - len(self.inventory)
-            for item in self.current_chamber.chamber_items:
-                if loot_count > 0 and loot_count <= inventory_room:
-                    loot_list.append(item.name)
-                    self.add_to_inventory(item)
-                    inventory_room -= 1
-        return loot_list
-    
     def print_character_inventory(self):
         """Return inventory entries WITHOUT numeric prefixes.
         The UI is responsible for adding 1-based numbering. This avoids
