@@ -83,14 +83,19 @@ async function updateUI(data) {
     currentMenu = data.menu || [];
     currentState = data.state || null;
     isEventMenu = data.event || false;
+
     if (data.logs) {
         for (const msg of data.logs) {
             const p = create('p');
             p.textContent = '> '; 
             logPanel.appendChild(p);
+            
+            // Type the text and scroll as we go
             await typeText(p, msg);
+            window.scrollTo(0, document.body.scrollHeight);
         }
     }
+    
     ol.innerHTML = '';
     currentMenu.forEach((opt, i) => {
         const li = create('li');
@@ -103,7 +108,10 @@ async function updateUI(data) {
 
     errorPanel.innerText = data.error || "";
     inputEl.focus();
+    // Final scroll to ensure menu is visible
+    window.scrollTo(0, document.body.scrollHeight);
 }
+
 
 // Initial Load
 listen('DOMContentLoaded', window, () => {

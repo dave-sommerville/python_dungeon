@@ -1,11 +1,15 @@
-Bugs
+- Interaction event
+  - No more merchants, only NPCs
+  - 2 dialogue options, 1 barganing options
+- Debug logs
+  - Room descriptions
 - Overstock only forces you to discard single item
 - Back escapes discard/interaction sequence
-- Game Logs/Actions don't always make sense
-- Room descriptions don't quite make sense
 - Likely redundancy with numeric/index vs. string/input
   - In Python and JS
 - Test game over, add to description
+- Base game spell management
+- Add move counter
 - States/classes/enums need more consistency
   - Player Level
   - Combat/Traps
@@ -21,9 +25,6 @@ Bugs
 Features
 - Action Menu Should have status bar 
   - Player details?
-- Combat Rounds
-- Interactions
-  - Built into merchant
 - Initialization
   - Enter name
   - Enter description
@@ -33,8 +34,6 @@ Features
   - Gain n amount of hp
   - Choose a skill to add to
   - Rebuild character
-- Add more error warning classes
-- Fix UI
 
 - Containerize and deploy
 
@@ -43,8 +42,9 @@ Later
 - User authorization
 - Deployment
 
-Unmade Mechanics
+Future Mechanics
 - Classes
+- Testing/Error handling
 - UI/Frontend Effects
   - ASCII Printouts
   - Theme selection

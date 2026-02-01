@@ -134,7 +134,7 @@ class Dungeon:
         loot_list = []
         loot_count = len(self.player.current_chamber.chamber_items)
         inventory_room = self.player.get_inventory_room()
-        if self.player.wis < search_dc or loot_count <= 0:
+        if loot_count <= 0:
             loot_list.append("Nothing is found in this chamber")
         else:
             if loot_count <= inventory_room:

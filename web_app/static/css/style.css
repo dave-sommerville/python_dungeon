@@ -29,33 +29,53 @@ body {
     position: relative;
 }
 
-#game-container{
+#game-container {
     padding: 50px;
-    padding-bottom: 120px;
+    padding-bottom: 150px; /* Space for the fixed input form */
     display: flex;
     flex-direction: column;
 }
-#log-panel{
+
+#log-panel {
     min-height: 70svh;
-    min-width: 700px;
-    max-width: 900px;
-    text-wrap: wrap;
-    white-space: pre;
-}
-#menu-panel {
-    width: 200px;
-    margin-left: 50px;
+    /* Use max-width and overflow-wrap to prevent text from hitting the menu */
+    max-width: calc(100% - 300px); 
+    width: 900px;
+    white-space: pre-wrap; /* Allows newlines while respecting manual pre-formatting */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
+.control-panel {
+    position: fixed;
+    bottom: 140px; /* Sits right above the action form */
+    right: 50px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: var(--bg-clr); /* Prevents overlapping text from showing through */
+    padding: 10px;
+}
+
+#menu-panel {
+    width: 100%;
+    margin-left: 0; /* Aligned within its own fixed container now */
+}
+
+/* Ensure the form stays on top of other elements */
+form {
+    z-index: 100;
+}
 .buffer {
     height: 20svh;
     width: 100%;
 }
-.control-panel{
+/* .control-panel{
     position: fixed;
     top: 20px;
     right: 200px;
-}
+} */
 ul {
     list-style-type: none;
     overflow: scroll;
