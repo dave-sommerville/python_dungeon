@@ -1,6 +1,8 @@
 - Interaction event
   - No more merchants, only NPCs
   - 2 dialogue options, 1 barganing options
+- Debug/remove redundancy of UI mapping
+-  
 - Debug logs
   - Room descriptions
 - Overstock only forces you to discard single item

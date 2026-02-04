@@ -12,7 +12,7 @@ class CombatEvent(Event):
         if self.entity.character_death_check():
             dungeon.pop_event()
             dungeon.state = GameState.MAIN_MENU
-            dungeon.player.xp += self.entity.xp_award
+            dungeon.player.xp += self.entity.xp
             dungeon.player.killcount += 1
             return True
         else:
