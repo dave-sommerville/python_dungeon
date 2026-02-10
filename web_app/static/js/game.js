@@ -44,32 +44,29 @@ function typeText(element, text, speed = 5) {
         }, speed);
     });
 }
-function getActionValue(index) {
-    const opt = currentMenu[index];
-    const subMenuCommands = ["use", "discard", "back", "cancel"];
-    if (subMenuCommands.includes(opt.toLowerCase())) {
-        return opt;
-    }
-    if (currentState === 'INVENTORY_MANAGEMENT') {
-        return String(index);
-    }
-    return opt;
-}
+
 async function sendAction(overrideAction) {
-    let action = typeof overrideAction === 'string' ? overrideAction : inputEl.value;
+    let raw = overrideAction ?? inputEl.value.trim();
     inputEl.value = '';
-    const numericMatch = action.trim().match(/^\d+$/);
-    if (numericMatch) {
-        const idx = parseInt(action.trim(), 10) - 1;
-        if (currentMenu && idx >= 0 && idx < currentMenu.length) {
-            action = getActionValue(idx);
+
+    let action = raw;
+
+    // Numeric shortcut → menu index
+    if (/^\d+$/.test(raw)) {
+        const idx = parseInt(raw, 10) - 1;
+        if (currentMenu[idx]) {
+            action = currentMenu[idx].id;
+        } else {
+            errorPanel.innerText = "Invalid menu selection";
+            return;
         }
     }
+
     try {
         const response = await fetch('/action', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: action })
+            body: JSON.stringify({ action })
         });
 
         if (!response.ok) throw new Error('Server error: ' + response.status);
@@ -79,6 +76,7 @@ async function sendAction(overrideAction) {
         errorPanel.innerText = String(err);
     }
 }
+
 async function updateUI(data) {
     currentMenu = data.menu || [];
     currentState = data.state || null;
@@ -101,8 +99,8 @@ async function updateUI(data) {
         const li = create('li');
         li.className = 'menu-item';
         li.style.cursor = 'pointer';
-        li.innerText = `${i + 1}: ${opt}`;
-        li.onclick = () => sendAction(getActionValue(i));
+        li.innerText = `${i + 1}: ${opt.label}`;
+        li.onclick = () => sendAction(opt.id);
         ol.appendChild(li);
     });
 

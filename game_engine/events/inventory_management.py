@@ -53,22 +53,14 @@ class InventoryManagementEvent(Event):
             self._handle_confirmation(dungeon, action)
 
     def _handle_item_selection(self, dungeon, action):
-        """Handle selection from the item list (stage 0)."""
-        # Try to find the item by name first (in case the UI sends item names directly)
+        # Action is now the item name string sent by JS
         for i, item in enumerate(self.items_list):
             if item.name.lower() == action.lower():
                 self.selected_index = i
                 dungeon._msg(item.item_description())
                 self.stage = 1
                 return
-        # Otherwise try to parse as index
-        index = self._parse_index_from_action(action, len(self.items_list))
-        if index is None:
-            raise GameActionError("Invalid selection")
-        self.selected_index = index
-        item = self.items_list[index]
-        dungeon._msg(item.item_description())
-        self.stage = 1
+        raise GameActionError("Item not found.")
 
     def _handle_action_selection(self, dungeon, action):
         """Handle action selection for the item (stage 1)."""

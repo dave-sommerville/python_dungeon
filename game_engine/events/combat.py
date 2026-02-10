@@ -4,8 +4,8 @@ from .spell_management import SpellManagementEvent
 from ..errors.game_action_error import GameActionError
 from ..game_states import GameState
 from ..entities.characters.character import Character
-class CombatEvent(Event):
 
+class CombatEvent(Event):
     def __init__(self, entity):
         super().__init__(entity)
     def enemy_death(self, dungeon):
@@ -59,6 +59,7 @@ class CombatEvent(Event):
                     dungeon.state = GameState.INVENTORY_MANAGEMENT
                     dungeon.push_event(InventoryManagementEvent(dungeon.player, mode="use"))
                     dungeon.state = GameState.MAIN_MENU
+
                     self._enemy_attack(dungeon)
                 case _:
                     raise GameActionError("Invalid action")

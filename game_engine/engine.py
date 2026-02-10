@@ -64,21 +64,19 @@ class GameEngine:
             
     @staticmethod
     def get_current_menu(dungeon):
+        # Events always take priority
         if dungeon.current_event:
-            return dungeon.current_event.get_options()
-        match dungeon.state:
-            case GameState.MAIN_MENU:
-                actions_list = dungeon.player.current_chamber.move_actions()
-                actions_list.extend(
-                    ["search", "rest", "inventory", "spells", "details", "describe"]
-                )
-                return actions_list
-            # case GameState.INVENTORY_MANAGEMENT:
-            #     return dungeon.player.print_character_inventory()
-            # case GameState.SPELL_MANAGEMENT:
-            #     return ["cast", "inspect", "back"]
-            case _:
-                raise GameActionError("Invalid Action")
+            raw_options = dungeon.current_event.get_options()
+            # Convert to list of dicts so JS can easily map label/id
+            return [{"label": opt.capitalize() if isinstance(opt, str) else opt, "id": opt} for opt in raw_options]
+
+        # Main Menu fallback
+        if dungeon.state == GameState.MAIN_MENU:
+            actions = dungeon.player.current_chamber.move_actions()
+            actions.extend(["search", "rest", "inventory", "spells", "details", "describe"])
+            return [{"label": a.replace("move ", "").capitalize(), "id": a} for a in actions]
+        
+        return []
 
     def _resolve_main_menu(self, dungeon, action):
         match action:

@@ -2,17 +2,13 @@
   - No more merchants, only NPCs
   - 2 dialogue options, 1 barganing options
 - Debug/remove redundancy of UI mapping
--  
 - Debug logs
   - Room descriptions
 - Overstock only forces you to discard single item
 - Back escapes discard/interaction sequence
-- Likely redundancy with numeric/index vs. string/input
-  - In Python and JS
 - Shouldn't be able to use most base items
 - Test game over, add to description
 - Base game spell management
-- Add move counter/effects
 - States/classes/enums need more consistency
   - Player Level
   - Combat/Traps
@@ -26,6 +22,7 @@
   - Skill Levels 
 
 Features
+- Add move counter/effects
 - Action Menu Should have status bar 
   - Player details?
 - Initialization
