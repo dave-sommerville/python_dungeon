@@ -1,5 +1,4 @@
 from .event import Event
-from ..game_states import GameState
 from ..errors.game_action_error import GameActionError
 
 class InventoryManagementEvent(Event):
@@ -42,8 +41,6 @@ class InventoryManagementEvent(Event):
         if action == "back":
             # Pop this event and return to previous
             dungeon.pop_event()
-            if dungeon.current_event is None:
-                dungeon.state = GameState.MAIN_MENU
             return
         if self.stage == 0:
             self._handle_item_selection(dungeon, action)
@@ -102,9 +99,6 @@ class InventoryManagementEvent(Event):
         self.entity.inventory = self.items_list
         dungeon._msg(f"{item.name} used.")
         dungeon.pop_event()
-        # If in combat, handle enemy turn
-        if dungeon.current_event is None:
-            dungeon.state = GameState.MAIN_MENU
 
     def _perform_discard(self, dungeon):
         """Discard the selected item and clean up."""
@@ -116,15 +110,11 @@ class InventoryManagementEvent(Event):
             if len(self.entity.inventory_size) is len(self.items_list):
                 self.entity.inventory = self.items_list
                 dungeon.pop_event()
-                if dungeon.current_event is None:
-                    dungeon.state = GameState.MAIN_MENU
             else:
                 dungeon._msg("Select another item to discard.")
         else:
             self.entity.inventory = self.items_list
             dungeon.pop_event()
-            if dungeon.current_event is None:
-                dungeon.state = GameState.MAIN_MENU
 
     def _get_item_list(self):
         """Return list of items as options."""

@@ -1,5 +1,4 @@
 from .event import Event
-from ..game_states import GameState
 from ..errors.game_action_error import GameActionError
 
 class SpellManagementEvent(Event):
@@ -28,8 +27,6 @@ class SpellManagementEvent(Event):
         if action == "back":
             # Pop this event and return to previous
             dungeon.pop_event()
-            if dungeon.current_event is None:
-                dungeon.state = GameState.MAIN_MENU
             return
         if self.stage == 0:
             self._handle_item_selection(dungeon, action)
@@ -78,9 +75,6 @@ class SpellManagementEvent(Event):
         dungeon._msg(spell.cast_spell(dungeon.player, self.enemy))
         dungeon._msg(f"{spell.name} used.")
         dungeon.pop_event()
-        # If in combat, handle enemy turn
-        if dungeon.current_event is None:
-            dungeon.state = GameState.MAIN_MENU
 
     def _parse_index_from_action(self, action, max_index):
         """Parse an index from action string. Handles both plain digits and "0: Item Name" format."""

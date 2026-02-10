@@ -50,7 +50,7 @@ class GameEngine:
         options = event.get_options() or []
         # Accept numeric selection or exact match; caller UI maps numbers, engine expects strings
         event.resolve(dungeon, action)
-
+    # **** Likely redudant options
     def _resolve_state_action(self, dungeon, action):
         match dungeon.state:
             case GameState.MAIN_MENU:

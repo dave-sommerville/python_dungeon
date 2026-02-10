@@ -47,7 +47,7 @@ function typeText(element, text, speed = 5) {
 
 async function sendAction(overrideAction) {
     let raw = overrideAction ?? inputEl.value.trim();
-    inputEl.value = '';
+    inputEl.value = ''; 
 
     let action = raw;
 

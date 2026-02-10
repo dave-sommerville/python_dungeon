@@ -2,7 +2,6 @@ from .event import Event
 from .inventory_management import InventoryManagementEvent
 from .spell_management import SpellManagementEvent
 from ..errors.game_action_error import GameActionError
-from ..game_states import GameState
 from ..entities.characters.character import Character
 
 class CombatEvent(Event):
@@ -11,7 +10,6 @@ class CombatEvent(Event):
     def enemy_death(self, dungeon):
         if self.entity.character_death_check():
             dungeon.pop_event()
-            dungeon.state = GameState.MAIN_MENU
             dungeon.player.xp += self.entity.xp
             dungeon.player.killcount += 1
             return True
@@ -20,6 +18,7 @@ class CombatEvent(Event):
 
     def get_options(self):
         return ["attack", "interact", "dodge", "retreat", "use item", "cast spell"]
+    
     def resolve(self, dungeon, action):
         if isinstance(self.entity, Character) and dungeon.player.health > 0:
             match action:
@@ -36,7 +35,6 @@ class CombatEvent(Event):
                 case "interact": # Sub events
                     dungeon._msg("You said hi and they left")
                     dungeon.pop_event()
-                    dungeon.state = GameState.MAIN_MENU
                 case "dodge":
                     dungeon._msg("You dodged")
                     dungeon.player.dodge_action()
@@ -51,18 +49,14 @@ class CombatEvent(Event):
                         dungeon.move_player(direction)
                 case "cast spell":
                     dungeon._msg("Select a spell to case")
-                    dungeon.state = GameState.INVENTORY_MANAGEMENT
                     dungeon.push_event(SpellManagementEvent(dungeon.player, self.entity))
-                    dungeon.state = GameState.MAIN_MENU
                 case "use item": # Sub events
                     dungeon._msg("Select an item to use")
-                    dungeon.state = GameState.INVENTORY_MANAGEMENT
                     dungeon.push_event(InventoryManagementEvent(dungeon.player, mode="use"))
-                    dungeon.state = GameState.MAIN_MENU
-
                     self._enemy_attack(dungeon)
                 case _:
                     raise GameActionError("Invalid action")
+                
     def _enemy_attack(self, dungeon):
         enemy_damage = self.entity.attack_action(dungeon.player)
         if enemy_damage == 0:

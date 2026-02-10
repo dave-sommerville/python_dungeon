@@ -1,14 +1,13 @@
 from .event import Event
-from ..game_states import GameState
 from ..errors.game_action_error import GameActionError
 
 class NpcInteractionEvent(Event):
-    def __init__(self, entity, enemy):
+    def __init__(self, entity, enemy, dialogue_options):
         super().__init__(entity)
         self.enemy = enemy
         self.stage = 0
         self.selected_index = None
-        self.options = [""]
+        self.dialogue_options = dialogue_options
 
     def get_options(self):
         """Return options based on current stage."""
@@ -19,8 +18,6 @@ class NpcInteractionEvent(Event):
         if action == "ignore":
             # Pop this event and return to previous
             dungeon.pop_event()
-            if dungeon.current_event is None:
-                dungeon.state = GameState.MAIN_MENU
             return
         if action == self.entity.dialogue_options[0]:
             dungeon._msg(f"{self.entity.name} replies:")
