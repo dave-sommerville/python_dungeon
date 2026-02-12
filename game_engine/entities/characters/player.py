@@ -119,7 +119,7 @@ class Player(Character):
             inventory_list.append(f"{item.name} - {item.durability}")
         inventory_list.append("back")
         return inventory_list
-
+   
     # Will need to add limiting to list, but mayaswell enjoy the dynamic sizes for now
     def add_to_inventory(self, item):
         if len(self.inventory) >= self.inventory_size:

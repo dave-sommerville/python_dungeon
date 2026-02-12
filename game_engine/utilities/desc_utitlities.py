@@ -230,3 +230,61 @@ dungeon_traps = [
 ]
 def trap_description():
   return random_list_element(dungeon_traps)
+# Format: (Player Choice 1, Player Choice 2, Response to 1, Response to 2)
+dialogue_tree = [
+    (
+        "I've come to save the village.", 
+        "I'm just here for the gold.", 
+        "A hero! We haven't seen one of those since the Great Frost.", 
+        "At least you're honest. The coins are in the chest, if you survive."
+    ),
+    (
+        "Is there a faster way through the mountains?", 
+        "Are the mountain passes safe?", 
+        "Only if you fancy a climb through the Devil's Chimney.", 
+        "Safe? Only if you consider a pack of hungry wolves 'safe'."
+    ),
+    (
+        "Lower your weapon, I mean no harm.", 
+        "Drop the sword before I make you.", 
+        "Easy there... my nerves are a bit frayed lately.", 
+        "Big words for someone standing in range of my blade!"
+    ),
+    (
+        "Tell me about the wizard in the tower.", 
+        "I heard the wizard is a fraud.", 
+        "He's brilliant, but he hasn't been seen since the lightning hit.", 
+        "Careful! He has ears everywhere... and some of them aren't even his."
+    )
+]
+dungeon_npcs = [
+    (
+        "The Skeletal Archivist", "An ancient undead librarian who refuses to pass on until every scroll in the dungeon is properly cataloged."
+    ),
+    (
+        "Fizzlebang the 'Exterminator'", "A frantic goblin alchemist looking for 'volunteer' testers for his highly unstable monster-repelling potions."
+    ),
+    (
+        "The Cursed Statue", "A stone guardian that can only speak in riddles and offers cryptic directions in exchange for a drop of blood."
+    ),
+    (
+        "Barnaby the Mimic-Slayer", "A grizzled, paranoid veteran who spends his time stabbing every chest, chair, and door handle he encounters."
+    ),
+    (
+        "The Lost Squire", "A terrified youth hiding in a barrel, hoping someone will lead them back to the surface before their torch burns out."
+    ),
+    (
+        "Wraith of the Vault", "A shimmering spirit that offers to open locked doors if you can tell it a story from the world of the living."
+    ),
+    (
+        "Grog the Gourmet", "An ogre wearing a stained chef's hat, obsessed with finding the 'perfect spice' found only on Giant Spider legs."
+    ),
+    (
+        "The Shadow Merchant", "A hooded figure who only appears in the darkest corners, trading high-tier loot for the player's most cherished memories."
+    )
+]
+def npc_description():
+  return random_list_element(dungeon_npcs)
+
+def npc_dialogue():
+  return random_list_element(dialogue_tree)

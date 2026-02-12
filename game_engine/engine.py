@@ -75,7 +75,6 @@ class GameEngine:
             actions = dungeon.player.current_chamber.move_actions()
             actions.extend(["search", "rest", "inventory", "spells", "details", "describe"])
             return [{"label": a.replace("move ", "").capitalize(), "id": a} for a in actions]
-        
         return []
 
     def _resolve_main_menu(self, dungeon, action):
@@ -137,7 +136,7 @@ class GameEngine:
         self._log(f"You meet a merchant named {merchant.name}")
         self._log("Select an item to purchase if you wish")
         dungeon.push_event(merchant_interaction)
-
+    
     def _game_over_check(self, dungeon):
         if dungeon.player.character_death_check():
             self._log("You died")

@@ -1,6 +1,7 @@
-from .utilities.desc_utitlities import enemy_description, weapon_description, base_item_description, armor_description, potion_description, trap_description
-from .utilities.rng_utilities import random_integer
+from .utilities.desc_utitlities import enemy_description, weapon_description, base_item_description, armor_description, potion_description, trap_description, npc_description, npc_dialogue
+from .utilities.rng_utilities import random_integer, weighted_decision
 from .entities.characters.character import Character
+from .entities.characters.npc import NPC
 from .entities.items.item import Item
 from .entities.items.weapon import Weapon
 from .entities.items.armor import Armor
@@ -67,6 +68,18 @@ def merchant_factory():
     item = random_item_factory(rarity)
     merchant.inventory.append(item)
   return merchant
+
+def npc_factory():
+  dialogue = npc_dialogue()
+  description = npc_description()
+  npc = NPC(description[0], description[1], [dialogue[0], dialogue[1]], dialogue[2],dialogue[3])
+  if weighted_decision(0.8):
+    shop_size = random_integer(1, 4)
+    for i in range(shop_size):
+      rarity = random_integer(1,10)
+      item = random_item_factory(rarity)
+      npc.inventory.append(item)
+  pass
 
 def trap_factory():
   info_obj = trap_description()
