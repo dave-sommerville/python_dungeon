@@ -5,10 +5,6 @@ from .events.combat import CombatEvent
 from .events.npcs.merchant_interaction import MerchantEvent
 from .utilities.rng_utilities import weighted_decision
 from .factory import enemy_factory, merchant_factory, trap_factory
-# Use a stack to hold events instead of referring to them within the object
-# Leave main menu as the only resolution in the engine
-# Instead of switching between states, only switch between numeric and string values
-# Will have to consider all log effects to see the best architecture
 class GameEngine:
     def __init__(self):
         self.logs = []
@@ -26,7 +22,7 @@ class GameEngine:
                 self._resolve_event_action(dungeon, action)
             else:
                 # Attempt the game logic for the current state
-                self._resolve_state_action(dungeon, action)
+                self._resolve_main_menu(dungeon, action)
         except GameActionError as e:
             self.error = str(e)
         finally:
@@ -50,18 +46,7 @@ class GameEngine:
         options = event.get_options() or []
         # Accept numeric selection or exact match; caller UI maps numbers, engine expects strings
         event.resolve(dungeon, action)
-    # **** Likely redudant options
-    def _resolve_state_action(self, dungeon, action):
-        match dungeon.state:
-            case GameState.MAIN_MENU:
-                self._resolve_main_menu(dungeon, action)
-            case GameState.INVENTORY_MANAGEMENT:
-                self._resolve_inventory_management_menu(dungeon, action)
-            case GameState.SPELL_MANAGEMENT:
-                self._resolve_spell_management_menu(dungeon, action)
-            case _:
-                raise GameActionError("Invalid State")
-            
+
     @staticmethod
     def get_current_menu(dungeon):
         # Events always take priority
@@ -71,11 +56,9 @@ class GameEngine:
             return [{"label": opt.capitalize() if isinstance(opt, str) else opt, "id": opt} for opt in raw_options]
 
         # Main Menu fallback
-        if dungeon.state == GameState.MAIN_MENU:
-            actions = dungeon.player.current_chamber.move_actions()
-            actions.extend(["search", "rest", "inventory", "spells", "details", "describe"])
-            return [{"label": a.replace("move ", "").capitalize(), "id": a} for a in actions]
-        return []
+        actions = dungeon.player.current_chamber.move_actions()
+        actions.extend(["search", "rest", "inventory", "spells", "details", "describe"])
+        return [{"label": a.replace("move ", "").capitalize(), "id": a} for a in actions]
 
     def _resolve_main_menu(self, dungeon, action):
         match action:

@@ -30,6 +30,7 @@ class InventoryManagementEvent(Event):
             return self._get_item_list()
         elif self.stage == 1:
             # Show available actions for selected item
+            print(self._get_action_options())
             return self._get_action_options()
         elif self.stage == 2:
             # Confirm destructive action
@@ -98,7 +99,7 @@ class InventoryManagementEvent(Event):
         self.items_list.remove(item)
         self.entity.inventory = self.items_list
         dungeon._msg(f"{item.name} used.")
-        dungeon.pop_event()
+        self.stage = 0
 
     def _perform_discard(self, dungeon):
         """Discard the selected item and clean up."""
@@ -108,13 +109,13 @@ class InventoryManagementEvent(Event):
         # Pop this event and return to previous context
         if self.selected_action == "discard":
             if len(self.entity.inventory_size) is len(self.items_list):
-                self.entity.inventory = self.items_list
+                # self.entity.inventory = self.items_list
                 dungeon.pop_event()
             else:
                 dungeon._msg("Select another item to discard.")
+                self.stage = 0
         else:
             self.entity.inventory = self.items_list
-            dungeon.pop_event()
 
     def _get_item_list(self):
         """Return list of items as options."""

@@ -1,22 +1,9 @@
-Events
-- General event management
+Bugs
+- Alter inventory to persist until all overstock is gone
+- Remove items from search so as to not continually generate
 - Clean up GameState 
-- Interaction event
-  - No more merchants, only NPCs
-  - 2 dialogue options, 1 barganing option
-- Base game spell management
-- Initialization
-  - Enter name
-  - Enter description
-  - Choose skills
-  - Generate Stats
-- Level Up
-  - Gain n amount of hp
-  - Choose a skill to add to
-  - Rebuild character
-- Game Over
-
-Debug
+- NPC
+- Spell testing
 - Logs
   - Room description capitlization
 - Overstock only forces you to discard single item
@@ -34,6 +21,23 @@ Debug
   - Healing spell/potion frequency
   - Exhaustion
   - Skill Levels
+
+Events
+- Interaction event
+  - No more merchants, only NPCs
+  - 2 dialogue options, 1 barganing option
+- Base game spell management
+- Initialization
+  - Enter name
+  - Enter description
+  - Choose skills
+  - Generate Stats
+- Level Up
+  - Gain n amount of hp
+  - Choose a skill to add to
+  - Rebuild character
+- Game Over
+
 
 
 Features
