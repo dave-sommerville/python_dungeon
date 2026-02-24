@@ -3,13 +3,15 @@ Bugs
 - Remove items from search so as to not continually generate
 - Clean up GameState 
 - NPC
+  - Back escapes discard/interaction sequence
 - Spell testing
 - Logs
   - Room description capitlization
-- Overstock only forces you to discard single item
-- Back escapes discard/interaction sequence
+- Item menu should populate before the dungeon logs
 - Shouldn't be able to use most base items
-- Enums where appropriate (clean up old files)
+- Exhaustion should be more present4
+
+
 - Balancing
   - Player Level
   - Combat/Traps
@@ -23,9 +25,6 @@ Bugs
   - Skill Levels
 
 Events
-- Interaction event
-  - No more merchants, only NPCs
-  - 2 dialogue options, 1 barganing option
 - Base game spell management
 - Initialization
   - Enter name

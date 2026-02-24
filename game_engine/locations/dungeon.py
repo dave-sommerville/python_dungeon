@@ -122,12 +122,10 @@ class Dungeon:
         location_id = self.player.print_current_location()
         chamber = next((c for c in self.visited_locations if c.id == location_id), None)
         if chamber:
-            return chamber.description
-        # Fallback to player's current chamber (and track it for future lookups)
-        if getattr(self.player, "current_chamber", None):
-            self.visited_locations.append(self.player.current_chamber)
-            return self.player.current_chamber.description
-        return "You see nothing of interest."
+            for line in chamber.description:
+                self._msg(line)
+        else:
+            self._msg("You see nothing of interest.")
     
     def display_player_inventory(self):
         for item in self.player.inventory:

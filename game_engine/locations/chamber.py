@@ -11,13 +11,12 @@ class Chamber():
         if chamber_items is None:
             chamber_items = []
         self.chamber_items = chamber_items
-        self.description = description
+        self.description = [description]
         self.chamber_gold = random_integer(0, 50)
         self.north_passage = weighted_decision(0.7)
         self.east_passage = weighted_decision(0.6)
         self.south_passage = weighted_decision(0.6)
         self.west_passage = weighted_decision(0.6)
-
 
     def add_reverse_passage(self, direction):
         match direction:
@@ -45,11 +44,11 @@ class Chamber():
     def establish_passageways(self):
         room_description = self.description
         if self.north_passage:
-            room_description += f"To the North {passageway_descriptions()}" 
+            self.description.append(f"To the North {passageway_descriptions()}") 
         if self.east_passage:
-            room_description += f"To the East {passageway_descriptions()}"
+            self.description.append(f"To the East {passageway_descriptions()}")
         if self.south_passage:
-            room_description += f"To the South {passageway_descriptions()}"
+            self.description.append(f"To the South {passageway_descriptions()}")
         if self.west_passage:
-            room_description += f"To the West {passageway_descriptions()}"
+            self.description.append(f"To the West {passageway_descriptions()}")
         self.description = room_description

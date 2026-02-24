@@ -90,13 +90,12 @@ class GameEngine:
                 for item in dungeon.player.print_character_info():
                     self._log(item)
             case "describe":
-                chamber = dungeon.player.current_chamber
-                self._log(chamber.description)
+                dungeon.describe_current_chamber()
             case _:
                 raise GameActionError("Invalid Action")
                         
     def _call_for_combat_event(self, dungeon):
-        if weighted_decision(0.5):
+        if weighted_decision(0.9):
             character = enemy_factory()
             event = CombatEvent(character)
             self._log(f"You are attacked by an aggressive enemy")
