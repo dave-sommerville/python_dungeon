@@ -21,7 +21,6 @@ class InventoryManagementEvent(Event):
         self.mode = mode  # 'use', 'discard', or 'both'
         self.items_list = items_list if items_list is not None else entity.inventory
         self.selected_index = None
-        self.selected_action = None
 
     def get_options(self):
         """Return options based on current stage."""
@@ -106,16 +105,7 @@ class InventoryManagementEvent(Event):
         item = self.items_list[self.selected_index]
         self.items_list.remove(item)
         dungeon._msg(f"{item.name} discarded.")
-        # Pop this event and return to previous context
-        if self.selected_action == "discard":
-            if len(self.entity.inventory_size) is len(self.items_list):
-                # self.entity.inventory = self.items_list
-                dungeon.pop_event()
-            else:
-                dungeon._msg("Select another item to discard.")
-                self.stage = 0
-        else:
-            self.entity.inventory = self.items_list
+        self.entity.inventory = self.items_list
 
     def _get_item_list(self):
         """Return list of items as options."""

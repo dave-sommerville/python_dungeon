@@ -1,15 +1,19 @@
 Bugs
+- Printing none after the passageways
+- What do you do next comes in awkwardly
 - Alter inventory to persist until all overstock is gone
 - Remove items from search so as to not continually generate
 - Clean up GameState 
 - NPC
   - Back escapes discard/interaction sequence
-- Spell testing
-- Logs
-  - Room description capitlization
+- Healing spell not working
+- More spells needed
 - Item menu should populate before the dungeon logs
 - Shouldn't be able to use most base items
-- Exhaustion should be more present4
+- Exhaustion should be more present
+- Add move counter/effects
+- Action Menu Should have status bar 
+  - Player details?
 
 
 - Balancing
@@ -39,10 +43,8 @@ Events
 
 
 
-Features
-- Add move counter/effects
-- Action Menu Should have status bar 
-  - Player details?
+General
+- Clean up comments
 - Containerize and deploy
 
 Later

@@ -82,18 +82,7 @@ async function updateUI(data) {
     currentState = data.state || null;
     isEventMenu = data.event || false;
 
-    if (data.logs) {
-        for (const msg of data.logs) {
-            const p = create('p');
-            p.textContent = '> '; 
-            logPanel.appendChild(p);
-            
-            // Type the text and scroll as we go
-            await typeText(p, msg);
-            window.scrollTo(0, document.body.scrollHeight);
-        }
-    }
-    
+    // 1️⃣ Populate menu immediately
     ol.innerHTML = '';
     currentMenu.forEach((opt, i) => {
         const li = create('li');
@@ -104,10 +93,25 @@ async function updateUI(data) {
         ol.appendChild(li);
     });
 
+    // 2️⃣ Animate logs WITHOUT blocking
+    if (data.logs) {
+        animateLogs(data.logs);
+    }
+
     errorPanel.innerText = data.error || "";
     inputEl.focus();
-    // Final scroll to ensure menu is visible
+
     window.scrollTo(0, document.body.scrollHeight);
+}
+async function animateLogs(logs) {
+    for (const msg of logs) {
+        const p = create('p');
+        p.textContent = '> ';
+        logPanel.appendChild(p);
+
+        await typeText(p, msg);
+        window.scrollTo(0, document.body.scrollHeight);
+    }
 }
 
 
